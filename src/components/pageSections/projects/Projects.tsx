@@ -38,7 +38,7 @@ const PROJECTS: Project[] = [
     description:
       "Portfólio pessoal bilíngue (PT-BR/EN) construído em React + Vite com Styled Components, framer-motion e i18n — dark mode, animações de scroll e deploy na Vercel.",
     stack: ["React", "Vite", "TypeScript", "Styled Components", "Framer Motion", "i18next"],
-    link: "https://rayancmorais.com.br",
+    link: "https://portfolio-novo-omega.vercel.app",
   },
   {
     id: "movideux",
