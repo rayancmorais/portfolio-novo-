@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# Rayan Morais — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfólio pessoal bilíngue (PT-BR / EN) construído do zero com React, Vite e Styled Components.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 18** + **TypeScript**
+- **Vite** — build tool
+- **Styled Components** — estilização
+- **Framer Motion** — animações
+- **i18next** — internacionalização PT-BR/EN
+- **Lenis** — smooth scroll
 
-## React Compiler
+## ✨ Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Dark mode fixo com design system em cyan (#00f5d4)
+- Animações de entrada com useInView
+- Loading screen com terminal animado
+- Seções: Hero, Technical Ecosystem, Case Studies, Projects, GitHub Stats, Services, Testimonials, Contact, Footer
+- Download de CV em PT-BR ou EN conforme idioma selecionado
+- Formulário de contato integrado com Formspree
+- Totalmente responsivo
 
-## Expanding the ESLint configuration
+## 📁 Projetos em Destaque
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **CupomManiac** — plataforma brasileira de cupons (Next.js 15, PostgreSQL, Prisma)
+- **Crash Game** — jogo multiplayer em tempo real com algoritmo provably fair
+- **BR Dropshipping / Lux Lab Brasil** — e-commerce com checkout nacional
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🌐 Deploy
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+[rayancmorais.com.br](https://rayancmorais.com.br)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📬 Contato
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- GitHub: [@rayancmorais](https://github.com/rayancmorais)
+- LinkedIn: [Rayan Morais](https://linkedin.com/in/rayancmorais)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Desenvolvido por Rayan Morais © 2025
