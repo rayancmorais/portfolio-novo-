@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "eyebrow": "FULL-STACK DEVELOPER · BRASIL",
+    "headline_1": "I build",
+    "headline_accent": "seamless",
+    "headline_2": "scalable web & mobile",
+    "headline_caps": "E X P E R I E N C E S",
+    "bio": "Hi! I'm <strong>Rayan Morais</strong>, a full-stack developer specialised in <em>React / Node.js / TypeScript</em>. I build products with event-driven architectures, microservices and cloud deployments.",
+    "name": "Rayan Morais",
+    "role": "FULL-STACK DEVELOPER",
+    "available": "Open to opportunities",
+    "cta_primary": "View Selected Work →",
+    "cta_cv": "Download CV ↓",
+    "location_label": "LOCATION",
+    "location_value": "Brazil · GMT-3",
+    "focus_label": "FOCUS",
+    "focus_value": "React · Next · Nest · Node · TS",
+    "exp_label": "EXPERIENCE",
+    "exp_value": "3+ years"
+  },
+  "techStack": {
+    "title": "Technical Ecosystem",
+    "total": "technologies"
+  }
+}
