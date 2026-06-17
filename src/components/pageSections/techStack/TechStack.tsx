@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
   SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiStyledcomponents, SiRadixui,
@@ -11,11 +12,11 @@ import {
 /* ── data ───────────────────────────────────────────────────────────────────── */
 
 interface TechItem { name: string; icon: React.ReactNode; }
-interface EcoGroup { id: string; index: string; label: string; items: TechItem[]; chips: string[]; }
+interface EcoGroup { id: string; index: string; items: TechItem[]; chips: string[]; }
 
 const GROUPS: EcoGroup[] = [
   {
-    id: 'frontend', index: 'F·01', label: 'Frontend',
+    id: 'frontend', index: 'F·01',
     items: [
       { name: 'Next.js 15',        icon: <SiNextdotjs /> },
       { name: 'React 19',          icon: <SiReact /> },
@@ -28,7 +29,7 @@ const GROUPS: EcoGroup[] = [
     chips: ['TypeScript', 'i18next', 'Lenis', 'Vite'],
   },
   {
-    id: 'backend', index: 'B·02', label: 'Backend',
+    id: 'backend', index: 'B·02',
     items: [
       { name: 'Node.js',   icon: <SiNodedotjs /> },
       { name: 'Fastify',   icon: <SiFastify /> },
@@ -41,7 +42,7 @@ const GROUPS: EcoGroup[] = [
     chips: ['BullMQ', 'Socket.io', 'REST API', 'JWT'],
   },
   {
-    id: 'data-devops', index: 'D·03', label: 'Data & DevOps',
+    id: 'data-devops', index: 'D·03',
     items: [
       { name: 'PostgreSQL',     icon: <SiPostgresql /> },
       { name: 'MongoDB',        icon: <SiMongodb /> },
@@ -82,6 +83,7 @@ function clearSpot(e: React.MouseEvent<HTMLDivElement>) {
 /* ── component ─────────────────────────────────────────────────────────────── */
 
 export function TechStack() {
+  const { t } = useTranslation('home');
   const [active, setActive] = useState('frontend');
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px' });
@@ -96,11 +98,11 @@ export function TechStack() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Eyebrow>02 · The Stack</Eyebrow>
+          <Eyebrow>{t('techStack.eyebrow')}</Eyebrow>
           <SectionTitle>
-            Technical <Accent>Ecosystem</Accent>
+            {t('techStack.title_1')} <Accent>{t('techStack.title_accent')}</Accent>
           </SectionTitle>
-          <Subtitle>O conjunto de ferramentas que uso para construir produtos.</Subtitle>
+          <Subtitle>{t('techStack.subtitle')}</Subtitle>
         </Header>
 
         <Panel
@@ -118,7 +120,7 @@ export function TechStack() {
             {GROUPS.map(g => (
               <Tab key={g.id} $active={active === g.id} onClick={() => setActive(g.id)}>
                 <TabIndex>{g.index}</TabIndex>
-                <TabName>{g.label}</TabName>
+                <TabName>{t(`techStack.groups.${g.id}`)}</TabName>
                 {active === g.id && <TabUnderline layoutId="eco-tab-line" />}
               </Tab>
             ))}

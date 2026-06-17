@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    Projects — "repository"-style project grid for the Rayan Morais portfolio.
@@ -28,15 +29,13 @@ interface Project {
   link?: string;            // external link, rendered only when present
 }
 
-const PROJECTS: Project[] = [
+const PROJECTS_BASE: Omit<Project, 'description'>[] = [
   {
     id: "portfolio",
     label: "P·01",
     repo: "rayancmorais / portfolio",
     title: "Portfolio Landing Page",
     status: "live",
-    description:
-      "Portfólio pessoal bilíngue (PT-BR/EN) construído em React + Vite com Styled Components, framer-motion e i18n — dark mode, animações de scroll e deploy na Vercel.",
     stack: ["React", "Vite", "TypeScript", "Styled Components", "Framer Motion", "i18next"],
     link: "https://portfolio-novo-omega.vercel.app",
   },
@@ -46,8 +45,6 @@ const PROJECTS: Project[] = [
     repo: "rayancmorais / movideux",
     title: "Movideux",
     status: "done",
-    description:
-      "Plataforma de filmes no estilo Netflix, com navegação por categorias e busca, consumindo uma API REST.",
     stack: ["React", "Node.js", "React Router"],
     link: "https://moviedeux.vercel.app",
   },
@@ -57,8 +54,6 @@ const PROJECTS: Project[] = [
     repo: "rayancmorais / chronos-pomodoro",
     title: "Chronos",
     status: "done",
-    description:
-      "Timer Pomodoro com ciclos persistentes, histórico de foco e temas claro/escuro.",
     stack: ["React", "Node.js", "TypeScript"],
   },
   {
@@ -67,8 +62,6 @@ const PROJECTS: Project[] = [
     repo: "rayancmorais / iclothes",
     title: "iClothes E-commerce",
     status: "done",
-    description:
-      "E-commerce de roupas com catálogo, carrinho e autenticação, apoiado por uma API Node + MongoDB.",
     stack: ["React", "Node.js", "MongoDB"],
     link: "https://iclothes.vercel.app",
   },
@@ -78,16 +71,9 @@ const PROJECTS: Project[] = [
     repo: "rayancmorais / map-tracker",
     title: "Map Tracker",
     status: "done",
-    description:
-      "App mobile em React Native que registra e visualiza trajetos com rastreamento por mapa em tempo real.",
     stack: ["React Native"],
   },
 ];
-
-const STATUS_TEXT: Record<Status, string> = {
-  live: "No ar",
-  done: "Concluído",
-};
 
 /* ------------------------------------------------------------- motion ---- */
 
@@ -395,9 +381,16 @@ const NoLink = styled.span`
 /* ---------------------------------------------------------- component ---- */
 
 export function Projects() {
+  const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px 0px" });
   const reduce = useReducedMotion();
+
+  const items = t('projects.items', { returnObjects: true }) as Array<{ description: string }>;
+  const statusText: Record<Status, string> = {
+    live: t('projects.status_live'),
+    done: t('projects.status_done'),
+  };
 
   const prettyHost = (url: string) =>
     url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -406,13 +399,11 @@ export function Projects() {
     <Section id="projects" aria-labelledby="projects-title">
       <Inner>
         <Header>
-          <Eyebrow>04 · Projetos</Eyebrow>
+          <Eyebrow>{t('projects.eyebrow')}</Eyebrow>
           <Title id="projects-title">
-            <em>Projetos</em>
+            <em>{t('projects.title_accent')}</em>
           </Title>
-          <Subtitle>
-            Projetos que construí — tecnologias usadas e onde vivem.
-          </Subtitle>
+          <Subtitle>{t('projects.subtitle')}</Subtitle>
         </Header>
 
         <Grid
@@ -421,7 +412,7 @@ export function Projects() {
           initial={reduce ? false : "hidden"}
           animate={reduce ? undefined : inView ? "show" : "hidden"}
         >
-          {PROJECTS.map((p) => (
+          {PROJECTS_BASE.map((p, i) => (
             <Card key={p.id} variants={reduce ? undefined : cardVariants}>
               <Bracket data-c="tl" aria-hidden="true" />
               <Bracket data-c="tr" aria-hidden="true" />
@@ -438,11 +429,11 @@ export function Projects() {
 
               <StatusBadge $status={p.status}>
                 <Dot $status={p.status} $reduce={!!reduce} aria-hidden="true" />
-                {STATUS_TEXT[p.status]}
+                {statusText[p.status]}
               </StatusBadge>
 
               <CardTitle>{p.title}</CardTitle>
-              <Description>{p.description}</Description>
+              <Description>{items[i]?.description ?? ''}</Description>
 
               <Stack>
                 {p.stack.map((tech) => (
@@ -456,7 +447,7 @@ export function Projects() {
                     {prettyHost(p.link)} →
                   </RepoLink>
                 ) : (
-                  <NoLink>Repositório privado</NoLink>
+                  <NoLink>{t('projects.private_repo')}</NoLink>
                 )}
               </Footer>
             </Card>

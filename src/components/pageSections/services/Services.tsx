@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import styled, { css } from "styled-components";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    Services — what Rayan offers. Grid 2×2. Eyebrow "06 · Serviços".
@@ -17,40 +18,8 @@ interface Service {
   tags: string[];
 }
 
-const SERVICES: Service[] = [
-  {
-    id: "fullstack",
-    glyph: "</>",
-    title: "Desenvolvimento Full-Stack",
-    description:
-      "Aplicações web completas em React e Node, do banco de dados à interface, escaláveis e prontas para produção.",
-    tags: ["React", "Node.js", "TypeScript"],
-  },
-  {
-    id: "api",
-    glyph: "{ }",
-    title: "API & Backend",
-    description:
-      "APIs REST seguras com autenticação, modelagem de dados e integrações — construídas para crescer com o produto.",
-    tags: ["Express", "PostgreSQL", "MongoDB"],
-  },
-  {
-    id: "design",
-    glyph: "▣",
-    title: "UI/UX com Figma",
-    description:
-      "Do wireframe ao protótipo de alta fidelidade, com foco em hierarquia, espaçamento e detalhes que importam.",
-    tags: ["Figma", "Design System", "Protótipo"],
-  },
-  {
-    id: "devops",
-    glyph: "▲",
-    title: "Deploy & DevOps",
-    description:
-      "Publicação contínua, ambientes de preview e monitoramento — para que cada commit chegue ao ar sem fricção.",
-    tags: ["Vercel", "CI/CD", "Git Flow"],
-  },
-];
+const SERVICES_GLYPHS = ["</>", "{ }", "▣", "▲"] as const;
+const SERVICES_IDS = ["fullstack", "api", "design", "devops"] as const;
 
 const containerVariants: Variants = {
   hidden: {},
@@ -230,21 +199,27 @@ const Tag = styled.span`
 `;
 
 export function Services() {
+  const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px 0px" });
   const reduce = useReducedMotion();
+
+  const items = t('services.items', { returnObjects: true }) as Service[];
+  const SERVICES: Service[] = items.map((item, i) => ({
+    ...item,
+    id: SERVICES_IDS[i],
+    glyph: SERVICES_GLYPHS[i],
+  }));
 
   return (
     <Section id="services" aria-labelledby="services-title">
       <Inner>
         <Header>
-          <Eyebrow>06 · Serviços</Eyebrow>
+          <Eyebrow>{t('services.eyebrow')}</Eyebrow>
           <Title id="services-title">
-            O que eu <em>faço</em>
+            {t('services.title_1')} <em>{t('services.title_accent')}</em>
           </Title>
-          <Subtitle>
-            Do conceito ao deploy — alguns dos serviços que ofereço.
-          </Subtitle>
+          <Subtitle>{t('services.subtitle')}</Subtitle>
         </Header>
 
         <Grid
@@ -261,8 +236,8 @@ export function Services() {
               <CardTitle>{s.title}</CardTitle>
               <Description>{s.description}</Description>
               <Tags>
-                {s.tags.map((t) => (
-                  <Tag key={t}>{t}</Tag>
+                {s.tags.map((tag) => (
+                  <Tag key={tag}>{tag}</Tag>
                 ))}
               </Tags>
             </Card>

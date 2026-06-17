@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from "react";
 import styled, { css } from "styled-components";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    Contact — name / email / message form (no backend) + social links.
@@ -276,6 +277,7 @@ const Arrow = styled.span`
 `;
 
 export function Contact() {
+  const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px 0px" });
   const reduce = useReducedMotion();
@@ -302,13 +304,11 @@ export function Contact() {
     <Section id="contact" aria-labelledby="contact-title">
       <Inner>
         <Header>
-          <Eyebrow>08 · Contato</Eyebrow>
+          <Eyebrow>{t('contact.eyebrow')}</Eyebrow>
           <Title id="contact-title">
-            Vamos <em>conversar</em>
+            {t('contact.title_1')} <em>{t('contact.title_accent')}</em>
           </Title>
-          <Subtitle>
-            Tem um projeto em mente ou uma vaga aberta? Manda uma mensagem.
-          </Subtitle>
+          <Subtitle>{t('contact.subtitle')}</Subtitle>
         </Header>
 
         <Layout
@@ -326,32 +326,32 @@ export function Contact() {
             <span className="brk-bl" aria-hidden="true" />
 
             <Field>
-              <FieldLabel>Nome</FieldLabel>
-              <Input name="name" type="text" placeholder="Seu nome" required autoComplete="name" />
+              <FieldLabel>{t('contact.label_name')}</FieldLabel>
+              <Input name="name" type="text" placeholder={t('contact.placeholder_name')} required autoComplete="name" />
             </Field>
 
             <Field>
-              <FieldLabel>Email</FieldLabel>
-              <Input name="email" type="email" placeholder="voce@email.com" required autoComplete="email" />
+              <FieldLabel>{t('contact.label_email')}</FieldLabel>
+              <Input name="email" type="email" placeholder={t('contact.placeholder_email')} required autoComplete="email" />
             </Field>
 
             <Field>
-              <FieldLabel>Mensagem</FieldLabel>
-              <Textarea name="message" placeholder="Conta um pouco sobre o que você precisa…" required />
+              <FieldLabel>{t('contact.label_message')}</FieldLabel>
+              <Textarea name="message" placeholder={t('contact.placeholder_message')} required />
             </Field>
 
             <Submit type="submit" disabled={sent}>
-              {sent ? "Mensagem enviada ✓" : "Enviar mensagem →"}
+              {sent ? t('contact.btn_sent') : t('contact.btn_send')}
             </Submit>
-            {sent && <Sent>Obrigado! Retorno em breve.</Sent>}
+            {sent && <Sent>{t('contact.sent_feedback')}</Sent>}
           </FormCard>
 
           <Side>
             <SideCard variants={reduce ? undefined : itemVariants}>
               <span className="brk-tr" aria-hidden="true" />
               <span className="brk-bl" aria-hidden="true" />
-              <SideTitle>Onde me encontrar</SideTitle>
-              <SideText>Prefere ir direto ao ponto? Me chama em uma dessas.</SideText>
+              <SideTitle>{t('contact.side_title')}</SideTitle>
+              <SideText>{t('contact.side_text')}</SideText>
               <Links>
                 <SocialLink href="https://github.com/rayancmorais" target="_blank" rel="noopener noreferrer">
                   GitHub · @rayancmorais

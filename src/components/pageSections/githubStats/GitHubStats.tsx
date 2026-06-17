@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    GitHubStats — mocked GitHub activity panel for the Rayan Morais portfolio.
@@ -23,11 +24,13 @@ interface Stat {
   label: string;
 }
 
-const STATS: Stat[] = [
-  { id: "commits", value: 847, label: "Commits no total" },
-  { id: "repos", value: 12, label: "Repositórios públicos" },
-  { id: "streak", value: 23, suffix: " dias", label: "Streak atual" },
-  { id: "langs", value: 4, label: "Linguagens principais" },
+const STATS_VALUES = [847, 12, 23, 4] as const;
+
+const LANGS_BASE: Omit<Lang, 'name'>[] = [
+  { pct: 45, color: "var(--cy, #00f5d4)" },
+  { pct: 28, color: "#f1e05a" },
+  { pct: 15, color: "#a78bfa" },
+  { pct: 12, color: "var(--fg-4, #545b6b)" },
 ];
 
 interface Lang {
@@ -36,12 +39,7 @@ interface Lang {
   color: string;
 }
 
-const LANGS: Lang[] = [
-  { name: "TypeScript", pct: 45, color: "var(--cy, #00f5d4)" },
-  { name: "JavaScript", pct: 28, color: "#f1e05a" },
-  { name: "CSS", pct: 15, color: "#a78bfa" },
-  { name: "Outros", pct: 12, color: "var(--fg-4, #545b6b)" },
-];
+const LANG_NAMES = ["TypeScript", "JavaScript", "CSS"] as const;
 
 /* ------------------------------------------------------------- motion ---- */
 
@@ -305,8 +303,7 @@ function StatItem({ stat, active }: { stat: Stat; active: boolean }) {
       <span className="brk-tr" aria-hidden="true" />
       <span className="brk-bl" aria-hidden="true" />
       <StatValue>
-        {n}
-        {stat.suffix ?? ""}
+        {n}{stat.suffix ?? ""}
       </StatValue>
       <StatLabel>{stat.label}</StatLabel>
     </StatCard>
@@ -316,17 +313,30 @@ function StatItem({ stat, active }: { stat: Stat; active: boolean }) {
 /* ---------------------------------------------------------- component ---- */
 
 export function GitHubStats() {
+  const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px 0px" });
   const reduce = useReducedMotion();
+
+  const STATS: Stat[] = [
+    { id: "commits", value: STATS_VALUES[0], label: t('github.stat_commits') },
+    { id: "repos",   value: STATS_VALUES[1], label: t('github.stat_repos') },
+    { id: "streak",  value: STATS_VALUES[2], suffix: t('github.stat_streak_suffix'), label: t('github.stat_streak') },
+    { id: "langs",   value: STATS_VALUES[3], label: t('github.stat_langs') },
+  ];
+
+  const LANGS: Lang[] = [
+    ...LANG_NAMES.map((name, i) => ({ name, ...LANGS_BASE[i] })),
+    { name: t('github.lang_others'), ...LANGS_BASE[3] },
+  ];
 
   return (
     <Section id="github" aria-labelledby="github-title">
       <Inner>
         <Header>
-          <Eyebrow>05 · GitHub</Eyebrow>
+          <Eyebrow>{t('github.eyebrow')}</Eyebrow>
           <Title id="github-title">
-            Atividade no <em>GitHub</em>
+            {t('github.title_1')} <em>{t('github.title_accent')}</em>
           </Title>
           <Handle
             href={`https://github.com/${GH_USER}`}
@@ -354,10 +364,10 @@ export function GitHubStats() {
             <span className="brk-bl" aria-hidden="true" />
 
             <LangHead>
-              <LangTitle>Linguagens mais usadas</LangTitle>
+              <LangTitle>{t('github.lang_title')}</LangTitle>
             </LangHead>
 
-            <Bar role="img" aria-label="Distribuição de linguagens">
+            <Bar role="img" aria-label={t('github.lang_bar_aria')}>
               {LANGS.map((l) => (
                 <BarFill
                   key={l.name}

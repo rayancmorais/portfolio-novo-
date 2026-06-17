@@ -20,6 +20,162 @@
   },
   "techStack": {
     "title": "Technical Ecosystem",
-    "total": "tecnologias"
+    "total": "tecnologias",
+    "eyebrow": "02 · A STACK",
+    "title_1": "Ecossistema",
+    "title_accent": "Técnico",
+    "subtitle": "O conjunto de ferramentas que uso para construir produtos.",
+    "groups": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "data-devops": "Dados & DevOps"
+    }
+  },
+  "caseStudies": {
+    "eyebrow": "03 · Trabalhos Selecionados",
+    "title_1": "Estudos de",
+    "title_accent": "Caso",
+    "subtitle": "Alguns builds, contados do jeito que eu penso neles — problema, abordagem, resultado.",
+    "label_problem": "Problema",
+    "label_approach": "Abordagem",
+    "label_result": "Resultado",
+    "visit_site": "Visitar site →",
+    "private_repo": "Repositório privado",
+    "items": [
+      {
+        "kind": "Plataforma de cupons",
+        "problem": "O mercado brasileiro de cupons é cheio de sites lentos e desatualizados — faltava uma plataforma rápida, com lojas reais e uma comunidade ativa em torno das ofertas.",
+        "approach": "Construí em Next.js 15 com PostgreSQL + Prisma, login via Google OAuth, sistema de comentários por cupom e um seed de produção para popular lojas e ofertas desde o primeiro deploy.",
+        "result": "Uma plataforma no ar, com lojas cadastradas, cupons comentáveis e autenticação social — pronta para escalar a base de usuários.",
+        "metric_labels": ["login social", "SSR + seed", "lojas cadastradas"]
+      },
+      {
+        "kind": "Jungle Gaming Challenge",
+        "problem": "Um jogo crash em tempo real só ganha a confiança do jogador se cada rodada puder ser verificada — não basta prometer que o resultado é justo.",
+        "approach": "Implementei um algoritmo provably fair com hash criptográfico por rodada e sincronizei todos os clientes via WebSocket, mantendo o multiplicador idêntico em tempo real para todo mundo.",
+        "result": "Cada resultado é reproduzível e auditável pelo próprio jogador, com a curva do multiplicador transmitida ao vivo, sem divergência entre as sessões.",
+        "metric_labels": ["verificável", "via WebSocket", "fonte de verdade"]
+      },
+      {
+        "kind": "Lux Lab Brasil · e-commerce",
+        "problem": "Lojas de dropshipping no Brasil esbarram no checkout: gateways internacionais quebram a conversão e a gestão de catálogo com fornecedores locais costuma ser manual.",
+        "approach": "Montei a loja em Next.js com checkout nacional via Stripe e integração direta com fornecedores BR, automatizando a sincronização de catálogo e o fluxo de pedidos.",
+        "result": "Um e-commerce com pagamento nacional ponta a ponta e catálogo gerido de forma integrada — menos trabalho manual e checkout pensado para o cliente brasileiro.",
+        "metric_labels": ["checkout nacional", "sync de catálogo", "fluxo de pedidos"]
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "08 · Contato",
+    "title_1": "Vamos",
+    "title_accent": "conversar",
+    "subtitle": "Tem um projeto em mente ou uma vaga aberta? Manda uma mensagem.",
+    "label_name": "Nome",
+    "label_email": "Email",
+    "label_message": "Mensagem",
+    "placeholder_name": "Seu nome",
+    "placeholder_email": "voce@email.com",
+    "placeholder_message": "Conta um pouco sobre o que você precisa…",
+    "btn_send": "Enviar mensagem →",
+    "btn_sent": "Mensagem enviada ✓",
+    "sent_feedback": "Obrigado! Retorno em breve.",
+    "side_title": "Onde me encontrar",
+    "side_text": "Prefere ir direto ao ponto? Me chama em uma dessas."
+  },
+  "footer": {
+    "nav_ecosystem": "Ecossistema",
+    "nav_projects": "Projetos",
+    "nav_github": "GitHub",
+    "nav_services": "Serviços",
+    "nav_contact": "Contato",
+    "aria_top": "Rayan — topo",
+    "aria_nav": "Navegação do rodapé",
+    "copyright": "© 2025 Rayan Morais · Construído com React, Vite & styled-components"
+  },
+  "github": {
+    "eyebrow": "05 · GitHub",
+    "title_1": "Atividade no",
+    "title_accent": "GitHub",
+    "stat_commits": "Commits no total",
+    "stat_repos": "Repositórios públicos",
+    "stat_streak": "Streak atual",
+    "stat_streak_suffix": " dias",
+    "stat_langs": "Linguagens principais",
+    "lang_title": "Linguagens mais usadas",
+    "lang_bar_aria": "Distribuição de linguagens",
+    "lang_others": "Outros"
+  },
+  "projects": {
+    "eyebrow": "04 · Projetos",
+    "title_accent": "Projetos",
+    "subtitle": "Projetos que construí — tecnologias usadas e onde vivem.",
+    "status_live": "No ar",
+    "status_done": "Concluído",
+    "private_repo": "Repositório privado",
+    "items": [
+      {
+        "description": "Portfólio pessoal bilíngue (PT-BR/EN) construído em React + Vite com Styled Components, framer-motion e i18n — dark mode, animações de scroll e deploy na Vercel."
+      },
+      {
+        "description": "Plataforma de filmes no estilo Netflix, com navegação por categorias e busca, consumindo uma API REST."
+      },
+      {
+        "description": "Timer Pomodoro com ciclos persistentes, histórico de foco e temas claro/escuro."
+      },
+      {
+        "description": "E-commerce de roupas com catálogo, carrinho e autenticação, apoiado por uma API Node + MongoDB."
+      },
+      {
+        "description": "App mobile em React Native que registra e visualiza trajetos com rastreamento por mapa em tempo real."
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "06 · Serviços",
+    "title_1": "O que eu",
+    "title_accent": "faço",
+    "subtitle": "Do conceito ao deploy — alguns dos serviços que ofereço.",
+    "items": [
+      {
+        "title": "Desenvolvimento Full-Stack",
+        "description": "Aplicações web completas em React e Node, do banco de dados à interface, escaláveis e prontas para produção.",
+        "tags": ["React", "Node.js", "TypeScript"]
+      },
+      {
+        "title": "API & Backend",
+        "description": "APIs REST seguras com autenticação, modelagem de dados e integrações — construídas para crescer com o produto.",
+        "tags": ["Express", "PostgreSQL", "MongoDB"]
+      },
+      {
+        "title": "UI/UX com Figma",
+        "description": "Do wireframe ao protótipo de alta fidelidade, com foco em hierarquia, espaçamento e detalhes que importam.",
+        "tags": ["Figma", "Design System", "Protótipo"]
+      },
+      {
+        "title": "Deploy & DevOps",
+        "description": "Publicação contínua, ambientes de preview e monitoramento — para que cada commit chegue ao ar sem fricção.",
+        "tags": ["Vercel", "CI/CD", "Git Flow"]
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "07 · Depoimentos",
+    "title_1": "O que dizem",
+    "title_accent": "por aí",
+    "subtitle": "Pessoas com quem trabalhei — em projetos e no dia a dia.",
+    "items": [
+      {
+        "quote": "O Rayan entregou nosso e-commerce antes do prazo e com um cuidado de design que a gente não esperava de um dev. Virou referência no time.",
+        "role": "Product Manager · Lux Lab Brasil"
+      },
+      {
+        "quote": "Trabalhei com ele no backend da plataforma de cupons. Código limpo, comunicação clara e zero drama em produção. Recomendo de olhos fechados.",
+        "role": "Tech Lead · CupomManiac"
+      },
+      {
+        "quote": "Contratamos o Rayan para um app em React Native e ele cuidou de tudo, da UX ao deploy. Profissional raro de achar por aqui.",
+        "role": "Fundadora · Startup de mobilidade"
+      }
+    ]
   }
 }

@@ -1,17 +1,13 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    Footer — wordmark + nav links + copyright. React + styled-components.
    Tokens via CSS custom properties with hex fallbacks. No new dependencies.
    ========================================================================== */
 
-const NAV_LINKS: { label: string; href: string }[] = [
-  { label: "Ecossistema", href: "#ecosystem" },
-  { label: "Projetos", href: "#projects" },
-  { label: "GitHub", href: "#github" },
-  { label: "Serviços", href: "#services" },
-  { label: "Contato", href: "#contact" },
-];
+const NAV_HREFS = ["#ecosystem", "#projects", "#github", "#services", "#contact"];
+const NAV_KEYS = ["nav_ecosystem", "nav_projects", "nav_github", "nav_services", "nav_contact"] as const;
 
 const Wrap = styled.footer`
   position: relative;
@@ -74,6 +70,8 @@ const Copy = styled.span`
 `;
 
 export function Footer() {
+  const { t } = useTranslation('home');
+
   const scrollTop = (e: React.MouseEvent) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -82,21 +80,19 @@ export function Footer() {
   return (
     <Wrap>
       <Inner>
-        <Wordmark href="#home" onClick={scrollTop} aria-label="Rayan — topo">
+        <Wordmark href="#home" onClick={scrollTop} aria-label={t('footer.aria_top')}>
           RAYAN<span className="dot">.</span>
         </Wordmark>
 
-        <Nav aria-label="Navegação do rodapé">
-          {NAV_LINKS.map((l) => (
-            <NavLink key={l.href} href={l.href}>
-              {l.label}
+        <Nav aria-label={t('footer.aria_nav')}>
+          {NAV_KEYS.map((key, i) => (
+            <NavLink key={NAV_HREFS[i]} href={NAV_HREFS[i]}>
+              {t(`footer.${key}`)}
             </NavLink>
           ))}
         </Nav>
 
-        <Copy>
-          © 2025 Rayan Morais · Construído com React, Vite &amp; styled-components
-        </Copy>
+        <Copy>{t('footer.copyright')}</Copy>
       </Inner>
     </Wrap>
   );

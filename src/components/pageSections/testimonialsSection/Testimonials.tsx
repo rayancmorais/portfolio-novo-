@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import styled, { css } from "styled-components";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    Testimonials — fictional peer/client quotes. Grid 3 cols.
@@ -8,40 +9,11 @@ import { motion, useInView, useReducedMotion, type Variants } from "framer-motio
    Tokens via CSS custom properties with hex fallbacks. No new dependencies.
    ========================================================================== */
 
-interface Testimonial {
-  id: string;
-  quote: string;
-  name: string;
-  role: string;
-  initials: string;
-}
-
-const TESTIMONIALS: Testimonial[] = [
-  {
-    id: "t1",
-    quote:
-      "O Rayan entregou nosso e-commerce antes do prazo e com um cuidado de design que a gente não esperava de um dev. Virou referência no time.",
-    name: "Mariana Lopes",
-    role: "Product Manager · Lux Lab Brasil",
-    initials: "ML",
-  },
-  {
-    id: "t2",
-    quote:
-      "Trabalhei com ele no backend da plataforma de cupons. Código limpo, comunicação clara e zero drama em produção. Recomendo de olhos fechados.",
-    name: "Bruno Carvalho",
-    role: "Tech Lead · CupomManiac",
-    initials: "BC",
-  },
-  {
-    id: "t3",
-    quote:
-      "Contratamos o Rayan para um app em React Native e ele cuidou de tudo, da UX ao deploy. Profissional raro de achar por aqui.",
-    name: "Camila Andrade",
-    role: "Fundadora · Startup de mobilidade",
-    initials: "CA",
-  },
-];
+const TESTIMONIALS_BASE = [
+  { id: "t1", name: "Mariana Lopes", initials: "ML" },
+  { id: "t2", name: "Bruno Carvalho", initials: "BC" },
+  { id: "t3", name: "Camila Andrade", initials: "CA" },
+] as const;
 
 const containerVariants: Variants = {
   hidden: {},
@@ -229,21 +201,22 @@ const Role = styled.span`
 `;
 
 export function Testimonials() {
+  const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px 0px" });
   const reduce = useReducedMotion();
+
+  const items = t('testimonials.items', { returnObjects: true }) as Array<{ quote: string; role: string }>;
 
   return (
     <Section id="testimonials" aria-labelledby="testimonials-title">
       <Inner>
         <Header>
-          <Eyebrow>07 · Depoimentos</Eyebrow>
+          <Eyebrow>{t('testimonials.eyebrow')}</Eyebrow>
           <Title id="testimonials-title">
-            O que dizem por <em>aí</em>
+            {t('testimonials.title_1')} <em>{t('testimonials.title_accent')}</em>
           </Title>
-          <Subtitle>
-            Pessoas com quem trabalhei — em projetos e no dia a dia.
-          </Subtitle>
+          <Subtitle>{t('testimonials.subtitle')}</Subtitle>
         </Header>
 
         <Grid
@@ -252,17 +225,17 @@ export function Testimonials() {
           initial={reduce ? false : "hidden"}
           animate={reduce ? undefined : inView ? "show" : "hidden"}
         >
-          {TESTIMONIALS.map((t) => (
-            <Card key={t.id} variants={reduce ? undefined : cardVariants}>
+          {TESTIMONIALS_BASE.map((base, i) => (
+            <Card key={base.id} variants={reduce ? undefined : cardVariants}>
               <span className="brk-tr" aria-hidden="true" />
               <span className="brk-bl" aria-hidden="true" />
               <Mark aria-hidden="true">&ldquo;</Mark>
-              <Quote>{t.quote}</Quote>
+              <Quote>{items[i]?.quote ?? ''}</Quote>
               <Person>
-                <Avatar aria-hidden="true">{t.initials}</Avatar>
+                <Avatar aria-hidden="true">{base.initials}</Avatar>
                 <span>
-                  <Name>{t.name}</Name>
-                  <Role>{t.role}</Role>
+                  <Name>{base.name}</Name>
+                  <Role>{items[i]?.role ?? ''}</Role>
                 </span>
               </Person>
             </Card>

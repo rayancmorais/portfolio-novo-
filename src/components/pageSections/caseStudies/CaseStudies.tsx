@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /* ============================================================================
    CaseStudies — Estudos de Caso (production port of the js/CaseStudies.jsx
@@ -18,83 +19,46 @@ import { motion, useInView, useReducedMotion, type Variants } from "framer-motio
 
 /* ---------------------------------------------------------------- data ---- */
 
-interface CaseStudy {
+interface CaseStudyBase {
   no: string;
   title: string;
-  kind: string;
   year: string;
-  domain: string;          // browser-chrome filename
+  domain: string;
   image?: string;
-  problem: string;
-  approach: string;
-  result: string;
   stack: string[];
   link?: string;
-  metrics: [string, string][];
+  metric_values: string[];
 }
 
-const CASES: CaseStudy[] = [
+const CASES_BASE: CaseStudyBase[] = [
   {
     no: "01",
     title: "CupomManiac",
-    kind: "Plataforma de cupons",
     year: "2025",
     domain: "cupommaniac.com.br",
     image: "/assets/cases/cupommaniac.png",
-    problem:
-      "O mercado brasileiro de cupons é cheio de sites lentos e desatualizados — faltava uma plataforma rápida, com lojas reais e uma comunidade ativa em torno das ofertas.",
-    approach:
-      "Construí em Next.js 15 com PostgreSQL + Prisma, login via Google OAuth, sistema de comentários por cupom e um seed de produção para popular lojas e ofertas desde o primeiro deploy.",
-    result:
-      "Uma plataforma no ar, com lojas cadastradas, cupons comentáveis e autenticação social — pronta para escalar a base de usuários.",
     stack: ["Next.js 15", "PostgreSQL", "Prisma", "Google OAuth", "Vercel"],
     link: "https://cupommaniac.com.br",
-    metrics: [
-      ["OAuth", "login social"],
-      ["100%", "SSR + seed"],
-      ["∞", "lojas cadastradas"],
-    ],
+    metric_values: ["OAuth", "100%", "∞"],
   },
   {
     no: "02",
     title: "Crash Game",
-    kind: "Jungle Gaming Challenge",
     year: "2025",
     domain: "jungle-gaming.app",
     image: "/assets/cases/crash-game.png",
-    problem:
-      "Um jogo crash em tempo real só ganha a confiança do jogador se cada rodada puder ser verificada — não basta prometer que o resultado é justo.",
-    approach:
-      "Implementei um algoritmo provably fair com hash criptográfico por rodada e sincronizei todos os clientes via WebSocket, mantendo o multiplicador idêntico em tempo real para todo mundo.",
-    result:
-      "Cada resultado é reproduzível e auditável pelo próprio jogador, com a curva do multiplicador transmitida ao vivo, sem divergência entre as sessões.",
     stack: ["Node.js", "WebSocket", "Provably Fair", "React"],
     link: "https://github.com/rayancmorais/fullstack-challengeRayancm",
-    metrics: [
-      ["100%", "verificável"],
-      ["RT", "via WebSocket"],
-      ["1", "fonte de verdade"],
-    ],
+    metric_values: ["100%", "RT", "1"],
   },
   {
     no: "03",
     title: "BR Dropshipping",
-    kind: "Lux Lab Brasil · e-commerce",
     year: "2024",
     domain: "luxlabbrasil.com.br",
     image: "/assets/cases/brdropshipping.png",
-    problem:
-      "Lojas de dropshipping no Brasil esbarram no checkout: gateways internacionais quebram a conversão e a gestão de catálogo com fornecedores locais costuma ser manual.",
-    approach:
-      "Montei a loja em Next.js com checkout nacional via Stripe e integração direta com fornecedores BR, automatizando a sincronização de catálogo e o fluxo de pedidos.",
-    result:
-      "Um e-commerce com pagamento nacional ponta a ponta e catálogo gerido de forma integrada — menos trabalho manual e checkout pensado para o cliente brasileiro.",
     stack: ["Next.js", "Stripe", "Fornecedores BR"],
-    metrics: [
-      ["BR", "checkout nacional"],
-      ["Auto", "sync de catálogo"],
-      ["E2E", "fluxo de pedidos"],
-    ],
+    metric_values: ["BR", "Auto", "E2E"],
   },
 ];
 
@@ -498,13 +462,28 @@ const Private = styled.span`
 
 /* ---------------------------------------------------------- subcomponent -- */
 
-function CaseRow({ c, i, reduce }: { c: CaseStudy; i: number; reduce: boolean }) {
+interface CaseRowProps {
+  base: CaseStudyBase;
+  i: number;
+  reduce: boolean;
+  lProblem: string;
+  lApproach: string;
+  lResult: string;
+  kind: string;
+  problemText: string;
+  approachText: string;
+  resultText: string;
+  metric_labels: string[];
+  visit_site: string;
+  private_repo: string;
+}
+
+function CaseRow({ base: c, i, reduce, lProblem, lApproach, lResult, kind, problemText, approachText, resultText, metric_labels, visit_site, private_repo }: CaseRowProps) {
   const flip = i % 2 === 1;
   const imgRef = useParallax(28);
 
   return (
     <Row $flip={flip} variants={reduce ? undefined : rowVariants}>
-      {/* screenshot */}
       <Col variants={reduce ? undefined : itemVariants}>
         <Frame>
           <span className="brk-tr" aria-hidden="true" />
@@ -534,7 +513,6 @@ function CaseRow({ c, i, reduce }: { c: CaseStudy; i: number; reduce: boolean })
         </Frame>
       </Col>
 
-      {/* copy */}
       <Col variants={reduce ? undefined : itemVariants}>
         <Copy>
           <Heading>
@@ -542,31 +520,31 @@ function CaseRow({ c, i, reduce }: { c: CaseStudy; i: number; reduce: boolean })
             <div>
               <CaseTitle>{c.title}</CaseTitle>
               <Kind>
-                {c.kind} · {c.year}
+                {kind} · {c.year}
               </Kind>
             </div>
           </Heading>
 
           <Blocks>
             <Block>
-              <BlockLabel>Problema</BlockLabel>
-              <BlockText>{c.problem}</BlockText>
+              <BlockLabel>{lProblem}</BlockLabel>
+              <BlockText>{problemText}</BlockText>
             </Block>
             <Block>
-              <BlockLabel>Abordagem</BlockLabel>
-              <BlockText>{c.approach}</BlockText>
+              <BlockLabel>{lApproach}</BlockLabel>
+              <BlockText>{approachText}</BlockText>
             </Block>
             <Block>
-              <BlockLabel>Resultado</BlockLabel>
-              <BlockText>{c.result}</BlockText>
+              <BlockLabel>{lResult}</BlockLabel>
+              <BlockText>{resultText}</BlockText>
             </Block>
           </Blocks>
 
           <Metrics>
-            {c.metrics.map(([v, l]) => (
-              <Metric key={l}>
+            {c.metric_values.map((v, idx) => (
+              <Metric key={idx}>
                 <MetricValue>{v}</MetricValue>
-                <MetricLabel>{l}</MetricLabel>
+                <MetricLabel>{metric_labels[idx]}</MetricLabel>
               </Metric>
             ))}
           </Metrics>
@@ -579,10 +557,10 @@ function CaseRow({ c, i, reduce }: { c: CaseStudy; i: number; reduce: boolean })
 
           {c.link ? (
             <Ghost href={c.link} target="_blank" rel="noopener noreferrer">
-              Visitar site →
+              {visit_site}
             </Ghost>
           ) : (
-            <Private>Repositório privado</Private>
+            <Private>{private_repo}</Private>
           )}
         </Copy>
       </Col>
@@ -593,9 +571,14 @@ function CaseRow({ c, i, reduce }: { c: CaseStudy; i: number; reduce: boolean })
 /* ---------------------------------------------------------- component ---- */
 
 export function CaseStudies() {
+  const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px 0px" });
   const reduce = useReducedMotion();
+
+  const items = t('caseStudies.items', { returnObjects: true }) as Array<{
+    kind: string; problem: string; approach: string; result: string; metric_labels: string[];
+  }>;
 
   return (
     <Section id="work" aria-labelledby="work-title">
@@ -606,14 +589,11 @@ export function CaseStudies() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 360, damping: 30 }}
         >
-          <Eyebrow>03 · Selected Work</Eyebrow>
+          <Eyebrow>{t('caseStudies.eyebrow')}</Eyebrow>
           <Title id="work-title">
-            Estudos de <em>Caso</em>
+            {t('caseStudies.title_1')} <em>{t('caseStudies.title_accent')}</em>
           </Title>
-          <Subtitle>
-            Alguns builds, contados do jeito que eu penso neles — problema,
-            abordagem, resultado.
-          </Subtitle>
+          <Subtitle>{t('caseStudies.subtitle')}</Subtitle>
         </Header>
 
         <Rows
@@ -623,8 +603,23 @@ export function CaseStudies() {
           initial={reduce ? false : "hidden"}
           animate={reduce ? undefined : inView ? "show" : "hidden"}
         >
-          {CASES.map((c, i) => (
-            <CaseRow key={c.no} c={c} i={i} reduce={!!reduce} />
+          {CASES_BASE.map((c, i) => (
+            <CaseRow
+              key={c.no}
+              base={c}
+              i={i}
+              reduce={!!reduce}
+              lProblem={t('caseStudies.label_problem')}
+              lApproach={t('caseStudies.label_approach')}
+              lResult={t('caseStudies.label_result')}
+              kind={items[i]?.kind ?? ''}
+              problemText={items[i]?.problem ?? ''}
+              approachText={items[i]?.approach ?? ''}
+              resultText={items[i]?.result ?? ''}
+              metric_labels={items[i]?.metric_labels ?? []}
+              visit_site={t('caseStudies.visit_site')}
+              private_repo={t('caseStudies.private_repo')}
+            />
           ))}
         </Rows>
       </Inner>
