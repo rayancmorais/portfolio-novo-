@@ -1,13 +1,19 @@
-import styled from "styled-components";
-import { useTranslation } from "react-i18next";
+import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    Footer — wordmark + nav links + copyright. React + styled-components.
    Tokens via CSS custom properties with hex fallbacks. No new dependencies.
    ========================================================================== */
 
-const NAV_HREFS = ["#ecosystem", "#projects", "#github", "#services", "#contact"];
-const NAV_KEYS = ["nav_ecosystem", "nav_projects", "nav_github", "nav_services", "nav_contact"] as const;
+const NAV_HREFS = ['#ecosystem', '#projects', '#github', '#services', '#contact'];
+const NAV_KEYS = [
+  'nav_ecosystem',
+  'nav_projects',
+  'nav_github',
+  'nav_services',
+  'nav_contact',
+] as const;
 
 const Wrap = styled.footer`
   position: relative;
@@ -29,14 +35,16 @@ const Wordmark = styled.a`
   display: inline-flex;
   align-items: baseline;
   gap: 1px;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   color: var(--fg-1, #e6e8ee);
   text-decoration: none;
 
-  span.dot { color: var(--cy, #00f5d4); }
+  span.dot {
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Nav = styled.nav`
@@ -46,7 +54,7 @@ const Nav = styled.nav`
 `;
 
 const NavLink = styled.a`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -54,11 +62,13 @@ const NavLink = styled.a`
   text-decoration: none;
   transition: color 0.2s ease;
 
-  &:hover { color: var(--cy, #00f5d4); }
+  &:hover {
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Copy = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
   letter-spacing: 0.06em;
   color: var(--fg-4, #545b6b);
@@ -74,7 +84,7 @@ export function Footer() {
 
   const scrollTop = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

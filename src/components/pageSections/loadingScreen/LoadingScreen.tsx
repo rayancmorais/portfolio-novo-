@@ -14,25 +14,28 @@ const LOGS = [
   { text: '> Portfolio ready — welcome 🚀', done: true },
 ];
 
-const STEP  = 380;
+const STEP = 380;
 const TOTAL = LOGS.length * STEP + 400;
 
 /* ── component ─────────────────────────────────────────────────────────────── */
 
 export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
   const [visibleLogs, setVisibleLogs] = useState(0);
-  const [progress, setProgress]       = useState(0);
-  const [exiting, setExiting]         = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     LOGS.forEach((_, i) => {
       timers.push(
-        setTimeout(() => {
-          setVisibleLogs(i + 1);
-          setProgress(Math.round(((i + 1) / LOGS.length) * 100));
-        }, i * STEP + 200)
+        setTimeout(
+          () => {
+            setVisibleLogs(i + 1);
+            setProgress(Math.round(((i + 1) / LOGS.length) * 100));
+          },
+          i * STEP + 200
+        )
       );
     });
 
@@ -103,11 +106,11 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.22 }}
                   style={{
-                    fontFamily:    "var(--mono, 'JetBrains Mono', monospace)",
-                    fontSize:      '0.68rem',
-                    lineHeight:    1.85,
-                    color:         log.done ? '#4ade80' : 'var(--fg-2, #8b93a7)',
-                    whiteSpace:    'nowrap',
+                    fontFamily: "var(--mono, 'JetBrains Mono', monospace)",
+                    fontSize: '0.68rem',
+                    lineHeight: 1.85,
+                    color: log.done ? '#4ade80' : 'var(--fg-2, #8b93a7)',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {log.text}
@@ -160,16 +163,16 @@ const Aurora = styled.div`
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 65% 55% at 25% 35%, rgba(62,127,233,0.13) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 45% at 78% 70%, rgba(0,229,204,0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 35% 35% at 60% 10%, rgba(0,229,204,0.06) 0%, transparent 55%);
+    radial-gradient(ellipse 65% 55% at 25% 35%, rgba(62, 127, 233, 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 78% 70%, rgba(0, 229, 204, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 35% 35% at 60% 10%, rgba(0, 229, 204, 0.06) 0%, transparent 55%);
 `;
 
 const Dots = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(0,229,204,0.07) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 229, 204, 0.07) 1px, transparent 1px);
   background-size: 36px 36px;
   mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
 `;
@@ -213,7 +216,7 @@ const SpinArc = styled.div`
   background: conic-gradient(
     from 0deg,
     #00e5cc 0deg,
-    rgba(0,229,204,0.35) 65deg,
+    rgba(0, 229, 204, 0.35) 65deg,
     transparent 115deg,
     transparent 360deg
   );
@@ -241,8 +244,17 @@ const ScanLine = styled.div`
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #00e5cc 40%, #5cf3e3 50%, #00e5cc 60%, transparent 100%);
-  box-shadow: 0 0 10px rgba(0,229,204,0.8), 0 0 4px rgba(0,229,204,0.4);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #00e5cc 40%,
+    #5cf3e3 50%,
+    #00e5cc 60%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px rgba(0, 229, 204, 0.8),
+    0 0 4px rgba(0, 229, 204, 0.4);
   z-index: 2;
   animation: ${scan} 0.9s cubic-bezier(0.4, 0, 0.6, 1) 0.5s both;
 `;
@@ -317,5 +329,5 @@ const ProgressFill = styled.div`
   height: 100%;
   transform-origin: left center;
   background: linear-gradient(90deg, #00e5cc 0%, #5cf3e3 100%);
-  box-shadow: 0 0 10px rgba(0,229,204,0.55);
+  box-shadow: 0 0 10px rgba(0, 229, 204, 0.55);
 `;

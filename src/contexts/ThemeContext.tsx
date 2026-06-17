@@ -25,16 +25,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, [theme]);
 
   const toggleTheme = useCallback(() => {
-    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+    setTheme(t => (t === 'dark' ? 'light' : 'dark'));
   }, []);
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 }
 
+// hooks de contexto exportados junto com o Provider é padrão React
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme(): ThemeContextValue {
   const ctx = useContext(ThemeContext);
   if (!ctx) throw new Error('useTheme must be used inside ThemeProvider');

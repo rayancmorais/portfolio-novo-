@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import styled, { keyframes, css } from "styled-components";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { useRef } from 'react';
+import styled, { keyframes, css } from 'styled-components';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    Projects — "repository"-style project grid for the Rayan Morais portfolio.
@@ -16,62 +16,62 @@ import { useTranslation } from "react-i18next";
 
 /* ---------------------------------------------------------------- data ---- */
 
-type Status = "live" | "done";
+type Status = 'live' | 'done';
 
 interface Project {
   id: string;
-  label: string;            // "P·01"
-  repo: string;             // owner/repo path
+  label: string; // "P·01"
+  repo: string; // owner/repo path
   title: string;
   status: Status;
   description: string;
   stack: string[];
-  link?: string;            // external link, rendered only when present
+  link?: string; // external link, rendered only when present
 }
 
 const PROJECTS_BASE: Omit<Project, 'description'>[] = [
   {
-    id: "portfolio",
-    label: "P·01",
-    repo: "rayancmorais / portfolio",
-    title: "Portfolio Landing Page",
-    status: "live",
-    stack: ["React", "Vite", "TypeScript", "Styled Components", "Framer Motion", "i18next"],
-    link: "https://portfolio-novo-omega.vercel.app",
+    id: 'portfolio',
+    label: 'P·01',
+    repo: 'rayancmorais / portfolio',
+    title: 'Portfolio Landing Page',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Styled Components', 'Framer Motion', 'i18next'],
+    link: 'https://portfolio-novo-omega.vercel.app',
   },
   {
-    id: "movideux",
-    label: "P·02",
-    repo: "rayancmorais / movideux",
-    title: "Movideux",
-    status: "done",
-    stack: ["React", "Node.js", "React Router"],
-    link: "https://moviedeux.vercel.app",
+    id: 'movideux',
+    label: 'P·02',
+    repo: 'rayancmorais / movideux',
+    title: 'Movideux',
+    status: 'done',
+    stack: ['React', 'Node.js', 'React Router'],
+    link: 'https://moviedeux.vercel.app',
   },
   {
-    id: "chronos",
-    label: "P·03",
-    repo: "rayancmorais / chronos-pomodoro",
-    title: "Chronos",
-    status: "done",
-    stack: ["React", "Node.js", "TypeScript"],
+    id: 'chronos',
+    label: 'P·03',
+    repo: 'rayancmorais / chronos-pomodoro',
+    title: 'Chronos',
+    status: 'done',
+    stack: ['React', 'Node.js', 'TypeScript'],
   },
   {
-    id: "iclothes",
-    label: "P·04",
-    repo: "rayancmorais / iclothes",
-    title: "iClothes E-commerce",
-    status: "done",
-    stack: ["React", "Node.js", "MongoDB"],
-    link: "https://iclothes.vercel.app",
+    id: 'iclothes',
+    label: 'P·04',
+    repo: 'rayancmorais / iclothes',
+    title: 'iClothes E-commerce',
+    status: 'done',
+    stack: ['React', 'Node.js', 'MongoDB'],
+    link: 'https://iclothes.vercel.app',
   },
   {
-    id: "map-tracker",
-    label: "P·05",
-    repo: "rayancmorais / map-tracker",
-    title: "Map Tracker",
-    status: "done",
-    stack: ["React Native"],
+    id: 'map-tracker',
+    label: 'P·05',
+    repo: 'rayancmorais / map-tracker',
+    title: 'Map Tracker',
+    status: 'done',
+    stack: ['React Native'],
   },
 ];
 
@@ -83,13 +83,13 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 44, scale: 0.96, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 44, scale: 0.96, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 360, damping: 30 },
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 360, damping: 30 },
   },
 };
 
@@ -117,7 +117,7 @@ const Header = styled.div`
 
 const Eyebrow = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.32em;
@@ -126,7 +126,7 @@ const Eyebrow = styled.span`
 `;
 
 const Title = styled.h2`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -135,11 +135,14 @@ const Title = styled.h2`
   color: var(--fg-1, #e6e8ee);
   margin: 0.7rem 0 0.6rem;
 
-  em { font-style: italic; color: var(--cy, #00f5d4); }
+  em {
+    font-style: italic;
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Subtitle = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 1rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.6;
@@ -169,13 +172,37 @@ const Bracket = styled.span`
   opacity: 0;
   pointer-events: none;
   z-index: 5;
-  transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease,
-    right 0.3s ease, bottom 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    top 0.3s ease,
+    left 0.3s ease,
+    right 0.3s ease,
+    bottom 0.3s ease;
 
-  &[data-c="tl"] { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  &[data-c="tr"] { top: 9px; right: 9px; border-left: none; border-bottom: none; }
-  &[data-c="bl"] { bottom: 9px; left: 9px; border-right: none; border-top: none; }
-  &[data-c="br"] { bottom: 9px; right: 9px; border-left: none; border-top: none; }
+  &[data-c='tl'] {
+    top: 9px;
+    left: 9px;
+    border-right: none;
+    border-bottom: none;
+  }
+  &[data-c='tr'] {
+    top: 9px;
+    right: 9px;
+    border-left: none;
+    border-bottom: none;
+  }
+  &[data-c='bl'] {
+    bottom: 9px;
+    left: 9px;
+    border-right: none;
+    border-top: none;
+  }
+  &[data-c='br'] {
+    bottom: 9px;
+    right: 9px;
+    border-left: none;
+    border-top: none;
+  }
 `;
 
 const Card = styled(motion.article)`
@@ -191,11 +218,14 @@ const Card = styled(motion.article)`
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 
   /* thin top accent rail that grows on hover — the "project" signature */
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -208,19 +238,43 @@ const Card = styled(motion.article)`
 
   &:hover {
     border-color: var(--cy-35, rgba(0, 245, 212, 0.35));
-    box-shadow: 0 0 0 1px rgba(0, 245, 212, 0.14), 0 24px 60px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      0 0 0 1px rgba(0, 245, 212, 0.14),
+      0 24px 60px rgba(0, 0, 0, 0.6);
     transform: translateY(-6px);
   }
-  &:hover::after { width: 100%; }
+  &:hover::after {
+    width: 100%;
+  }
 
-  &:hover ${Bracket}[data-c="tl"] { top: 14px; left: 14px; opacity: 0.9; }
-  &:hover ${Bracket}[data-c="tr"] { top: 14px; right: 14px; opacity: 0.9; }
-  &:hover ${Bracket}[data-c="bl"] { bottom: 14px; left: 14px; opacity: 0.9; }
-  &:hover ${Bracket}[data-c="br"] { bottom: 14px; right: 14px; opacity: 0.9; }
+  &:hover ${Bracket}[data-c="tl"] {
+    top: 14px;
+    left: 14px;
+    opacity: 0.9;
+  }
+  &:hover ${Bracket}[data-c="tr"] {
+    top: 14px;
+    right: 14px;
+    opacity: 0.9;
+  }
+  &:hover ${Bracket}[data-c="bl"] {
+    bottom: 14px;
+    left: 14px;
+    opacity: 0.9;
+  }
+  &:hover ${Bracket}[data-c="br"] {
+    bottom: 14px;
+    right: 14px;
+    opacity: 0.9;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
-    &::after { transition: none; }
+    &:hover {
+      transform: none;
+    }
+    &::after {
+      transition: none;
+    }
   }
 `;
 
@@ -239,7 +293,7 @@ const RepoMeta = styled.div`
 `;
 
 const Mark = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--cy, #00f5d4);
@@ -247,7 +301,7 @@ const Mark = styled.span`
 `;
 
 const RepoPath = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.7rem;
   letter-spacing: 0.02em;
   color: var(--fg-4, #545b6b);
@@ -257,7 +311,7 @@ const RepoPath = styled.span`
 `;
 
 const Label = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
   font-weight: 500;
   letter-spacing: 0.2em;
@@ -274,7 +328,7 @@ const StatusBadge = styled.span<{ $status: Status }>`
   align-items: center;
   gap: 7px;
   align-self: flex-start;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.64rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -283,7 +337,7 @@ const StatusBadge = styled.span<{ $status: Status }>`
   border-radius: 100px;
 
   ${({ $status }) =>
-    $status === "live"
+    $status === 'live'
       ? css`
           color: var(--success, #4ade80);
           background: var(--success-bg, rgba(74, 222, 128, 0.1));
@@ -301,16 +355,17 @@ const Dot = styled.span<{ $status: Status; $reduce: boolean }>`
   height: 7px;
   border-radius: 50%;
   background: ${({ $status }) =>
-    $status === "live" ? "var(--success, #4ade80)" : "var(--cy, #00f5d4)"};
+    $status === 'live' ? 'var(--success, #4ade80)' : 'var(--cy, #00f5d4)'};
   ${({ $status, $reduce }) =>
-    $status === "live" && !$reduce &&
+    $status === 'live' &&
+    !$reduce &&
     css`
       animation: ${pulse} 2s ease-in-out infinite;
     `}
 `;
 
 const CardTitle = styled.h3`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1.75rem;
@@ -320,7 +375,7 @@ const CardTitle = styled.h3`
 `;
 
 const Description = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.9rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.7;
@@ -336,7 +391,7 @@ const Stack = styled.div`
 `;
 
 const Tag = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.68rem;
   letter-spacing: 0.02em;
   color: var(--fg-2, #8b93a7);
@@ -358,12 +413,14 @@ const RepoLink = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.74rem;
   letter-spacing: 0.02em;
   color: var(--fg-1, #e6e8ee);
   text-decoration: none;
-  transition: color 0.2s ease, gap 0.2s ease;
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
 
   &:hover {
     color: var(--cy, #00f5d4);
@@ -372,7 +429,7 @@ const RepoLink = styled.a`
 `;
 
 const NoLink = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   letter-spacing: 0.02em;
   color: var(--fg-4, #545b6b);
@@ -383,7 +440,7 @@ const NoLink = styled.span`
 export function Projects() {
   const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+  const inView = useInView(ref, { once: true, margin: '-80px 0px' });
   const reduce = useReducedMotion();
 
   const items = t('projects.items', { returnObjects: true }) as Array<{ description: string }>;
@@ -392,8 +449,7 @@ export function Projects() {
     done: t('projects.status_done'),
   };
 
-  const prettyHost = (url: string) =>
-    url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const prettyHost = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   return (
     <Section id="projects" aria-labelledby="projects-title">
@@ -409,8 +465,8 @@ export function Projects() {
         <Grid
           ref={ref}
           variants={reduce ? undefined : containerVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : inView ? "show" : "hidden"}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
           {PROJECTS_BASE.map((p, i) => (
             <Card key={p.id} variants={reduce ? undefined : cardVariants}>
@@ -436,7 +492,7 @@ export function Projects() {
               <Description>{items[i]?.description ?? ''}</Description>
 
               <Stack>
-                {p.stack.map((tech) => (
+                {p.stack.map(tech => (
                   <Tag key={tech}>{tech}</Tag>
                 ))}
               </Stack>

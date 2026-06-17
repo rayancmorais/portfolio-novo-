@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import styled, { css } from "styled-components";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { useRef } from 'react';
+import styled, { css } from 'styled-components';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    Services — what Rayan offers. Grid 2×2. Eyebrow "06 · Serviços".
@@ -18,8 +18,8 @@ interface Service {
   tags: string[];
 }
 
-const SERVICES_GLYPHS = ["</>", "{ }", "▣", "▲"] as const;
-const SERVICES_IDS = ["fullstack", "api", "design", "devops"] as const;
+const SERVICES_GLYPHS = ['</>', '{ }', '▣', '▲'] as const;
+const SERVICES_IDS = ['fullstack', 'api', 'design', 'devops'] as const;
 
 const containerVariants: Variants = {
   hidden: {},
@@ -27,13 +27,13 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.96, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 40, scale: 0.96, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 360, damping: 30 },
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 360, damping: 30 },
   },
 };
 
@@ -54,7 +54,7 @@ const Header = styled.div`
 
 const Eyebrow = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.32em;
@@ -63,7 +63,7 @@ const Eyebrow = styled.span`
 `;
 
 const Title = styled.h2`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -72,11 +72,14 @@ const Title = styled.h2`
   color: var(--fg-1, #e6e8ee);
   margin: 0.7rem 0 0.6rem;
 
-  em { font-style: italic; color: var(--cy, #00f5d4); }
+  em {
+    font-style: italic;
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Subtitle = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 1rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.6;
@@ -99,7 +102,7 @@ const bracket = css`
   &::after,
   & > .brk-tr,
   & > .brk-bl {
-    content: "";
+    content: '';
     position: absolute;
     width: 13px;
     height: 13px;
@@ -107,17 +110,57 @@ const bracket = css`
     opacity: 0;
     pointer-events: none;
     z-index: 5;
-    transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease,
-      right 0.3s ease, bottom 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      top 0.3s ease,
+      left 0.3s ease,
+      right 0.3s ease,
+      bottom 0.3s ease;
   }
-  &::before { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  &::after { bottom: 9px; right: 9px; border-left: none; border-top: none; }
-  & > .brk-tr { top: 9px; right: 9px; border-left: none; border-bottom: none; }
-  & > .brk-bl { bottom: 9px; left: 9px; border-right: none; border-top: none; }
-  &:hover::before { top: 13px; left: 13px; opacity: 0.9; }
-  &:hover::after { bottom: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-tr { top: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-bl { bottom: 13px; left: 13px; opacity: 0.9; }
+  &::before {
+    top: 9px;
+    left: 9px;
+    border-right: none;
+    border-bottom: none;
+  }
+  &::after {
+    bottom: 9px;
+    right: 9px;
+    border-left: none;
+    border-top: none;
+  }
+  & > .brk-tr {
+    top: 9px;
+    right: 9px;
+    border-left: none;
+    border-bottom: none;
+  }
+  & > .brk-bl {
+    bottom: 9px;
+    left: 9px;
+    border-right: none;
+    border-top: none;
+  }
+  &:hover::before {
+    top: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
+  &:hover::after {
+    bottom: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-tr {
+    top: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-bl {
+    bottom: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
 `;
 
 const Card = styled(motion.article)`
@@ -133,16 +176,23 @@ const Card = styled(motion.article)`
   border-radius: var(--r-card, 16px);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     border-color: var(--cy-35, rgba(0, 245, 212, 0.35));
-    box-shadow: 0 0 0 1px rgba(0, 245, 212, 0.14), 0 24px 60px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      0 0 0 1px rgba(0, 245, 212, 0.14),
+      0 24px 60px rgba(0, 0, 0, 0.6);
     transform: translateY(-6px);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
+    &:hover {
+      transform: none;
+    }
   }
 `;
 
@@ -154,14 +204,14 @@ const IconWell = styled.span`
   border-radius: var(--r-icon, 12px);
   background: var(--cy-08, rgba(0, 245, 212, 0.08));
   border: 1px solid var(--cy-20, rgba(0, 245, 212, 0.2));
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--cy, #00f5d4);
 `;
 
 const CardTitle = styled.h3`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1.55rem;
@@ -171,7 +221,7 @@ const CardTitle = styled.h3`
 `;
 
 const Description = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.9rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.7;
@@ -188,7 +238,7 @@ const Tags = styled.div`
 `;
 
 const Tag = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.68rem;
   letter-spacing: 0.02em;
   color: var(--cy-bright, #5cf8e6);
@@ -201,7 +251,7 @@ const Tag = styled.span`
 export function Services() {
   const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+  const inView = useInView(ref, { once: true, margin: '-80px 0px' });
   const reduce = useReducedMotion();
 
   const items = t('services.items', { returnObjects: true }) as Service[];
@@ -225,10 +275,10 @@ export function Services() {
         <Grid
           ref={ref}
           variants={reduce ? undefined : containerVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : inView ? "show" : "hidden"}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
-          {SERVICES.map((s) => (
+          {SERVICES.map(s => (
             <Card key={s.id} variants={reduce ? undefined : cardVariants}>
               <span className="brk-tr" aria-hidden="true" />
               <span className="brk-bl" aria-hidden="true" />
@@ -236,7 +286,7 @@ export function Services() {
               <CardTitle>{s.title}</CardTitle>
               <Description>{s.description}</Description>
               <Tags>
-                {s.tags.map((tag) => (
+                {s.tags.map(tag => (
                   <Tag key={tag}>{tag}</Tag>
                 ))}
               </Tags>

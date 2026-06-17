@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const CV_URLS = {
   ptBR: '/pdf/Rayan_Morais_CV_PT_FullStack.pdf',
-  en:   '/pdf/Rayan_Morais_CV_Eng.pdf',
+  en: '/pdf/Rayan_Morais_CV_Eng.pdf',
 };
 
 /* ── keyframes ─────────────────────────────────────────────────────────────── */
@@ -48,15 +48,15 @@ const rainFall = keyframes`
 
 const FADE = {
   hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
-  show:   (i: number) => ({
+  show: (i: number) => ({
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
     transition: {
-      type:     'spring' as const,
+      type: 'spring' as const,
       stiffness: 380,
-      damping:   28,
-      delay:     i * 0.07,
+      damping: 28,
+      delay: i * 0.07,
     },
   }),
 };
@@ -78,7 +78,7 @@ const RAIN_LINES = Array.from({ length: 28 }, (_, i) => ({
   height: `${60 + ((i * 37) % 180)}px`,
   duration: `${5.5 + ((i * 0.27) % 7)}s`,
   delay: `${-((i * 0.41) % 6)}s`,
-  opacity: 0.05 + ((i % 8) * 0.025),
+  opacity: 0.05 + (i % 8) * 0.025,
 }));
 
 function RainBackground() {
@@ -104,9 +104,21 @@ function RainBackground() {
 /* ── marquee data ──────────────────────────────────────────────────────────── */
 
 const STACK = [
-  'React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL',
-  'Framer Motion', 'Fastify', 'NestJS', 'Docker', 'Supabase',
-  'Prisma', 'Vercel', 'GitHub Actions', 'Socket.io', 'Go',
+  'React',
+  'Next.js',
+  'Node.js',
+  'TypeScript',
+  'PostgreSQL',
+  'Framer Motion',
+  'Fastify',
+  'NestJS',
+  'Docker',
+  'Supabase',
+  'Prisma',
+  'Vercel',
+  'GitHub Actions',
+  'Socket.io',
+  'Go',
 ];
 
 /* ── spotlight helpers ─────────────────────────────────────────────────────── */
@@ -140,8 +152,14 @@ export function IntroSection() {
         <TopBar>
           <Anim i={0} inView={inView}>
             <TermChip>
-              <TermDots><i /><i /><i /></TermDots>
-              <TermText>rayan@dev&nbsp;:&nbsp;~$&nbsp;whoami<Caret>▋</Caret></TermText>
+              <TermDots>
+                <i />
+                <i />
+                <i />
+              </TermDots>
+              <TermText>
+                rayan@dev&nbsp;:&nbsp;~$&nbsp;whoami<Caret>▋</Caret>
+              </TermText>
             </TermChip>
           </Anim>
         </TopBar>
@@ -154,9 +172,15 @@ export function IntroSection() {
             </Anim>
 
             <HeadBlock>
-              <Anim i={3} inView={inView}><Line1>{t('hero.headline_1')}</Line1></Anim>
-              <Anim i={4} inView={inView}><Line2>{t('hero.headline_accent')},</Line2></Anim>
-              <Anim i={5} inView={inView}><Line3>{t('hero.headline_2')}</Line3></Anim>
+              <Anim i={3} inView={inView}>
+                <Line1>{t('hero.headline_1')}</Line1>
+              </Anim>
+              <Anim i={4} inView={inView}>
+                <Line2>{t('hero.headline_accent')},</Line2>
+              </Anim>
+              <Anim i={5} inView={inView}>
+                <Line3>{t('hero.headline_2')}</Line3>
+              </Anim>
             </HeadBlock>
 
             <Anim i={6} inView={inView}>
@@ -170,7 +194,9 @@ export function IntroSection() {
             <Anim i={8} inView={inView}>
               <CTAs>
                 <PrimaryBtn href="#work">{t('hero.cta_primary')}</PrimaryBtn>
-                <GhostBtn href={cvUrl} download target="_blank" rel="noopener noreferrer">{t('hero.cta_cv')}</GhostBtn>
+                <GhostBtn href={cvUrl} download target="_blank" rel="noopener noreferrer">
+                  {t('hero.cta_cv')}
+                </GhostBtn>
               </CTAs>
             </Anim>
           </HeadCol>
@@ -185,7 +211,10 @@ export function IntroSection() {
                 </AvatarFrame>
                 <AvatarName>{t('hero.name')}</AvatarName>
                 <AvatarRole>{t('hero.role')}</AvatarRole>
-                <AvailBadge><PulseDot />{t('hero.available')}</AvailBadge>
+                <AvailBadge>
+                  <PulseDot />
+                  {t('hero.available')}
+                </AvailBadge>
 
                 <InfoDivider />
 
@@ -230,16 +259,16 @@ const AuroraBg = styled.div`
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 60% at 15% 40%, rgba(62,127,233,0.11) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 50% at 85% 70%, rgba(0,229,204,0.09) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 55% 10%, rgba(0,229,204,0.06) 0%, transparent 55%);
+    radial-gradient(ellipse 70% 60% at 15% 40%, rgba(62, 127, 233, 0.11) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 85% 70%, rgba(0, 229, 204, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 55% 10%, rgba(0, 229, 204, 0.06) 0%, transparent 55%);
 `;
 
 const DotGrid = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(0,229,204,0.09) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 229, 204, 0.09) 1px, transparent 1px);
   background-size: 38px 38px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
 `;
@@ -313,9 +342,15 @@ const TermDots = styled.span`
     height: 9px;
     border-radius: 50%;
   }
-  i:nth-child(1) { background: #ff5f57; }
-  i:nth-child(2) { background: #febc2e; }
-  i:nth-child(3) { background: var(--cy); }
+  i:nth-child(1) {
+    background: #ff5f57;
+  }
+  i:nth-child(2) {
+    background: #febc2e;
+  }
+  i:nth-child(3) {
+    background: var(--cy);
+  }
 `;
 
 const TermText = styled.span`
@@ -438,8 +473,14 @@ const Bio = styled.p`
   color: var(--fg-2);
   max-width: 520px;
 
-  strong { color: var(--fg-1); font-weight: 600; }
-  em     { font-style: normal; color: var(--cy-bright); }
+  strong {
+    color: var(--fg-1);
+    font-weight: 600;
+  }
+  em {
+    font-style: normal;
+    color: var(--cy-bright);
+  }
 `;
 
 const CTAs = styled.div`
@@ -459,7 +500,10 @@ const PrimaryBtn = styled.a`
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
-  transition: transform .2s var(--ease), background .2s, box-shadow .2s;
+  transition:
+    transform 0.2s var(--ease),
+    background 0.2s,
+    box-shadow 0.2s;
 
   &:hover {
     transform: translateY(-2px);
@@ -480,7 +524,10 @@ const GhostBtn = styled.a`
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
-  transition: transform .2s var(--ease), border-color .2s, color .2s;
+  transition:
+    transform 0.2s var(--ease),
+    border-color 0.2s,
+    color 0.2s;
 
   &:hover {
     transform: translateY(-2px);
@@ -531,7 +578,9 @@ const AvatarCard = styled.div`
   align-items: center;
   gap: 0.55rem;
   text-align: center;
-  transition: border-color .3s var(--ease), box-shadow .3s;
+  transition:
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s;
 
   &:hover {
     border-color: var(--cy-35);

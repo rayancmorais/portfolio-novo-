@@ -3,56 +3,83 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
-  SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiStyledcomponents, SiRadixui,
-  SiFastify, SiNestjs, SiNodedotjs, SiExpress, SiGo,
-  SiPostgresql, SiMongodb, SiSupabase, SiPrisma,
-  SiDocker, SiVercel, SiGithubactions, SiRabbitmq, SiRedis,
+  SiNextdotjs,
+  SiReact,
+  SiTailwindcss,
+  SiFramer,
+  SiStyledcomponents,
+  SiRadixui,
+  SiFastify,
+  SiNestjs,
+  SiNodedotjs,
+  SiExpress,
+  SiGo,
+  SiPostgresql,
+  SiMongodb,
+  SiSupabase,
+  SiPrisma,
+  SiDocker,
+  SiVercel,
+  SiGithubactions,
+  SiRabbitmq,
+  SiRedis,
 } from 'react-icons/si';
 
 /* ── data ───────────────────────────────────────────────────────────────────── */
 
-interface TechItem { name: string; icon: React.ReactNode; }
-interface EcoGroup { id: string; index: string; items: TechItem[]; chips: string[]; }
+interface TechItem {
+  name: string;
+  icon: React.ReactNode;
+}
+interface EcoGroup {
+  id: string;
+  index: string;
+  items: TechItem[];
+  chips: string[];
+}
 
 const GROUPS: EcoGroup[] = [
   {
-    id: 'frontend', index: 'F·01',
+    id: 'frontend',
+    index: 'F·01',
     items: [
-      { name: 'Next.js 15',        icon: <SiNextdotjs /> },
-      { name: 'React 19',          icon: <SiReact /> },
-      { name: 'React Native',      icon: <SiReact /> },
-      { name: 'Tailwind CSS',      icon: <SiTailwindcss /> },
-      { name: 'Framer Motion',     icon: <SiFramer /> },
+      { name: 'Next.js 15', icon: <SiNextdotjs /> },
+      { name: 'React 19', icon: <SiReact /> },
+      { name: 'React Native', icon: <SiReact /> },
+      { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
+      { name: 'Framer Motion', icon: <SiFramer /> },
       { name: 'Styled Components', icon: <SiStyledcomponents /> },
-      { name: 'Radix UI',          icon: <SiRadixui /> },
+      { name: 'Radix UI', icon: <SiRadixui /> },
     ],
     chips: ['TypeScript', 'i18next', 'Lenis', 'Vite'],
   },
   {
-    id: 'backend', index: 'B·02',
+    id: 'backend',
+    index: 'B·02',
     items: [
-      { name: 'Node.js',   icon: <SiNodedotjs /> },
-      { name: 'Fastify',   icon: <SiFastify /> },
-      { name: 'NestJS',    icon: <SiNestjs /> },
-      { name: 'Express',   icon: <SiExpress /> },
-      { name: 'Go / Gin',  icon: <SiGo /> },
-      { name: 'Redis',     icon: <SiRedis /> },
-      { name: 'RabbitMQ',  icon: <SiRabbitmq /> },
+      { name: 'Node.js', icon: <SiNodedotjs /> },
+      { name: 'Fastify', icon: <SiFastify /> },
+      { name: 'NestJS', icon: <SiNestjs /> },
+      { name: 'Express', icon: <SiExpress /> },
+      { name: 'Go / Gin', icon: <SiGo /> },
+      { name: 'Redis', icon: <SiRedis /> },
+      { name: 'RabbitMQ', icon: <SiRabbitmq /> },
     ],
     chips: ['BullMQ', 'Socket.io', 'REST API', 'JWT'],
   },
   {
-    id: 'data-devops', index: 'D·03',
+    id: 'data-devops',
+    index: 'D·03',
     items: [
-      { name: 'PostgreSQL',     icon: <SiPostgresql /> },
-      { name: 'MongoDB',        icon: <SiMongodb /> },
-      { name: 'Supabase',       icon: <SiSupabase /> },
-      { name: 'Prisma ORM',     icon: <SiPrisma /> },
-      { name: 'Docker',         icon: <SiDocker /> },
-      { name: 'Vercel',         icon: <SiVercel /> },
+      { name: 'PostgreSQL', icon: <SiPostgresql /> },
+      { name: 'MongoDB', icon: <SiMongodb /> },
+      { name: 'Supabase', icon: <SiSupabase /> },
+      { name: 'Prisma ORM', icon: <SiPrisma /> },
+      { name: 'Docker', icon: <SiDocker /> },
+      { name: 'Vercel', icon: <SiVercel /> },
       { name: 'GitHub Actions', icon: <SiGithubactions /> },
     ],
-    chips: ['AWS Lambda', 'Railway', 'MySQL', 'Kong'],
+    chips: ['AWS Lambda', 'Railway', 'MySQL', 'Kong', 'Vitest', 'ESLint', 'Husky', 'Prettier'],
   },
 ];
 
@@ -60,7 +87,7 @@ const GROUPS: EcoGroup[] = [
 
 const itemVariants = {
   hidden: { opacity: 0, scale: 0.88, y: 8 },
-  show:   (i: number) => ({
+  show: (i: number) => ({
     opacity: 1,
     scale: 1,
     y: 0,
@@ -128,7 +155,13 @@ export function TechStack() {
 
           {/* ── content ── */}
           <AnimatePresence mode="wait">
-            <Content key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.18, ease: 'easeOut' }}>
+            <Content
+              key={active}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+            >
               <TechGrid>
                 {group.items.map((tech, i) => (
                   <TechItem
@@ -259,17 +292,23 @@ const Tab = styled.button<{ $active: boolean }>`
   border: none;
   border-right: 1px solid var(--border-faint);
   cursor: pointer;
-  transition: background .2s var(--ease);
+  transition: background 0.2s var(--ease);
 
-  &:last-child { border-right: none; }
-  &:hover:not(:disabled) { background: var(--elev-2); }
+  &:last-child {
+    border-right: none;
+  }
+  &:hover:not(:disabled) {
+    background: var(--elev-2);
+  }
 
   @media (max-width: 560px) {
     flex-direction: row;
     gap: 0.6rem;
     border-right: none;
     border-bottom: 1px solid var(--border-faint);
-    &:last-child { border-bottom: none; }
+    &:last-child {
+      border-bottom: none;
+    }
   }
 `;
 
@@ -332,7 +371,9 @@ const TechItem = styled(motion.div)`
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: default;
-  transition: border-color .2s var(--ease), background .2s;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s;
 
   &:hover {
     border-color: var(--cy-35);

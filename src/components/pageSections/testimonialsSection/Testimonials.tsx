@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import styled, { css } from "styled-components";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { useRef } from 'react';
+import styled, { css } from 'styled-components';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    Testimonials — fictional peer/client quotes. Grid 3 cols.
@@ -10,9 +10,9 @@ import { useTranslation } from "react-i18next";
    ========================================================================== */
 
 const TESTIMONIALS_BASE = [
-  { id: "t1", name: "Mariana Lopes", initials: "ML" },
-  { id: "t2", name: "Bruno Carvalho", initials: "BC" },
-  { id: "t3", name: "Camila Andrade", initials: "CA" },
+  { id: 't1', name: 'Mariana Lopes', initials: 'ML' },
+  { id: 't2', name: 'Bruno Carvalho', initials: 'BC' },
+  { id: 't3', name: 'Camila Andrade', initials: 'CA' },
 ] as const;
 
 const containerVariants: Variants = {
@@ -21,13 +21,13 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.96, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 40, scale: 0.96, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 360, damping: 30 },
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 360, damping: 30 },
   },
 };
 
@@ -48,7 +48,7 @@ const Header = styled.div`
 
 const Eyebrow = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.32em;
@@ -57,7 +57,7 @@ const Eyebrow = styled.span`
 `;
 
 const Title = styled.h2`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -66,11 +66,14 @@ const Title = styled.h2`
   color: var(--fg-1, #e6e8ee);
   margin: 0.7rem 0 0.6rem;
 
-  em { font-style: italic; color: var(--cy, #00f5d4); }
+  em {
+    font-style: italic;
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Subtitle = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 1rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.6;
@@ -96,7 +99,7 @@ const bracket = css`
   &::after,
   & > .brk-tr,
   & > .brk-bl {
-    content: "";
+    content: '';
     position: absolute;
     width: 13px;
     height: 13px;
@@ -104,17 +107,57 @@ const bracket = css`
     opacity: 0;
     pointer-events: none;
     z-index: 5;
-    transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease,
-      right 0.3s ease, bottom 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      top 0.3s ease,
+      left 0.3s ease,
+      right 0.3s ease,
+      bottom 0.3s ease;
   }
-  &::before { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  &::after { bottom: 9px; right: 9px; border-left: none; border-top: none; }
-  & > .brk-tr { top: 9px; right: 9px; border-left: none; border-bottom: none; }
-  & > .brk-bl { bottom: 9px; left: 9px; border-right: none; border-top: none; }
-  &:hover::before { top: 13px; left: 13px; opacity: 0.9; }
-  &:hover::after { bottom: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-tr { top: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-bl { bottom: 13px; left: 13px; opacity: 0.9; }
+  &::before {
+    top: 9px;
+    left: 9px;
+    border-right: none;
+    border-bottom: none;
+  }
+  &::after {
+    bottom: 9px;
+    right: 9px;
+    border-left: none;
+    border-top: none;
+  }
+  & > .brk-tr {
+    top: 9px;
+    right: 9px;
+    border-left: none;
+    border-bottom: none;
+  }
+  & > .brk-bl {
+    bottom: 9px;
+    left: 9px;
+    border-right: none;
+    border-top: none;
+  }
+  &:hover::before {
+    top: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
+  &:hover::after {
+    bottom: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-tr {
+    top: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-bl {
+    bottom: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
 `;
 
 const Card = styled(motion.figure)`
@@ -130,21 +173,28 @@ const Card = styled(motion.figure)`
   border-radius: var(--r-card, 16px);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     border-color: var(--cy-35, rgba(0, 245, 212, 0.35));
-    box-shadow: 0 0 0 1px rgba(0, 245, 212, 0.14), 0 24px 60px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      0 0 0 1px rgba(0, 245, 212, 0.14),
+      0 24px 60px rgba(0, 0, 0, 0.6);
     transform: translateY(-6px);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
+    &:hover {
+      transform: none;
+    }
   }
 `;
 
 const Mark = styled.span`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-size: 3rem;
   line-height: 0.5;
@@ -152,7 +202,7 @@ const Mark = styled.span`
 `;
 
 const Quote = styled.blockquote`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.95rem;
   color: var(--fg-1, #e6e8ee);
   line-height: 1.7;
@@ -177,7 +227,7 @@ const Avatar = styled.span`
   border-radius: 50%;
   background: var(--cy-08, rgba(0, 245, 212, 0.08));
   border: 1px solid var(--cy-20, rgba(0, 245, 212, 0.2));
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--cy, #00f5d4);
@@ -185,7 +235,7 @@ const Avatar = styled.span`
 
 const Name = styled.span`
   display: block;
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--fg-1, #e6e8ee);
@@ -193,7 +243,7 @@ const Name = styled.span`
 
 const Role = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.64rem;
   letter-spacing: 0.06em;
   color: var(--fg-4, #545b6b);
@@ -203,10 +253,13 @@ const Role = styled.span`
 export function Testimonials() {
   const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+  const inView = useInView(ref, { once: true, margin: '-80px 0px' });
   const reduce = useReducedMotion();
 
-  const items = t('testimonials.items', { returnObjects: true }) as Array<{ quote: string; role: string }>;
+  const items = t('testimonials.items', { returnObjects: true }) as Array<{
+    quote: string;
+    role: string;
+  }>;
 
   return (
     <Section id="testimonials" aria-labelledby="testimonials-title">
@@ -222,8 +275,8 @@ export function Testimonials() {
         <Grid
           ref={ref}
           variants={reduce ? undefined : containerVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : inView ? "show" : "hidden"}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
           {TESTIMONIALS_BASE.map((base, i) => (
             <Card key={base.id} variants={reduce ? undefined : cardVariants}>

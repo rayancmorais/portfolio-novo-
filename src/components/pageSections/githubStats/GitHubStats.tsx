@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    GitHubStats — mocked GitHub activity panel for the Rayan Morais portfolio.
@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 
 /* ---------------------------------------------------------------- data ---- */
 
-const GH_USER = "rayancmorais";
+const GH_USER = 'rayancmorais';
 
 interface Stat {
   id: string;
@@ -27,10 +27,10 @@ interface Stat {
 const STATS_VALUES = [847, 12, 23, 4] as const;
 
 const LANGS_BASE: Omit<Lang, 'name'>[] = [
-  { pct: 45, color: "var(--cy, #00f5d4)" },
-  { pct: 28, color: "#f1e05a" },
-  { pct: 15, color: "#a78bfa" },
-  { pct: 12, color: "var(--fg-4, #545b6b)" },
+  { pct: 45, color: 'var(--cy, #00f5d4)' },
+  { pct: 28, color: '#f1e05a' },
+  { pct: 15, color: '#a78bfa' },
+  { pct: 12, color: 'var(--fg-4, #545b6b)' },
 ];
 
 interface Lang {
@@ -39,7 +39,7 @@ interface Lang {
   color: string;
 }
 
-const LANG_NAMES = ["TypeScript", "JavaScript", "CSS"] as const;
+const LANG_NAMES = ['TypeScript', 'JavaScript', 'CSS'] as const;
 
 /* ------------------------------------------------------------- motion ---- */
 
@@ -49,13 +49,13 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 32, scale: 0.96, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 32, scale: 0.96, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 360, damping: 30 },
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 360, damping: 30 },
   },
 };
 
@@ -66,6 +66,8 @@ function useCountUp(target: number, active: boolean, duration = 1100) {
   useEffect(() => {
     if (!active) return;
     if (reduce) {
+      // target é estável — setN no branch reduce é inicialização, não loop
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setN(target);
       return;
     }
@@ -103,7 +105,7 @@ const Header = styled.div`
 
 const Eyebrow = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.32em;
@@ -112,7 +114,7 @@ const Eyebrow = styled.span`
 `;
 
 const Title = styled.h2`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -121,21 +123,26 @@ const Title = styled.h2`
   color: var(--fg-1, #e6e8ee);
   margin: 0.7rem 0 0.6rem;
 
-  em { font-style: italic; color: var(--cy, #00f5d4); }
+  em {
+    font-style: italic;
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Handle = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.78rem;
   letter-spacing: 0.02em;
   color: var(--fg-2, #8b93a7);
   text-decoration: none;
   transition: color 0.2s ease;
 
-  &:hover { color: var(--cy, #00f5d4); }
+  &:hover {
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 /* bracket-corner card — same recipe as the other sections */
@@ -144,7 +151,7 @@ const bracket = css`
   &::after,
   & > .brk-tr,
   & > .brk-bl {
-    content: "";
+    content: '';
     position: absolute;
     width: 13px;
     height: 13px;
@@ -152,18 +159,58 @@ const bracket = css`
     opacity: 0;
     pointer-events: none;
     z-index: 5;
-    transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease,
-      right 0.3s ease, bottom 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      top 0.3s ease,
+      left 0.3s ease,
+      right 0.3s ease,
+      bottom 0.3s ease;
   }
-  &::before { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  &::after { bottom: 9px; right: 9px; border-left: none; border-top: none; }
-  & > .brk-tr { top: 9px; right: 9px; border-left: none; border-bottom: none; }
-  & > .brk-bl { bottom: 9px; left: 9px; border-right: none; border-top: none; }
+  &::before {
+    top: 9px;
+    left: 9px;
+    border-right: none;
+    border-bottom: none;
+  }
+  &::after {
+    bottom: 9px;
+    right: 9px;
+    border-left: none;
+    border-top: none;
+  }
+  & > .brk-tr {
+    top: 9px;
+    right: 9px;
+    border-left: none;
+    border-bottom: none;
+  }
+  & > .brk-bl {
+    bottom: 9px;
+    left: 9px;
+    border-right: none;
+    border-top: none;
+  }
 
-  &:hover::before { top: 13px; left: 13px; opacity: 0.9; }
-  &:hover::after { bottom: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-tr { top: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-bl { bottom: 13px; left: 13px; opacity: 0.9; }
+  &:hover::before {
+    top: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
+  &:hover::after {
+    bottom: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-tr {
+    top: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-bl {
+    bottom: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
 `;
 
 const cardBase = css`
@@ -173,16 +220,23 @@ const cardBase = css`
   border-radius: var(--r-card, 16px);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     border-color: var(--cy-35, rgba(0, 245, 212, 0.35));
-    box-shadow: 0 0 0 1px rgba(0, 245, 212, 0.14), 0 24px 60px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      0 0 0 1px rgba(0, 245, 212, 0.14),
+      0 24px 60px rgba(0, 0, 0, 0.6);
     transform: translateY(-6px);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
+    &:hover {
+      transform: none;
+    }
   }
 `;
 
@@ -208,7 +262,7 @@ const StatCard = styled(motion.div)`
 `;
 
 const StatValue = styled.span`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 500;
   font-size: clamp(2.2rem, 4vw, 2.9rem);
@@ -218,7 +272,7 @@ const StatValue = styled.span`
 `;
 
 const StatLabel = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -241,7 +295,7 @@ const LangHead = styled.div`
 `;
 
 const LangTitle = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -263,7 +317,9 @@ const BarFill = styled(motion.span)`
   height: 100%;
   display: block;
 
-  & + & { border-left: 2px solid var(--bg, #0d1117); }
+  & + & {
+    border-left: 2px solid var(--bg, #0d1117);
+  }
 `;
 
 const Legend = styled.div`
@@ -277,7 +333,7 @@ const LegendItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   color: var(--fg-2, #8b93a7);
 `;
@@ -303,7 +359,8 @@ function StatItem({ stat, active }: { stat: Stat; active: boolean }) {
       <span className="brk-tr" aria-hidden="true" />
       <span className="brk-bl" aria-hidden="true" />
       <StatValue>
-        {n}{stat.suffix ?? ""}
+        {n}
+        {stat.suffix ?? ''}
       </StatValue>
       <StatLabel>{stat.label}</StatLabel>
     </StatCard>
@@ -315,14 +372,19 @@ function StatItem({ stat, active }: { stat: Stat; active: boolean }) {
 export function GitHubStats() {
   const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+  const inView = useInView(ref, { once: true, margin: '-80px 0px' });
   const reduce = useReducedMotion();
 
   const STATS: Stat[] = [
-    { id: "commits", value: STATS_VALUES[0], label: t('github.stat_commits') },
-    { id: "repos",   value: STATS_VALUES[1], label: t('github.stat_repos') },
-    { id: "streak",  value: STATS_VALUES[2], suffix: t('github.stat_streak_suffix'), label: t('github.stat_streak') },
-    { id: "langs",   value: STATS_VALUES[3], label: t('github.stat_langs') },
+    { id: 'commits', value: STATS_VALUES[0], label: t('github.stat_commits') },
+    { id: 'repos', value: STATS_VALUES[1], label: t('github.stat_repos') },
+    {
+      id: 'streak',
+      value: STATS_VALUES[2],
+      suffix: t('github.stat_streak_suffix'),
+      label: t('github.stat_streak'),
+    },
+    { id: 'langs', value: STATS_VALUES[3], label: t('github.stat_langs') },
   ];
 
   const LANGS: Lang[] = [
@@ -338,11 +400,7 @@ export function GitHubStats() {
           <Title id="github-title">
             {t('github.title_1')} <em>{t('github.title_accent')}</em>
           </Title>
-          <Handle
-            href={`https://github.com/${GH_USER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Handle href={`https://github.com/${GH_USER}`} target="_blank" rel="noopener noreferrer">
             @{GH_USER} ↗
           </Handle>
         </Header>
@@ -350,11 +408,11 @@ export function GitHubStats() {
         <motion.div
           ref={ref}
           variants={reduce ? undefined : containerVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : inView ? "show" : "hidden"}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
           <StatGrid variants={reduce ? undefined : containerVariants}>
-            {STATS.map((s) => (
+            {STATS.map(s => (
               <StatItem key={s.id} stat={s} active={inView} />
             ))}
           </StatGrid>
@@ -368,19 +426,19 @@ export function GitHubStats() {
             </LangHead>
 
             <Bar role="img" aria-label={t('github.lang_bar_aria')}>
-              {LANGS.map((l) => (
+              {LANGS.map(l => (
                 <BarFill
                   key={l.name}
                   style={{ background: l.color }}
                   initial={reduce ? false : { width: 0 }}
                   animate={inView || reduce ? { width: `${l.pct}%` } : { width: 0 }}
-                  transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
+                  transition={{ duration: 0.9, ease: 'easeOut', delay: 0.15 }}
                 />
               ))}
             </Bar>
 
             <Legend>
-              {LANGS.map((l) => (
+              {LANGS.map(l => (
                 <LegendItem key={l.name}>
                   <Swatch $color={l.color} aria-hidden="true" />
                   {l.name}

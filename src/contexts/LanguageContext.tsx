@@ -15,8 +15,8 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  const [language, setLanguage] = useState<Language>(
-    () => (i18n.language === 'en' ? 'en' : 'ptBR')
+  const [language, setLanguage] = useState<Language>(() =>
+    i18n.language === 'en' ? 'en' : 'ptBR'
   );
 
   const toggleLanguage = useCallback(() => {
@@ -32,6 +32,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   );
 }
 
+// hooks de contexto exportados junto com o Provider é padrão React
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLanguage(): LanguageContextValue {
   const ctx = useContext(LanguageContext);
   if (!ctx) throw new Error('useLanguage must be used inside LanguageProvider');

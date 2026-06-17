@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from 'react';
+import styled, { css } from 'styled-components';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    CaseStudies — Estudos de Caso (production port of the js/CaseStudies.jsx
@@ -32,33 +32,33 @@ interface CaseStudyBase {
 
 const CASES_BASE: CaseStudyBase[] = [
   {
-    no: "01",
-    title: "CupomManiac",
-    year: "2025",
-    domain: "cupommaniac.com.br",
-    image: "/assets/cases/cupommaniac.png",
-    stack: ["Next.js 15", "PostgreSQL", "Prisma", "Google OAuth", "Vercel"],
-    link: "https://cupommaniac.com.br",
-    metric_values: ["OAuth", "100%", "∞"],
+    no: '01',
+    title: 'CupomManiac',
+    year: '2025',
+    domain: 'cupommaniac.com.br',
+    image: '/assets/cases/cupommaniac.png',
+    stack: ['Next.js 15', 'PostgreSQL', 'Prisma', 'Google OAuth', 'Vercel'],
+    link: 'https://cupommaniac.com.br',
+    metric_values: ['OAuth', '100%', '∞'],
   },
   {
-    no: "02",
-    title: "Crash Game",
-    year: "2025",
-    domain: "jungle-gaming.app",
-    image: "/assets/cases/crash-game.png",
-    stack: ["Node.js", "WebSocket", "Provably Fair", "React"],
-    link: "https://github.com/rayancmorais/fullstack-challengeRayancm",
-    metric_values: ["100%", "RT", "1"],
+    no: '02',
+    title: 'Crash Game',
+    year: '2025',
+    domain: 'jungle-gaming.app',
+    image: '/assets/cases/crash-game.png',
+    stack: ['Node.js', 'WebSocket', 'Provably Fair', 'React'],
+    link: 'https://github.com/rayancmorais/fullstack-challengeRayancm',
+    metric_values: ['100%', 'RT', '1'],
   },
   {
-    no: "03",
-    title: "BR Dropshipping",
-    year: "2024",
-    domain: "luxlabbrasil.com.br",
-    image: "/assets/cases/brdropshipping.png",
-    stack: ["Next.js", "Stripe", "Fornecedores BR"],
-    metric_values: ["BR", "Auto", "E2E"],
+    no: '03',
+    title: 'BR Dropshipping',
+    year: '2024',
+    domain: 'luxlabbrasil.com.br',
+    image: '/assets/cases/brdropshipping.png',
+    stack: ['Next.js', 'Stripe', 'Fornecedores BR'],
+    metric_values: ['BR', 'Auto', 'E2E'],
   },
 ];
 
@@ -70,13 +70,13 @@ const rowVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 44, scale: 0.96, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 44, scale: 0.96, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 360, damping: 30 },
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 360, damping: 30 },
   },
 };
 
@@ -100,11 +100,11 @@ function useParallax(strength = 28) {
       if (raf == null) raf = requestAnimationFrame(update);
     };
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [strength, reduce]);
@@ -130,7 +130,7 @@ const Header = styled(motion.div)`
 
 const Eyebrow = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.32em;
@@ -139,7 +139,7 @@ const Eyebrow = styled.span`
 `;
 
 const Title = styled.h2`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -148,11 +148,14 @@ const Title = styled.h2`
   color: var(--fg-1, #e6e8ee);
   margin: 0.7rem 0 0.6rem;
 
-  em { font-style: italic; color: var(--cy, #00f5d4); }
+  em {
+    font-style: italic;
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Subtitle = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 1rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.6;
@@ -171,7 +174,7 @@ const Row = styled(motion.div)<{ $flip: boolean }>`
   grid-template-columns: 1fr 1fr;
   gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: start;
-  direction: ${({ $flip }) => ($flip ? "rtl" : "ltr")};
+  direction: ${({ $flip }) => ($flip ? 'rtl' : 'ltr')};
 
   @media (max-width: 860px) {
     grid-template-columns: 1fr;
@@ -189,7 +192,7 @@ const bracket = css`
   &::after,
   & > .brk-tr,
   & > .brk-bl {
-    content: "";
+    content: '';
     position: absolute;
     width: 14px;
     height: 14px;
@@ -197,17 +200,57 @@ const bracket = css`
     opacity: 0;
     pointer-events: none;
     z-index: 6;
-    transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease,
-      right 0.3s ease, bottom 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      top 0.3s ease,
+      left 0.3s ease,
+      right 0.3s ease,
+      bottom 0.3s ease;
   }
-  &::before { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  &::after { bottom: 9px; right: 9px; border-left: none; border-top: none; }
-  & > .brk-tr { top: 9px; right: 9px; border-left: none; border-bottom: none; }
-  & > .brk-bl { bottom: 9px; left: 9px; border-right: none; border-top: none; }
-  &:hover::before { top: 14px; left: 14px; opacity: 0.9; }
-  &:hover::after { bottom: 14px; right: 14px; opacity: 0.9; }
-  &:hover > .brk-tr { top: 14px; right: 14px; opacity: 0.9; }
-  &:hover > .brk-bl { bottom: 14px; left: 14px; opacity: 0.9; }
+  &::before {
+    top: 9px;
+    left: 9px;
+    border-right: none;
+    border-bottom: none;
+  }
+  &::after {
+    bottom: 9px;
+    right: 9px;
+    border-left: none;
+    border-top: none;
+  }
+  & > .brk-tr {
+    top: 9px;
+    right: 9px;
+    border-left: none;
+    border-bottom: none;
+  }
+  & > .brk-bl {
+    bottom: 9px;
+    left: 9px;
+    border-right: none;
+    border-top: none;
+  }
+  &:hover::before {
+    top: 14px;
+    left: 14px;
+    opacity: 0.9;
+  }
+  &:hover::after {
+    bottom: 14px;
+    right: 14px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-tr {
+    top: 14px;
+    right: 14px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-bl {
+    bottom: 14px;
+    left: 14px;
+    opacity: 0.9;
+  }
 `;
 
 const Frame = styled.div`
@@ -219,16 +262,23 @@ const Frame = styled.div`
   border-radius: var(--r-card, 16px);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     border-color: var(--cy-35, rgba(0, 245, 212, 0.35));
-    box-shadow: 0 0 0 1px rgba(0, 245, 212, 0.14), 0 24px 60px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      0 0 0 1px rgba(0, 245, 212, 0.14),
+      0 24px 60px rgba(0, 0, 0, 0.6);
     transform: translateY(-6px);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
+    &:hover {
+      transform: none;
+    }
   }
 `;
 
@@ -250,13 +300,19 @@ const Dots = styled.span`
     border-radius: 50%;
     display: block;
   }
-  i:nth-child(1) { background: #ff5f57; }
-  i:nth-child(2) { background: #febc2e; }
-  i:nth-child(3) { background: var(--cy, #00f5d4); }
+  i:nth-child(1) {
+    background: #ff5f57;
+  }
+  i:nth-child(2) {
+    background: #febc2e;
+  }
+  i:nth-child(3) {
+    background: var(--cy, #00f5d4);
+  }
 `;
 
 const FileName = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
   color: var(--fg-4, #545b6b);
   margin-left: 4px;
@@ -289,7 +345,7 @@ const Placeholder = styled.span`
     var(--cy-08, rgba(0, 245, 212, 0.08)),
     transparent 70%
   );
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-size: 3rem;
   color: var(--cy-20, rgba(0, 245, 212, 0.25));
@@ -309,7 +365,7 @@ const Heading = styled.div`
 `;
 
 const No = styled.span`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-size: 2.6rem;
   line-height: 1;
@@ -317,7 +373,7 @@ const No = styled.span`
 `;
 
 const CaseTitle = styled.h3`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: 2rem;
@@ -328,7 +384,7 @@ const CaseTitle = styled.h3`
 
 const Kind = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -356,7 +412,7 @@ const Block = styled.div`
 `;
 
 const BlockLabel = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -366,7 +422,7 @@ const BlockLabel = styled.span`
 `;
 
 const BlockText = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.94rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.7;
@@ -389,7 +445,7 @@ const Metric = styled.div`
 `;
 
 const MetricValue = styled.span`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: normal;
   font-weight: 500;
   font-size: 1.5rem;
@@ -398,7 +454,7 @@ const MetricValue = styled.span`
 `;
 
 const MetricLabel = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -413,7 +469,7 @@ const Chips = styled.div`
 `;
 
 const Chip = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -433,12 +489,15 @@ const Ghost = styled.a`
   padding: 0.65rem 1.4rem;
   border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.16));
   border-radius: var(--r-chip, 100px);
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--fg-1, #e6e8ee);
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
     border-color: var(--cy-50, rgba(0, 245, 212, 0.5));
@@ -447,14 +506,16 @@ const Ghost = styled.a`
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
+    &:hover {
+      transform: none;
+    }
   }
 `;
 
 const Private = styled.span`
   align-self: flex-start;
   margin-top: 0.2rem;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   letter-spacing: 0.02em;
   color: var(--fg-4, #545b6b);
@@ -478,7 +539,21 @@ interface CaseRowProps {
   private_repo: string;
 }
 
-function CaseRow({ base: c, i, reduce, lProblem, lApproach, lResult, kind, problemText, approachText, resultText, metric_labels, visit_site, private_repo }: CaseRowProps) {
+function CaseRow({
+  base: c,
+  i,
+  reduce,
+  lProblem,
+  lApproach,
+  lResult,
+  kind,
+  problemText,
+  approachText,
+  resultText,
+  metric_labels,
+  visit_site,
+  private_repo,
+}: CaseRowProps) {
   const flip = i % 2 === 1;
   const imgRef = useParallax(28);
 
@@ -504,8 +579,8 @@ function CaseRow({ base: c, i, reduce, lProblem, lApproach, lResult, kind, probl
                 src={c.image}
                 alt={`${c.title} — screenshot`}
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
+                onError={e => {
+                  e.currentTarget.style.display = 'none';
                 }}
               />
             )}
@@ -550,7 +625,7 @@ function CaseRow({ base: c, i, reduce, lProblem, lApproach, lResult, kind, probl
           </Metrics>
 
           <Chips>
-            {c.stack.map((s) => (
+            {c.stack.map(s => (
               <Chip key={s}>{s}</Chip>
             ))}
           </Chips>
@@ -573,11 +648,15 @@ function CaseRow({ base: c, i, reduce, lProblem, lApproach, lResult, kind, probl
 export function CaseStudies() {
   const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px 0px" });
+  const inView = useInView(ref, { once: true, margin: '-100px 0px' });
   const reduce = useReducedMotion();
 
   const items = t('caseStudies.items', { returnObjects: true }) as Array<{
-    kind: string; problem: string; approach: string; result: string; metric_labels: string[];
+    kind: string;
+    problem: string;
+    approach: string;
+    result: string;
+    metric_labels: string[];
   }>;
 
   return (
@@ -587,7 +666,7 @@ export function CaseStudies() {
           initial={reduce ? false : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 360, damping: 30 }}
+          transition={{ type: 'spring', stiffness: 360, damping: 30 }}
         >
           <Eyebrow>{t('caseStudies.eyebrow')}</Eyebrow>
           <Title id="work-title">
@@ -600,8 +679,8 @@ export function CaseStudies() {
           ref={ref}
           as={motion.div}
           variants={reduce ? undefined : rowVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : inView ? "show" : "hidden"}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
           {CASES_BASE.map((c, i) => (
             <CaseRow

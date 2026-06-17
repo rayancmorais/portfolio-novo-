@@ -11,7 +11,7 @@ const NAV_LINKS = [
 
 const CV_URLS = {
   ptBR: '/pdf/Rayan_Morais_CV_PT_FullStack.pdf',
-  en:   '/pdf/Rayan_Morais_CV_Eng.pdf',
+  en: '/pdf/Rayan_Morais_CV_Eng.pdf',
 };
 
 export function Navbar() {
@@ -36,20 +36,20 @@ export function Navbar() {
   return (
     <Nav $scrolled={scrolled}>
       <Inner>
-        <Logo href="#">RAYAN<Dot>.</Dot></Logo>
+        <Logo href="#">
+          RAYAN<Dot>.</Dot>
+        </Logo>
 
         <Links>
           {NAV_LINKS.map(({ key, href }) => (
-            <NavLink key={href} href={href} onClick={(e) => handleNavClick(e, href)}>
+            <NavLink key={href} href={href} onClick={e => handleNavClick(e, href)}>
               {t(key)}
             </NavLink>
           ))}
         </Links>
 
         <Controls>
-          <LangBtn onClick={toggleLanguage}>
-            {language === 'ptBR' ? 'EN' : 'PT'}
-          </LangBtn>
+          <LangBtn onClick={toggleLanguage}>{language === 'ptBR' ? 'EN' : 'PT'}</LangBtn>
           <CtaPill href={cvUrl} download rel="noopener">
             <Download size={13} />
             Download CV
@@ -67,13 +67,15 @@ const Nav = styled.nav<{ $scrolled: boolean }>`
   right: 0;
   z-index: 100;
   height: var(--nav-h, 66px);
-  background: ${({ $scrolled }) =>
-    $scrolled ? 'rgba(13,17,23,0.72)' : 'transparent'};
+  background: ${({ $scrolled }) => ($scrolled ? 'rgba(13,17,23,0.72)' : 'transparent')};
   backdrop-filter: ${({ $scrolled }) => ($scrolled ? 'blur(18px)' : 'none')};
   -webkit-backdrop-filter: ${({ $scrolled }) => ($scrolled ? 'blur(18px)' : 'none')};
-  border-bottom: 1px solid ${({ $scrolled }) =>
-    $scrolled ? 'var(--border, rgba(255,255,255,0.08))' : 'transparent'};
-  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+  border-bottom: 1px solid
+    ${({ $scrolled }) => ($scrolled ? 'var(--border, rgba(255,255,255,0.08))' : 'transparent')};
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    backdrop-filter 0.3s ease;
 `;
 
 const Inner = styled.div`
@@ -138,7 +140,7 @@ const Controls = styled.div`
 const LangBtn = styled.button`
   padding: 0 0.75rem;
   height: 32px;
-  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: 8px;
   background: transparent;
   color: var(--fg-2, #8b93a7);
@@ -148,11 +150,13 @@ const LangBtn = styled.button`
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 
   &:hover {
     color: var(--cy, #00e5cc);
-    border-color: var(--cy-50, rgba(0,229,204,0.5));
+    border-color: var(--cy-50, rgba(0, 229, 204, 0.5));
   }
 `;
 
@@ -170,12 +174,15 @@ const CtaPill = styled.a`
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
     background: var(--cy-bright, #5cf3e3);
-    box-shadow: var(--glow-cy-sm, 0 0 0.6rem rgba(0,229,204,0.45));
+    box-shadow: var(--glow-cy-sm, 0 0 0.6rem rgba(0, 229, 204, 0.45));
   }
 
   @media (max-width: 560px) {

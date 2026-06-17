@@ -1,7 +1,7 @@
-import { useRef, useState, type FormEvent } from "react";
-import styled, { css } from "styled-components";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { useRef, useState, type FormEvent } from 'react';
+import styled, { css } from 'styled-components';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /* ============================================================================
    Contact — name / email / message form (no backend) + social links.
@@ -18,13 +18,13 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 36, scale: 0.97, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 36, scale: 0.97, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 360, damping: 30 },
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 360, damping: 30 },
   },
 };
 
@@ -45,7 +45,7 @@ const Header = styled.div`
 
 const Eyebrow = styled.span`
   display: block;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.32em;
@@ -54,7 +54,7 @@ const Eyebrow = styled.span`
 `;
 
 const Title = styled.h2`
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -63,11 +63,14 @@ const Title = styled.h2`
   color: var(--fg-1, #e6e8ee);
   margin: 0.7rem 0 0.6rem;
 
-  em { font-style: italic; color: var(--cy, #00f5d4); }
+  em {
+    font-style: italic;
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 const Subtitle = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 1rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.6;
@@ -91,7 +94,7 @@ const bracket = css`
   &::after,
   & > .brk-tr,
   & > .brk-bl {
-    content: "";
+    content: '';
     position: absolute;
     width: 13px;
     height: 13px;
@@ -99,17 +102,57 @@ const bracket = css`
     opacity: 0;
     pointer-events: none;
     z-index: 5;
-    transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease,
-      right 0.3s ease, bottom 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      top 0.3s ease,
+      left 0.3s ease,
+      right 0.3s ease,
+      bottom 0.3s ease;
   }
-  &::before { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  &::after { bottom: 9px; right: 9px; border-left: none; border-top: none; }
-  & > .brk-tr { top: 9px; right: 9px; border-left: none; border-bottom: none; }
-  & > .brk-bl { bottom: 9px; left: 9px; border-right: none; border-top: none; }
-  &:hover::before { top: 13px; left: 13px; opacity: 0.9; }
-  &:hover::after { bottom: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-tr { top: 13px; right: 13px; opacity: 0.9; }
-  &:hover > .brk-bl { bottom: 13px; left: 13px; opacity: 0.9; }
+  &::before {
+    top: 9px;
+    left: 9px;
+    border-right: none;
+    border-bottom: none;
+  }
+  &::after {
+    bottom: 9px;
+    right: 9px;
+    border-left: none;
+    border-top: none;
+  }
+  & > .brk-tr {
+    top: 9px;
+    right: 9px;
+    border-left: none;
+    border-bottom: none;
+  }
+  & > .brk-bl {
+    bottom: 9px;
+    left: 9px;
+    border-right: none;
+    border-top: none;
+  }
+  &:hover::before {
+    top: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
+  &:hover::after {
+    bottom: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-tr {
+    top: 13px;
+    right: 13px;
+    opacity: 0.9;
+  }
+  &:hover > .brk-bl {
+    bottom: 13px;
+    left: 13px;
+    opacity: 0.9;
+  }
 `;
 
 const cardBase = css`
@@ -137,7 +180,7 @@ const Field = styled.label`
 `;
 
 const FieldLabel = styled.span`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.64rem;
   font-weight: 500;
   letter-spacing: 0.16em;
@@ -146,7 +189,7 @@ const FieldLabel = styled.span`
 `;
 
 const inputStyles = css`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.92rem;
   color: var(--fg-1, #e6e8ee);
   background: var(--bg-2, rgba(255, 255, 255, 0.02));
@@ -154,9 +197,13 @@ const inputStyles = css`
   border-radius: 10px;
   padding: 0.75rem 0.9rem;
   width: 100%;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
-  &::placeholder { color: var(--fg-4, #545b6b); }
+  &::placeholder {
+    color: var(--fg-4, #545b6b);
+  }
 
   &:focus {
     outline: none;
@@ -187,27 +234,39 @@ const Submit = styled.button`
   border-radius: var(--r-chip, 100px);
   background: var(--cy, #00f5d4);
   color: #052b27;
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
     filter: brightness(1.08);
     box-shadow: 0 0 0.6rem rgba(0, 245, 212, 0.45);
   }
-  &:active { transform: translateY(0); }
-  &:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
+  &:active {
+    transform: translateY(0);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    &:hover { transform: none; }
+    &:hover {
+      transform: none;
+    }
   }
 `;
 
 const Sent = styled.p`
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   color: var(--success, #4ade80);
@@ -228,7 +287,7 @@ const SideCard = styled(motion.div)`
 
 const SideTitle = styled.span`
   display: block;
-  font-family: var(--font-serif, "Spectral", Georgia, serif);
+  font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
   font-size: 1.3rem;
   color: var(--fg-1, #e6e8ee);
@@ -236,7 +295,7 @@ const SideTitle = styled.span`
 `;
 
 const SideText = styled.p`
-  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
   font-size: 0.86rem;
   color: var(--fg-2, #8b93a7);
   line-height: 1.6;
@@ -257,12 +316,15 @@ const SocialLink = styled.a`
   padding: 0.75rem 1rem;
   border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: var(--r-chip, 100px);
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.76rem;
   letter-spacing: 0.04em;
   color: var(--fg-1, #e6e8ee);
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
 
   &:hover {
     border-color: var(--cy-50, rgba(0, 245, 212, 0.5));
@@ -273,13 +335,15 @@ const SocialLink = styled.a`
 
 const Arrow = styled.span`
   color: var(--fg-4, #545b6b);
-  ${SocialLink}:hover & { color: var(--cy, #00f5d4); }
+  ${SocialLink}:hover & {
+    color: var(--cy, #00f5d4);
+  }
 `;
 
 export function Contact() {
   const { t } = useTranslation('home');
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+  const inView = useInView(ref, { once: true, margin: '-80px 0px' });
   const reduce = useReducedMotion();
   const [sent, setSent] = useState(false);
 
@@ -288,10 +352,10 @@ export function Contact() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    const response = await fetch("https://formspree.io/f/xdavdvwk", {
-      method: "POST",
+    const response = await fetch('https://formspree.io/f/xdavdvwk', {
+      method: 'POST',
       body: data,
-      headers: { Accept: "application/json" },
+      headers: { Accept: 'application/json' },
     });
 
     if (response.ok) {
@@ -314,25 +378,33 @@ export function Contact() {
         <Layout
           ref={ref}
           variants={reduce ? undefined : containerVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : inView ? "show" : "hidden"}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
-          <FormCard
-            variants={reduce ? undefined : itemVariants}
-            onSubmit={handleSubmit}
-            noValidate
-          >
+          <FormCard variants={reduce ? undefined : itemVariants} onSubmit={handleSubmit} noValidate>
             <span className="brk-tr" aria-hidden="true" />
             <span className="brk-bl" aria-hidden="true" />
 
             <Field>
               <FieldLabel>{t('contact.label_name')}</FieldLabel>
-              <Input name="name" type="text" placeholder={t('contact.placeholder_name')} required autoComplete="name" />
+              <Input
+                name="name"
+                type="text"
+                placeholder={t('contact.placeholder_name')}
+                required
+                autoComplete="name"
+              />
             </Field>
 
             <Field>
               <FieldLabel>{t('contact.label_email')}</FieldLabel>
-              <Input name="email" type="email" placeholder={t('contact.placeholder_email')} required autoComplete="email" />
+              <Input
+                name="email"
+                type="email"
+                placeholder={t('contact.placeholder_email')}
+                required
+                autoComplete="email"
+              />
             </Field>
 
             <Field>
@@ -353,11 +425,19 @@ export function Contact() {
               <SideTitle>{t('contact.side_title')}</SideTitle>
               <SideText>{t('contact.side_text')}</SideText>
               <Links>
-                <SocialLink href="https://github.com/rayancmorais" target="_blank" rel="noopener noreferrer">
+                <SocialLink
+                  href="https://github.com/rayancmorais"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   GitHub · @rayancmorais
                   <Arrow aria-hidden="true">↗</Arrow>
                 </SocialLink>
-                <SocialLink href="https://www.linkedin.com/in/rayancmorais" target="_blank" rel="noopener noreferrer">
+                <SocialLink
+                  href="https://www.linkedin.com/in/rayancmorais"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   LinkedIn · Rayan Morais
                   <Arrow aria-hidden="true">↗</Arrow>
                 </SocialLink>

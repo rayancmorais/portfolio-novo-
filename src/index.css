@@ -1,6 +1,8 @@
 @import './styles/tokens.css';
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -41,14 +43,31 @@ img {
   display: block;
 }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--cy-35); }
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cy-35);
+}
 
-::selection { background: var(--cy-35); color: #fff; }
+::selection {
+  background: var(--cy-35);
+  color: #fff;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
-  html { scroll-behavior: auto; }
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
