@@ -44,10 +44,10 @@
     "items": [
       {
         "kind": "Coupon platform",
-        "problem": "The Brazilian coupon market is full of slow, outdated sites — what was missing was a fast platform with real stores and an active community around deals.",
-        "approach": "Built with Next.js 15, PostgreSQL + Prisma, Google OAuth login, a per-coupon comment system and a production seed to populate stores and deals from the first deploy.",
-        "result": "A live platform with registered stores, commentable coupons and social authentication — ready to scale its user base.",
-        "metric_labels": ["social login", "SSR + seed", "registered stores"]
+        "problem": "The Brazilian coupon market is full of slow, stale-data sites — there was no platform with real affiliate sync, smart search and alerts that fire before deals expire.",
+        "approach": "Built a full-stack system with 5 affiliate sources via Adapter Pattern, BullMQ queues syncing every 3h, Meilisearch full-text search, double opt-in alerts and algorithmic scoring 0–100 by discount and expiry.",
+        "result": "A live platform with automatic sync of thousands of coupons, O(1) DB roundtrips for alert matching, 3-level threaded comments and a complete admin panel for coupons, stores and users.",
+        "metric_labels": ["affiliate sources", "sync interval", "scoring 0–100"]
       },
       {
         "kind": "Jungle Gaming Challenge",

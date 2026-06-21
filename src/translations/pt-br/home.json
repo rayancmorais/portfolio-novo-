@@ -44,10 +44,10 @@
     "items": [
       {
         "kind": "Plataforma de cupons",
-        "problem": "O mercado brasileiro de cupons é cheio de sites lentos e desatualizados — faltava uma plataforma rápida, com lojas reais e uma comunidade ativa em torno das ofertas.",
-        "approach": "Construí em Next.js 15 com PostgreSQL + Prisma, login via Google OAuth, sistema de comentários por cupom e um seed de produção para popular lojas e ofertas desde o primeiro deploy.",
-        "result": "Uma plataforma no ar, com lojas cadastradas, cupons comentáveis e autenticação social — pronta para escalar a base de usuários.",
-        "metric_labels": ["login social", "SSR + seed", "lojas cadastradas"]
+        "problem": "O mercado de cupons brasileiro tem sites lentos e dados obsoletos — faltava sync automático com afiliados reais, busca inteligente e alertas que chegam antes da oferta expirar.",
+        "approach": "Construí um sistema full-stack com 5 fontes de afiliados via Adapter Pattern, filas BullMQ para sync a cada 3h, busca full-text com Meilisearch, alertas com double opt-in e scoring algorítmico de 0 a 100 por desconto e expiração.",
+        "result": "Plataforma no ar com sync automático de milhares de cupons, matching de alertas em O(1) roundtrips de banco, comments com threading em 3 níveis e painel admin completo para gestão de cupons, lojas e usuários.",
+        "metric_labels": ["fontes afiliadas", "ciclo de sync", "scoring 0–100"]
       },
       {
         "kind": "Jungle Gaming Challenge",

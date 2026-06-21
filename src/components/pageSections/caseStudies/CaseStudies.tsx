@@ -37,9 +37,9 @@ const CASES_BASE: CaseStudyBase[] = [
     year: '2025',
     domain: 'cupommaniac.com.br',
     image: '/assets/cases/cupommaniac.png',
-    stack: ['Next.js 15', 'PostgreSQL', 'Prisma', 'Google OAuth', 'Vercel'],
+    stack: ['Next.js 15', 'Fastify', 'BullMQ', 'Meilisearch', 'PostgreSQL'],
     link: 'https://cupommaniac.com.br',
-    metric_values: ['OAuth', '100%', '∞'],
+    metric_values: ['5', '3h', '0–100'],
   },
   {
     no: '02',
