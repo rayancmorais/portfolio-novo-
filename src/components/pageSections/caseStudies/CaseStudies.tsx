@@ -46,7 +46,7 @@ const CASES_BASE: CaseStudyBase[] = [
     title: 'Crash Game',
     year: '2025',
     domain: 'jungle-gaming.app',
-    image: '/assets/cases/crash-game.png',
+    image: '/assets/cases/crashGame.png',
     stack: ['Node.js', 'WebSocket', 'Provably Fair', 'React'],
     link: 'https://github.com/rayancmorais/fullstack-challengeRayancm',
     metric_values: ['100%', 'RT', '1'],
