@@ -45,7 +45,7 @@ export const projects: Project[] = [
       'GitHub Actions',
       'PostgreSQL',
     ],
-    imageUrl: '/images/crash-game.png',
+    imageUrl: '/assets/cases/crashGame.png',
     link: 'https://github.com/rayancmorais/fullstack-challengeRayancm',
     featured: true,
   },
