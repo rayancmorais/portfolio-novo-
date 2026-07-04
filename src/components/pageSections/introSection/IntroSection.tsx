@@ -224,6 +224,18 @@ export function IntroSection() {
             <Anim i={3} inView={inView}>
               <AvatarCard onMouseMove={handleSpot} onMouseLeave={clearSpot}>
                 <Spot aria-hidden />
+                <Corners aria-hidden>
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </Corners>
+                <PanelHeader>
+                  <span>
+                    <HDot /> OPERATOR
+                  </span>
+                  <span>RM · 01</span>
+                </PanelHeader>
                 <AvatarFrame>
                   <AvatarImg src="/images/profilepicture.png" alt="Rayan Morais" />
                 </AvatarFrame>
@@ -598,10 +610,90 @@ const AvatarCard = styled.div`
     border-color 0.3s var(--ease),
     box-shadow 0.3s;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 14%;
+    right: 14%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cy-50), transparent);
+    opacity: 0.7;
+  }
+
   &:hover {
     border-color: var(--cy-35);
     box-shadow: var(--shadow-card-hover);
   }
+`;
+
+const Corners = styled.div`
+  position: absolute;
+  inset: 9px;
+  pointer-events: none;
+  z-index: 4;
+
+  span {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border: 1px solid var(--cy-35);
+  }
+  span:nth-child(1) {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+  span:nth-child(2) {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+  }
+  span:nth-child(3) {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+  }
+  span:nth-child(4) {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+`;
+
+const PanelHeader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fg-4);
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid var(--border-faint);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+`;
+
+const HDot = styled.span`
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cy);
+  box-shadow: 0 0 6px var(--cy);
+  animation: ${pulseDot} 2s ease-in-out infinite;
 `;
 
 const AvatarFrame = styled.div`
@@ -654,6 +746,13 @@ const InfoRow = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--cy-20);
+  transition: border-color 0.25s var(--ease);
+
+  &:hover {
+    border-left-color: var(--cy-50);
+  }
 `;
 
 const InfoLabel = styled.p`
@@ -663,6 +762,17 @@ const InfoLabel = styled.p`
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fg-4);
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 1px;
+    margin-right: 7px;
+    vertical-align: middle;
+    background: var(--cy);
+    opacity: 0.7;
+  }
 `;
 
 const InfoVal = styled.p`
