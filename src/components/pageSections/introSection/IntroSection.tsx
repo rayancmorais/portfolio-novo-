@@ -371,19 +371,19 @@ const AvailBadge = styled.div`
   align-items: center;
   gap: 0.4rem;
   padding: 0.28rem 0.75rem;
-  background: var(--success-bg);
-  border: 1px solid var(--success-border);
+  background: var(--blue-15);
+  border: 1px solid var(--cy-20);
   border-radius: var(--r-chip);
   font-size: 0.74rem;
   font-weight: 500;
-  color: var(--success);
+  color: var(--blue-bright);
 `;
 
 const PulseDot = styled.span`
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--success);
+  background: var(--blue-bright);
   flex-shrink: 0;
   animation: ${pulseDot} 2s ease-in-out infinite;
 `;

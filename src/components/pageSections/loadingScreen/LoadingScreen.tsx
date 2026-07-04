@@ -109,7 +109,7 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
                     fontFamily: "var(--mono, 'JetBrains Mono', monospace)",
                     fontSize: '0.68rem',
                     lineHeight: 1.85,
-                    color: log.done ? '#4ade80' : 'var(--fg-2, #8b93a7)',
+                    color: log.done ? '#64a0ff' : 'var(--fg-2, #8b93a7)',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -164,15 +164,15 @@ const Aurora = styled.div`
   pointer-events: none;
   background:
     radial-gradient(ellipse 65% 55% at 25% 35%, rgba(62, 127, 233, 0.13) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 45% at 78% 70%, rgba(0, 229, 204, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 35% 35% at 60% 10%, rgba(0, 229, 204, 0.06) 0%, transparent 55%);
+    radial-gradient(ellipse 50% 45% at 78% 70%, rgba(62, 127, 233, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 35% 35% at 60% 10%, rgba(62, 127, 233, 0.06) 0%, transparent 55%);
 `;
 
 const Dots = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(0, 229, 204, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(62, 127, 233, 0.07) 1px, transparent 1px);
   background-size: 36px 36px;
   mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
 `;
@@ -215,8 +215,8 @@ const SpinArc = styled.div`
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    #00e5cc 0deg,
-    rgba(0, 229, 204, 0.35) 65deg,
+    #3e7fe9 0deg,
+    rgba(62, 127, 233, 0.35) 65deg,
     transparent 115deg,
     transparent 360deg
   );
@@ -247,14 +247,14 @@ const ScanLine = styled.div`
   background: linear-gradient(
     90deg,
     transparent 0%,
-    #00e5cc 40%,
-    #5cf3e3 50%,
-    #00e5cc 60%,
+    #3e7fe9 40%,
+    #64a0ff 50%,
+    #3e7fe9 60%,
     transparent 100%
   );
   box-shadow:
-    0 0 10px rgba(0, 229, 204, 0.8),
-    0 0 4px rgba(0, 229, 204, 0.4);
+    0 0 10px rgba(62, 127, 233, 0.8),
+    0 0 4px rgba(62, 127, 233, 0.4);
   z-index: 2;
   animation: ${scan} 0.9s cubic-bezier(0.4, 0, 0.6, 1) 0.5s both;
 `;
@@ -309,7 +309,7 @@ const Pct = styled.span`
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: #00e5cc;
+  color: #64a0ff;
   white-space: nowrap;
   padding-bottom: 2px;
 `;
@@ -328,6 +328,6 @@ const ProgressTrack = styled.div`
 const ProgressFill = styled.div`
   height: 100%;
   transform-origin: left center;
-  background: linear-gradient(90deg, #00e5cc 0%, #5cf3e3 100%);
-  box-shadow: 0 0 10px rgba(0, 229, 204, 0.55);
+  background: linear-gradient(90deg, #3e7fe9 0%, #64a0ff 100%);
+  box-shadow: 0 0 10px rgba(62, 127, 233, 0.55);
 `;
