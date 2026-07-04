@@ -125,7 +125,6 @@ export function TechStack() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Eyebrow>{t('techStack.eyebrow')}</Eyebrow>
           <SectionTitle>
             {t('techStack.title_1')} <Accent>{t('techStack.title_accent')}</Accent>
           </SectionTitle>
@@ -210,15 +209,6 @@ const Header = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
-`;
-
-const Eyebrow = styled.p`
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--cy);
 `;
 
 const SectionTitle = styled.h2`

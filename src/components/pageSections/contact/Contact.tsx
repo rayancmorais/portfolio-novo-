@@ -43,16 +43,6 @@ const Header = styled.div`
   margin-bottom: 3rem;
 `;
 
-const Eyebrow = styled.span`
-  display: block;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--cy, #00f5d4);
-`;
-
 const Title = styled.h2`
   font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
@@ -368,7 +358,6 @@ export function Contact() {
     <Section id="contact" aria-labelledby="contact-title">
       <Inner>
         <Header>
-          <Eyebrow>{t('contact.eyebrow')}</Eyebrow>
           <Title id="contact-title">
             {t('contact.title_1')} <em>{t('contact.title_accent')}</em>
           </Title>

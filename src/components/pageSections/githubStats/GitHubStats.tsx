@@ -103,16 +103,6 @@ const Header = styled.div`
   margin-bottom: 3.2rem;
 `;
 
-const Eyebrow = styled.span`
-  display: block;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--cy, #00f5d4);
-`;
-
 const Title = styled.h2`
   font-family: var(--font-serif, 'Spectral', Georgia, serif);
   font-style: italic;
@@ -396,7 +386,6 @@ export function GitHubStats() {
     <Section id="github" aria-labelledby="github-title">
       <Inner>
         <Header>
-          <Eyebrow>{t('github.eyebrow')}</Eyebrow>
           <Title id="github-title">
             {t('github.title_1')} <em>{t('github.title_accent')}</em>
           </Title>
