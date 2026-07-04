@@ -23,14 +23,14 @@ const pulseDot = keyframes`
 
 const glowRing = keyframes`
   0%, 100% {
-    box-shadow: 0 0 0 2px rgba(0,229,204,0.22),
-                0 0 0 5px rgba(0,229,204,0.07),
-                0 0 22px rgba(0,229,204,0.18);
+    box-shadow: 0 0 0 2px rgba(62,127,233,0.22),
+                0 0 0 5px rgba(62,127,233,0.07),
+                0 0 22px rgba(62,127,233,0.18);
   }
   50% {
-    box-shadow: 0 0 0 2px rgba(0,229,204,0.55),
-                0 0 0 6px rgba(0,229,204,0.12),
-                0 0 38px rgba(0,229,204,0.35);
+    box-shadow: 0 0 0 2px rgba(62,127,233,0.55),
+                0 0 0 6px rgba(62,127,233,0.12),
+                0 0 38px rgba(62,127,233,0.35);
   }
 `;
 
@@ -260,15 +260,15 @@ const AuroraBg = styled.div`
   pointer-events: none;
   background:
     radial-gradient(ellipse 70% 60% at 15% 40%, rgba(62, 127, 233, 0.11) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 50% at 85% 70%, rgba(0, 229, 204, 0.09) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 55% 10%, rgba(0, 229, 204, 0.06) 0%, transparent 55%);
+    radial-gradient(ellipse 55% 50% at 85% 70%, rgba(62, 127, 233, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 55% 10%, rgba(62, 127, 233, 0.06) 0%, transparent 55%);
 `;
 
 const DotGrid = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(0, 229, 204, 0.09) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(62, 127, 233, 0.09) 1px, transparent 1px);
   background-size: 38px 38px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
 `;
@@ -494,7 +494,7 @@ const PrimaryBtn = styled.a`
   align-items: center;
   gap: 8px;
   background: var(--cy);
-  color: #062b27;
+  color: #07162e;
   padding: 0.72rem 1.5rem;
   border-radius: var(--r-chip);
   font-size: 0.9rem;
@@ -557,8 +557,8 @@ const Spot = styled.div`
   border-radius: inherit;
   background: radial-gradient(
     340px circle at var(--spot-x, -9999px) var(--spot-y, -9999px),
-    rgba(0, 229, 204, 0.14),
-    rgba(0, 229, 204, 0.04) 55%,
+    rgba(62, 127, 233, 0.14),
+    rgba(62, 127, 233, 0.04) 55%,
     transparent 75%
   );
 `;

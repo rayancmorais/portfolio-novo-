@@ -2,10 +2,10 @@
   "hero": {
     "eyebrow": "FULL-STACK DEVELOPER · BRASIL",
     "headline_1": "Construo",
-    "headline_accent": "experiências",
-    "headline_2": "web & mobile escaláveis",
-    "headline_caps": "E X P E R I Ê N C I A S",
-    "bio": "Olá! Sou <strong>Rayan Morais</strong>, desenvolvedor full-stack especializado em <em>React / Node.js / TypeScript</em>. Construo produtos com arquiteturas orientadas a eventos, microsserviços e deploy em nuvem.",
+    "headline_accent": "produtos",
+    "headline_2": "do back ao front.",
+    "headline_caps": "P R O D U T O S",
+    "bio": "Sou <strong>Rayan Morais</strong>, desenvolvedor full-stack baseado no Brasil. Trabalho com <em>React, Node.js e TypeScript</em> para construir produtos reais — da arquitetura ao deploy.",
     "name": "Rayan Morais",
     "role": "FULL-STACK DEVELOPER",
     "available": "Aberto a oportunidades",
@@ -138,12 +138,12 @@
     "items": [
       {
         "title": "Desenvolvimento Full-Stack",
-        "description": "Aplicações web completas em React e Node, do banco de dados à interface, escaláveis e prontas para produção.",
+        "description": "Aplicações web completas em React e Node, do banco de dados à interface — com foco em performance e manutenibilidade.",
         "tags": ["React", "Node.js", "TypeScript"]
       },
       {
         "title": "API & Backend",
-        "description": "APIs REST seguras com autenticação, modelagem de dados e integrações — construídas para crescer com o produto.",
+        "description": "APIs REST e WebSocket com autenticação, filas e integrações de terceiros — arquitetadas para durar.",
         "tags": ["Express", "PostgreSQL", "MongoDB"]
       },
       {
@@ -153,7 +153,7 @@
       },
       {
         "title": "Deploy & DevOps",
-        "description": "Publicação contínua, ambientes de preview e monitoramento — para que cada commit chegue ao ar sem fricção.",
+        "description": "CI/CD, ambientes de preview e deploy em Railway, Vercel e AWS — para que cada commit vá ao ar com segurança.",
         "tags": ["Vercel", "CI/CD", "Git Flow"]
       }
     ]

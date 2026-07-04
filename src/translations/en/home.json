@@ -1,11 +1,11 @@
 {
   "hero": {
-    "eyebrow": "FULL-STACK DEVELOPER · BRASIL",
+    "eyebrow": "FULL-STACK DEVELOPER · BRAZIL",
     "headline_1": "I build",
-    "headline_accent": "seamless",
-    "headline_2": "scalable web & mobile",
-    "headline_caps": "E X P E R I E N C E S",
-    "bio": "Hi! I'm <strong>Rayan Morais</strong>, a full-stack developer specialised in <em>React / Node.js / TypeScript</em>. I build products with event-driven architectures, microservices and cloud deployments.",
+    "headline_accent": "products",
+    "headline_2": "back to front.",
+    "headline_caps": "P R O D U C T S",
+    "bio": "I'm <strong>Rayan Morais</strong>, a full-stack developer based in Brazil. I work with <em>React, Node.js and TypeScript</em> to build real products — from architecture to deployment.",
     "name": "Rayan Morais",
     "role": "FULL-STACK DEVELOPER",
     "available": "Open to opportunities",
@@ -138,12 +138,12 @@
     "items": [
       {
         "title": "Full-Stack Development",
-        "description": "Complete web applications in React and Node, from database to interface, scalable and production-ready.",
+        "description": "Complete web applications in React and Node, from the database to the interface — focused on performance and maintainability.",
         "tags": ["React", "Node.js", "TypeScript"]
       },
       {
         "title": "API & Backend",
-        "description": "Secure REST APIs with authentication, data modeling and integrations — built to grow with the product.",
+        "description": "REST and WebSocket APIs with authentication, queues and third-party integrations — architected to last.",
         "tags": ["Express", "PostgreSQL", "MongoDB"]
       },
       {
@@ -153,7 +153,7 @@
       },
       {
         "title": "Deploy & DevOps",
-        "description": "Continuous publishing, preview environments and monitoring — so every commit ships without friction.",
+        "description": "CI/CD, preview environments and deployment on Railway, Vercel and AWS — so every commit ships safely.",
         "tags": ["Vercel", "CI/CD", "Git Flow"]
       }
     ]
