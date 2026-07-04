@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
   SiNextdotjs,
   SiReact,
@@ -25,6 +25,20 @@ import {
   SiRedis,
 } from 'react-icons/si';
 
+/* ── keyframes ──────────────────────────────────────────────────────────────── */
+
+const borderFlow = keyframes`
+  from { background-position: 0% 0; }
+  to   { background-position: 200% 0; }
+`;
+
+const scanSweep = keyframes`
+  0%   { top: -4%;  opacity: 0; }
+  8%   { opacity: 0.7; }
+  92%  { opacity: 0.7; }
+  100% { top: 104%; opacity: 0; }
+`;
+
 /* ── data ───────────────────────────────────────────────────────────────────── */
 
 interface TechItem {
@@ -33,7 +47,6 @@ interface TechItem {
 }
 interface EcoGroup {
   id: string;
-  index: string;
   items: TechItem[];
   chips: string[];
 }
@@ -41,7 +54,6 @@ interface EcoGroup {
 const GROUPS: EcoGroup[] = [
   {
     id: 'frontend',
-    index: 'F·01',
     items: [
       { name: 'Next.js 15', icon: <SiNextdotjs /> },
       { name: 'React 19', icon: <SiReact /> },
@@ -55,7 +67,6 @@ const GROUPS: EcoGroup[] = [
   },
   {
     id: 'backend',
-    index: 'B·02',
     items: [
       { name: 'Node.js', icon: <SiNodedotjs /> },
       { name: 'Fastify', icon: <SiFastify /> },
@@ -69,7 +80,6 @@ const GROUPS: EcoGroup[] = [
   },
   {
     id: 'data-devops',
-    index: 'D·03',
     items: [
       { name: 'PostgreSQL', icon: <SiPostgresql /> },
       { name: 'MongoDB', icon: <SiMongodb /> },
@@ -140,12 +150,12 @@ export function TechStack() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.12 }}
         >
           <Spot aria-hidden />
+          <Scanline aria-hidden />
 
           {/* ── tabs ── */}
           <TabBar>
             {GROUPS.map(g => (
               <Tab key={g.id} $active={active === g.id} onClick={() => setActive(g.id)}>
-                <TabIndex>{g.index}</TabIndex>
                 <TabName>{t(`techStack.groups.${g.id}`)}</TabName>
                 {active === g.id && <TabUnderline layoutId="eco-tab-line" />}
               </Tab>
@@ -241,11 +251,34 @@ const Spot = styled.div`
   z-index: 3;
   border-radius: inherit;
   background: radial-gradient(
-    340px circle at var(--spot-x, -9999px) var(--spot-y, -9999px),
-    rgba(0, 229, 204, 0.14),
-    rgba(0, 229, 204, 0.04) 55%,
-    transparent 75%
+    360px circle at var(--spot-x, -9999px) var(--spot-y, -9999px),
+    rgba(90, 130, 255, 0.16),
+    rgba(140, 90, 255, 0.08) 45%,
+    transparent 72%
   );
+`;
+
+const Scanline = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -4%;
+  height: 2px;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(120, 150, 255, 0.5) 35%,
+    rgba(160, 110, 255, 0.5) 65%,
+    transparent
+  );
+  filter: blur(1px);
+  animation: ${scanSweep} 7s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
 `;
 
 const Panel = styled.div`
@@ -256,6 +289,25 @@ const Panel = styled.div`
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    z-index: 4;
+    background: linear-gradient(90deg, transparent, var(--cy) 30%, #9a6cff 55%, transparent);
+    background-size: 200% 100%;
+    animation: ${borderFlow} 6s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
 `;
 
 /* ── tabs ── */
@@ -302,14 +354,6 @@ const Tab = styled.button<{ $active: boolean }>`
   }
 `;
 
-const TabIndex = styled.span`
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--cy);
-`;
-
 const TabName = styled.span`
   font-family: var(--serif);
   font-style: italic;
@@ -323,8 +367,11 @@ const TabUnderline = styled(motion.div)`
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--cy);
+  background: linear-gradient(90deg, var(--cy), #9a6cff);
   border-radius: 1px 1px 0 0;
+  box-shadow:
+    0 0 10px rgba(90, 130, 255, 0.7),
+    0 0 20px rgba(150, 100, 255, 0.4);
 
   @media (max-width: 560px) {
     top: 0;
@@ -363,11 +410,17 @@ const TechItem = styled(motion.div)`
   cursor: default;
   transition:
     border-color 0.2s var(--ease),
-    background 0.2s;
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s var(--ease);
 
   &:hover {
-    border-color: var(--cy-35);
+    border-color: rgba(120, 145, 255, 0.5);
     background: var(--elev-2);
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px rgba(120, 145, 255, 0.14),
+      0 8px 22px rgba(90, 110, 255, 0.16);
   }
 `;
 
@@ -382,6 +435,16 @@ const IconWell = styled.div`
   font-size: 1rem;
   color: var(--fg-2);
   flex-shrink: 0;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+
+  ${TechItem}:hover & {
+    color: var(--cy-bright);
+    background: rgba(90, 120, 255, 0.14);
+    box-shadow: 0 0 14px rgba(90, 130, 255, 0.4);
+  }
 `;
 
 const TechName = styled.span`
@@ -418,4 +481,14 @@ const Chip = styled.span`
   font-weight: 500;
   letter-spacing: 0.03em;
   white-space: nowrap;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+
+  &:hover {
+    border-color: rgba(150, 110, 255, 0.5);
+    color: #b9c6ff;
+    box-shadow: 0 0 12px rgba(110, 130, 255, 0.35);
+  }
 `;
