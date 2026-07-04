@@ -39,6 +39,16 @@ const marqueeScroll = keyframes`
   to   { transform: translateX(-50%); }
 `;
 
+const nebulaFlow = keyframes`
+  from { background-position: 0% 50%; }
+  to   { background-position: 300% 50%; }
+`;
+
+const glowPulse = keyframes`
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(90, 150, 255, 0.35)); }
+  50%      { filter: drop-shadow(0 0 30px rgba(130, 175, 255, 0.65)); }
+`;
+
 /* ── motion variant ────────────────────────────────────────────────────────── */
 
 const FADE = {
@@ -414,36 +424,54 @@ const LineMask = styled.span`
 
 const Line1 = styled.span`
   display: block;
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.5rem, 3vw, 2.4rem);
-  line-height: 1.15;
-  color: var(--fg-2);
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1rem, 2.1vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-3);
 `;
 
 const Line2 = styled.span`
   display: block;
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(2.8rem, 7.5vw, 5.8rem);
-  line-height: 0.98;
-  letter-spacing: -0.01em;
-  background: linear-gradient(130deg, var(--cy) 0%, var(--cy-bright) 55%, var(--cy-deep) 100%);
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(2.1rem, 6vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    100deg,
+    #64a0ff 0%,
+    #4ac0ff 22%,
+    #8a6cff 44%,
+    #3e7fe9 66%,
+    #64a0ff 100%
+  );
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation:
+    ${nebulaFlow} 9s linear infinite,
+    ${glowPulse} 4.5s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 const Line3 = styled.span`
   display: block;
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.3rem, 2.8vw, 2.1rem);
-  line-height: 1.2;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1rem, 2.1vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--fg-1);
+  text-shadow: 0 0 18px rgba(90, 150, 255, 0.25);
 `;
 
 const CapsLine = styled.p`

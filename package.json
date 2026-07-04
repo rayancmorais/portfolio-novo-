@@ -28,6 +28,7 @@
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.2.10",
     "@fontsource/fraunces": "^5.2.9",
+    "@fontsource/orbitron": "^5.2.8",
     "@fontsource/space-mono": "^5.2.9",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",

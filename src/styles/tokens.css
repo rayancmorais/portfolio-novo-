@@ -52,6 +52,7 @@
     Helvetica, Arial, sans-serif;
   --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --display: 'Orbitron', 'Space Grotesk Variable', sans-serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
