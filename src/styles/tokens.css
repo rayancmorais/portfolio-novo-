@@ -47,9 +47,11 @@
   --container: 1200px;
   --tight: 1080px;
   /* Type */
-  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --sans:
+    'Space Grotesk Variable', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif;
+  --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
