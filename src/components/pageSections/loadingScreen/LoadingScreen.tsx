@@ -114,7 +114,7 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
                 </Brackets>
 
                 <AvatarRing>
-                  <img src="/images/profilepicture.png" alt="Rayan Morais" />
+                  <img src="/images/profilepicture.jpg" alt="Rayan Morais" />
                   <Sweep aria-hidden />
                   <Crosshair aria-hidden>
                     <i />
@@ -340,6 +340,7 @@ const AvatarRing = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 50% 18%;
     display: block;
   }
 `;

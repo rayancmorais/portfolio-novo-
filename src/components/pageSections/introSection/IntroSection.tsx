@@ -237,7 +237,7 @@ export function IntroSection() {
                   <span>RM · 01</span>
                 </PanelHeader>
                 <AvatarFrame>
-                  <AvatarImg src="/images/profilepicture.png" alt="Rayan Morais" />
+                  <AvatarImg src="/images/profilepicture.jpg" alt="Rayan Morais" />
                 </AvatarFrame>
                 <AvatarName>{t('hero.name')}</AvatarName>
                 <AvatarRole>{t('hero.role')}</AvatarRole>
@@ -711,6 +711,7 @@ const AvatarImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 18%;
 `;
 
 const AvatarName = styled.p`
