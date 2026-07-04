@@ -234,7 +234,6 @@ export function IntroSection() {
                   <span>
                     <HDot /> OPERATOR
                   </span>
-                  <span>RM · 01</span>
                 </PanelHeader>
                 <AvatarFrame>
                   <AvatarImg src="/images/profilepicture.jpg" alt="Rayan Morais" />
