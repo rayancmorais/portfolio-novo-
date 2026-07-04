@@ -215,11 +215,7 @@ const Container = styled.div`
 
 const Header = styled.div`
   text-align: center;
-  margin-bottom: 2.8rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
+  margin-bottom: 3.2rem;
 `;
 
 const SectionTitle = styled.h2`
@@ -230,6 +226,7 @@ const SectionTitle = styled.h2`
   letter-spacing: 0.005em;
   line-height: 1.04;
   color: var(--fg-1);
+  margin: 0.7rem 0 0.6rem;
 `;
 
 const Accent = styled.em`
@@ -238,9 +235,11 @@ const Accent = styled.em`
 `;
 
 const Subtitle = styled.p`
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--fg-2);
-  line-height: 1.7;
+  line-height: 1.6;
+  max-width: 540px;
+  margin: 0 auto;
 `;
 
 /* ── panel ── */
