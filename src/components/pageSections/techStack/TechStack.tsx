@@ -136,7 +136,8 @@ export function TechStack() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <SectionTitle>
-            {t('techStack.title_1')} <Accent>{t('techStack.title_accent')}</Accent>
+            {t('techStack.title_1')}{' '}
+            <Accent className="accent-sci">{t('techStack.title_accent')}</Accent>
           </SectionTitle>
           <Subtitle>{t('techStack.subtitle')}</Subtitle>
         </Header>
@@ -253,7 +254,7 @@ const Spot = styled.div`
   background: radial-gradient(
     360px circle at var(--spot-x, -9999px) var(--spot-y, -9999px),
     rgba(90, 130, 255, 0.16),
-    rgba(140, 90, 255, 0.08) 45%,
+    rgba(70, 150, 255, 0.09) 45%,
     transparent 72%
   );
 `;
@@ -270,7 +271,7 @@ const Scanline = styled.div`
     90deg,
     transparent,
     rgba(120, 150, 255, 0.5) 35%,
-    rgba(160, 110, 255, 0.5) 65%,
+    rgba(90, 180, 255, 0.5) 65%,
     transparent
   );
   filter: blur(1px);
@@ -298,7 +299,7 @@ const Panel = styled.div`
     right: 0;
     height: 1px;
     z-index: 4;
-    background: linear-gradient(90deg, transparent, var(--cy) 30%, #9a6cff 55%, transparent);
+    background: linear-gradient(90deg, transparent, var(--cy) 30%, #64a0ff 55%, transparent);
     background-size: 200% 100%;
     animation: ${borderFlow} 6s linear infinite;
   }
@@ -367,11 +368,11 @@ const TabUnderline = styled(motion.div)`
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--cy), #9a6cff);
+  background: linear-gradient(90deg, var(--cy), #64a0ff);
   border-radius: 1px 1px 0 0;
   box-shadow:
     0 0 10px rgba(90, 130, 255, 0.7),
-    0 0 20px rgba(150, 100, 255, 0.4);
+    0 0 20px rgba(90, 165, 255, 0.45);
 
   @media (max-width: 560px) {
     top: 0;
@@ -487,7 +488,7 @@ const Chip = styled.span`
     color 0.2s;
 
   &:hover {
-    border-color: rgba(150, 110, 255, 0.5);
+    border-color: rgba(100, 165, 255, 0.5);
     color: #b9c6ff;
     box-shadow: 0 0 12px rgba(110, 130, 255, 0.35);
   }

@@ -659,7 +659,8 @@ export function CaseStudies() {
           transition={{ type: 'spring', stiffness: 360, damping: 30 }}
         >
           <Title id="work-title">
-            {t('caseStudies.title_1')} <em>{t('caseStudies.title_accent')}</em>
+            {t('caseStudies.title_1')}{' '}
+            <em className="accent-sci">{t('caseStudies.title_accent')}</em>
           </Title>
           <Subtitle>{t('caseStudies.subtitle')}</Subtitle>
         </Header>

@@ -446,7 +446,7 @@ export function Projects() {
       <Inner>
         <Header>
           <Title id="projects-title">
-            <em>{t('projects.title_accent')}</em>
+            <em className="accent-sci">{t('projects.title_accent')}</em>
           </Title>
           <Subtitle>{t('projects.subtitle')}</Subtitle>
         </Header>

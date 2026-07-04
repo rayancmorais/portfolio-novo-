@@ -387,7 +387,7 @@ export function GitHubStats() {
       <Inner>
         <Header>
           <Title id="github-title">
-            {t('github.title_1')} <em>{t('github.title_accent')}</em>
+            {t('github.title_1')} <em className="accent-sci">{t('github.title_accent')}</em>
           </Title>
           <Handle href={`https://github.com/${GH_USER}`} target="_blank" rel="noopener noreferrer">
             @{GH_USER} ↗

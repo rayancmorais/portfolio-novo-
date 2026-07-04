@@ -256,7 +256,8 @@ export function Testimonials() {
       <Inner>
         <Header>
           <Title id="testimonials-title">
-            {t('testimonials.title_1')} <em>{t('testimonials.title_accent')}</em>
+            {t('testimonials.title_1')}{' '}
+            <em className="accent-sci">{t('testimonials.title_accent')}</em>
           </Title>
           <Subtitle>{t('testimonials.subtitle')}</Subtitle>
         </Header>

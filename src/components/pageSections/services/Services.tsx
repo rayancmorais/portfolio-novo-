@@ -256,7 +256,7 @@ export function Services() {
       <Inner>
         <Header>
           <Title id="services-title">
-            {t('services.title_1')} <em>{t('services.title_accent')}</em>
+            {t('services.title_1')} <em className="accent-sci">{t('services.title_accent')}</em>
           </Title>
           <Subtitle>{t('services.subtitle')}</Subtitle>
         </Header>

@@ -359,7 +359,7 @@ export function Contact() {
       <Inner>
         <Header>
           <Title id="contact-title">
-            {t('contact.title_1')} <em>{t('contact.title_accent')}</em>
+            {t('contact.title_1')} <em className="accent-sci">{t('contact.title_accent')}</em>
           </Title>
           <Subtitle>{t('contact.subtitle')}</Subtitle>
         </Header>
