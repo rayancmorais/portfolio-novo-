@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -66,6 +66,52 @@ function Anim({ i, inView, children }: { i: number; inView: boolean; children: R
     <motion.div custom={i} variants={FADE} initial="hidden" animate={inView ? 'show' : 'hidden'}>
       {children}
     </motion.div>
+  );
+}
+
+/* ── headline line reveal (clip mask) ─────────────────────────────────────────── */
+
+const HEAD_EASE = [0.16, 1, 0.3, 1] as const;
+const HEAD_STAGGER = 0.12;
+
+const LINE_REVEAL = {
+  hidden: { y: '100%' },
+  show: (i: number) => ({
+    y: '0%',
+    transition: {
+      duration: 0.7,
+      ease: HEAD_EASE,
+      delay: 0.2 + i * HEAD_STAGGER,
+    },
+  }),
+};
+
+function LineReveal({
+  i,
+  inView,
+  reduced,
+  children,
+}: {
+  i: number;
+  inView: boolean;
+  reduced: boolean;
+  children: React.ReactNode;
+}) {
+  if (reduced) {
+    return <LineMask>{children}</LineMask>;
+  }
+  return (
+    <LineMask>
+      <motion.span
+        style={{ display: 'block', willChange: 'transform' }}
+        custom={i}
+        variants={LINE_REVEAL}
+        initial="hidden"
+        animate={inView ? 'show' : 'hidden'}
+      >
+        {children}
+      </motion.span>
+    </LineMask>
   );
 }
 
@@ -141,6 +187,7 @@ export function IntroSection() {
   const cvUrl = CV_URLS[language];
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-5% 0px' });
+  const reducedMotion = useReducedMotion() ?? false;
 
   return (
     <Section ref={ref} id="home">
@@ -172,15 +219,15 @@ export function IntroSection() {
             </Anim>
 
             <HeadBlock>
-              <Anim i={3} inView={inView}>
+              <LineReveal i={0} inView={inView} reduced={reducedMotion}>
                 <Line1>{t('hero.headline_1')}</Line1>
-              </Anim>
-              <Anim i={4} inView={inView}>
+              </LineReveal>
+              <LineReveal i={1} inView={inView} reduced={reducedMotion}>
                 <Line2>{t('hero.headline_accent')},</Line2>
-              </Anim>
-              <Anim i={5} inView={inView}>
+              </LineReveal>
+              <LineReveal i={2} inView={inView} reduced={reducedMotion}>
                 <Line3>{t('hero.headline_2')}</Line3>
-              </Anim>
+              </LineReveal>
             </HeadBlock>
 
             <Anim i={6} inView={inView}>
@@ -422,6 +469,13 @@ const HeadBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+`;
+
+const LineMask = styled.span`
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
 `;
 
 const Line1 = styled.span`
