@@ -301,7 +301,7 @@ const Section = styled.section`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
   background: transparent;
 `;
@@ -312,7 +312,7 @@ const Inner = styled.div`
   width: 100%;
   max-width: var(--tight, 1080px);
   margin: 0 auto;
-  padding: clamp(5.5rem, 11vw, 8rem) 1.5rem clamp(3rem, 6vw, 4rem);
+  padding: calc(var(--nav-h, 66px) + clamp(1rem, 3vw, 2.2rem)) 1.5rem clamp(3rem, 6vw, 4rem);
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
@@ -397,10 +397,11 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: 1.65fr 1fr;
   gap: 1.5rem;
-  align-items: start;
+  align-items: center;
 
   @media (max-width: 860px) {
     grid-template-columns: 1fr;
+    align-items: stretch;
   }
 `;
 
