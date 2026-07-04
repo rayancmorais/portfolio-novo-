@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { SpaceScene } from '@/components/pageSections/introSection/SpaceScene';
 import { LoadingScreen } from '@/components/pageSections/loadingScreen/LoadingScreen';
 import { Navbar } from '@/components/pageSections/navbar/Navbar';
 import { IntroSection } from '@/components/pageSections/introSection/IntroSection';
@@ -14,6 +16,7 @@ import { useLenis } from '@/hooks/useLenis';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const reducedMotion = useReducedMotion() ?? false;
 
   useLenis();
 
@@ -23,6 +26,17 @@ export default function App() {
 
   return (
     <>
+      <SpaceScene reduced={reducedMotion} />
+      <div
+        aria-hidden
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: -1,
+          pointerEvents: 'none',
+          background: 'rgba(9, 12, 20, 0.34)',
+        }}
+      />
       {loading && <LoadingScreen onFinish={handleLoadingFinish} />}
       {!loading && (
         <>

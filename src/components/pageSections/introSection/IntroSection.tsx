@@ -39,11 +39,6 @@ const marqueeScroll = keyframes`
   to   { transform: translateX(-50%); }
 `;
 
-const rainFall = keyframes`
-  from { transform: translateY(-20px); }
-  to   { transform: translateY(135vh); }
-`;
-
 /* ── motion variant ────────────────────────────────────────────────────────── */
 
 const FADE = {
@@ -115,38 +110,6 @@ function LineReveal({
   );
 }
 
-/* ── rain data ─────────────────────────────────────────────────────────────── */
-
-const RAIN_LINES = Array.from({ length: 28 }, (_, i) => ({
-  id: i,
-  left: `${3 + i * 3.3}%`,
-  width: `${1 + (i % 2)}px`,
-  height: `${60 + ((i * 37) % 180)}px`,
-  duration: `${5.5 + ((i * 0.27) % 7)}s`,
-  delay: `${-((i * 0.41) % 6)}s`,
-  opacity: 0.05 + (i % 8) * 0.025,
-}));
-
-function RainBackground() {
-  return (
-    <RainWrap aria-hidden>
-      {RAIN_LINES.map(l => (
-        <RainLine
-          key={l.id}
-          style={{
-            left: l.left,
-            width: l.width,
-            height: l.height,
-            animationDuration: l.duration,
-            animationDelay: l.delay,
-            opacity: l.opacity,
-          }}
-        />
-      ))}
-    </RainWrap>
-  );
-}
-
 /* ── marquee data ──────────────────────────────────────────────────────────── */
 
 const STACK = [
@@ -191,9 +154,7 @@ export function IntroSection() {
 
   return (
     <Section ref={ref} id="home">
-      <AuroraBg />
-      <DotGrid />
-      <RainBackground />
+      <Scrim aria-hidden />
 
       <Inner>
         <TopBar>
@@ -301,41 +262,14 @@ export function IntroSection() {
 
 /* ── background ────────────────────────────────────────────────────────────── */
 
-const AuroraBg = styled.div`
+const Scrim = styled.div`
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 60% at 15% 40%, rgba(62, 127, 233, 0.11) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 50% at 85% 70%, rgba(62, 127, 233, 0.09) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 55% 10%, rgba(62, 127, 233, 0.06) 0%, transparent 55%);
-`;
-
-const DotGrid = styled.div`
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(62, 127, 233, 0.09) 1px, transparent 1px);
-  background-size: 38px 38px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-`;
-
-const RainWrap = styled.div`
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 2;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-`;
-
-const RainLine = styled.div`
-  position: absolute;
-  top: -240px;
-  background: var(--cy);
-  border-radius: 1px;
-  animation: ${rainFall} linear infinite;
+    linear-gradient(95deg, rgba(6, 9, 18, 0.82) 0%, rgba(6, 9, 18, 0.45) 32%, transparent 58%),
+    radial-gradient(120% 90% at 50% 0%, transparent 55%, rgba(3, 5, 12, 0.55) 100%);
 `;
 
 /* ── layout ─────────────────────────────────────────────────────────────────── */
@@ -347,7 +281,7 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  background: var(--bg);
+  background: transparent;
 `;
 
 const Inner = styled.div`
