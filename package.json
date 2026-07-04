@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.2.10",
+    "@fontsource/chakra-petch": "^5.2.7",
     "@fontsource/fraunces": "^5.2.9",
     "@fontsource/orbitron": "^5.2.8",
     "@fontsource/space-mono": "^5.2.9",
