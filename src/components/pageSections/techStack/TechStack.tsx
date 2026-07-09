@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import {
@@ -121,10 +121,8 @@ function clearSpot(e: React.MouseEvent<HTMLDivElement>) {
 
 export function TechStack() {
   const { t } = useTranslation('home');
-  const [active, setActive] = useState('frontend');
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px' });
-  const group = GROUPS.find(g => g.id === active)!;
 
   return (
     <Section id="ecosystem" ref={ref}>
@@ -153,49 +151,39 @@ export function TechStack() {
           <Spot aria-hidden />
           <Scanline aria-hidden />
 
-          {/* ── tabs ── */}
-          <TabBar>
-            {GROUPS.map(g => (
-              <Tab key={g.id} $active={active === g.id} onClick={() => setActive(g.id)}>
-                <TabName>{t(`techStack.groups.${g.id}`)}</TabName>
-                {active === g.id && <TabUnderline layoutId="eco-tab-line" />}
-              </Tab>
+          <Columns>
+            {GROUPS.map((g, gi) => (
+              <GroupCol key={g.id}>
+                <GroupHead>
+                  <GroupTitle>{t(`techStack.groups.${g.id}`)}</GroupTitle>
+                  <GroupLine aria-hidden />
+                </GroupHead>
+
+                <TechGrid>
+                  {g.items.map((tech, i) => (
+                    <TechItem
+                      key={tech.name}
+                      custom={gi * 7 + i}
+                      variants={itemVariants}
+                      initial="hidden"
+                      animate={inView ? 'show' : 'hidden'}
+                    >
+                      <IconWell>{tech.icon}</IconWell>
+                      <TechName>{tech.name}</TechName>
+                    </TechItem>
+                  ))}
+                </TechGrid>
+
+                <ChipDivider />
+
+                <ChipRow>
+                  {g.chips.map(chip => (
+                    <Chip key={chip}>{chip}</Chip>
+                  ))}
+                </ChipRow>
+              </GroupCol>
             ))}
-          </TabBar>
-
-          {/* ── content ── */}
-          <AnimatePresence mode="wait">
-            <Content
-              key={active}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-            >
-              <TechGrid>
-                {group.items.map((tech, i) => (
-                  <TechItem
-                    key={tech.name}
-                    custom={i}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="show"
-                  >
-                    <IconWell>{tech.icon}</IconWell>
-                    <TechName>{tech.name}</TechName>
-                  </TechItem>
-                ))}
-              </TechGrid>
-
-              <ChipDivider />
-
-              <ChipRow>
-                {group.chips.map(chip => (
-                  <Chip key={chip}>{chip}</Chip>
-                ))}
-              </ChipRow>
-            </Content>
-          </AnimatePresence>
+          </Columns>
         </Panel>
       </Container>
     </Section>
@@ -310,42 +298,27 @@ const Panel = styled.div`
   }
 `;
 
-/* ── tabs ── */
+/* ── columns ── */
 
-const TabBar = styled.div`
-  display: flex;
-  border-bottom: 1px solid var(--border);
+const Columns = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-  @media (max-width: 560px) {
-    flex-direction: column;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const Tab = styled.button<{ $active: boolean }>`
+const GroupCol = styled.div`
   position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.28rem;
-  padding: 1.1rem 1rem 1.15rem;
-  background: ${({ $active }) => ($active ? 'var(--elev-2)' : 'transparent')};
-  border: none;
+  padding: 1.7rem 1.6rem 1.8rem;
   border-right: 1px solid var(--border-faint);
-  cursor: pointer;
-  transition: background 0.2s var(--ease);
 
   &:last-child {
     border-right: none;
   }
-  &:hover:not(:disabled) {
-    background: var(--elev-2);
-  }
 
-  @media (max-width: 560px) {
-    flex-direction: row;
-    gap: 0.6rem;
+  @media (max-width: 900px) {
     border-right: none;
     border-bottom: 1px solid var(--border-faint);
     &:last-child {
@@ -354,50 +327,33 @@ const Tab = styled.button<{ $active: boolean }>`
   }
 `;
 
-const TabName = styled.span`
+const GroupHead = styled.div`
+  margin-bottom: 1.3rem;
+`;
+
+const GroupTitle = styled.h3`
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.05rem;
+  font-weight: 400;
+  font-size: 1.15rem;
   color: var(--fg-1);
+  margin: 0 0 0.7rem;
 `;
 
-const TabUnderline = styled(motion.div)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+const GroupLine = styled.div`
   height: 2px;
-  background: linear-gradient(90deg, var(--cy), #64a0ff);
-  border-radius: 1px 1px 0 0;
+  width: 100%;
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--cy), #64a0ff 55%, transparent);
   box-shadow:
-    0 0 10px rgba(90, 130, 255, 0.7),
-    0 0 20px rgba(90, 165, 255, 0.45);
-
-  @media (max-width: 560px) {
-    top: 0;
-    bottom: auto;
-    left: 0;
-    right: auto;
-    width: 2px;
-    height: 100%;
-    border-radius: 0 1px 1px 0;
-  }
-`;
-
-/* ── content ── */
-
-const Content = styled(motion.div)`
-  padding: 1.8rem 2rem 2rem;
-
-  @media (max-width: 600px) {
-    padding: 1.4rem 1.2rem 1.6rem;
-  }
+    0 0 10px rgba(90, 130, 255, 0.6),
+    0 0 20px rgba(90, 165, 255, 0.35);
 `;
 
 const TechGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
 `;
 
 const TechItem = styled(motion.div)`
