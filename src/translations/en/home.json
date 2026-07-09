@@ -157,25 +157,5 @@
         "tags": ["Vercel", "CI/CD", "Git Flow"]
       }
     ]
-  },
-  "testimonials": {
-    "eyebrow": "07 · Testimonials",
-    "title_1": "What people",
-    "title_accent": "say",
-    "subtitle": "People I've worked with — on projects and day to day.",
-    "items": [
-      {
-        "quote": "Rayan delivered our e-commerce ahead of schedule with a level of design care we didn't expect from a dev. He's become a reference on the team.",
-        "role": "Product Manager · Lux Lab Brasil"
-      },
-      {
-        "quote": "I worked with him on the coupon platform backend. Clean code, clear communication and zero drama in production. I recommend him without hesitation.",
-        "role": "Tech Lead · CupomManiac"
-      },
-      {
-        "quote": "We hired Rayan for a React Native app and he handled everything, from UX to deploy. A rare professional to find around here.",
-        "role": "Founder · Mobility Startup"
-      }
-    ]
   }
 }

@@ -9,7 +9,6 @@ import { CaseStudies } from '@/components/pageSections/caseStudies/CaseStudies';
 import { Projects } from '@/components/pageSections/projects/Projects';
 import { GitHubStats } from '@/components/pageSections/githubStats/GitHubStats';
 import { Services } from '@/components/pageSections/services/Services';
-import { Testimonials } from '@/components/pageSections/testimonialsSection/Testimonials';
 import { Contact } from '@/components/pageSections/contact/Contact';
 import { Footer } from '@/components/pageSections/footer/Footer';
 import { useLenis } from '@/hooks/useLenis';
@@ -48,7 +47,6 @@ export default function App() {
             <Projects />
             <GitHubStats />
             <Services />
-            <Testimonials />
             <Contact />
           </main>
           <Footer />
