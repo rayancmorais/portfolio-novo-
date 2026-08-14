@@ -247,22 +247,25 @@ export function IntroSection() {
 
                 <InfoDivider />
 
+                {/* Ordem pensada para o grid 2×2 do mobile: os dois valores
+                    curtos pareiam na primeira linha, os longos ocupam a largura
+                    toda. No desktop a coluna é estreita e tudo empilha. */}
                 <InfoRows>
                   <InfoRow>
                     <InfoLabel>{t('hero.location_label')}</InfoLabel>
                     <InfoVal>{t('hero.location_value')}</InfoVal>
                   </InfoRow>
                   <InfoRow>
+                    <InfoLabel>{t('hero.exp_label')}</InfoLabel>
+                    <InfoVal>{t('hero.exp_value')}</InfoVal>
+                  </InfoRow>
+                  <InfoRow $wide>
                     <InfoLabel>{t('hero.focus_label')}</InfoLabel>
                     <InfoValAccent>{t('hero.focus_value')}</InfoValAccent>
                   </InfoRow>
-                  <InfoRow>
+                  <InfoRow $wide>
                     <InfoLabel>{t('hero.journey_label')}</InfoLabel>
                     <InfoVal>{t('hero.journey_value')}</InfoVal>
-                  </InfoRow>
-                  <InfoRow>
-                    <InfoLabel>{t('hero.exp_label')}</InfoLabel>
-                    <InfoVal>{t('hero.exp_value')}</InfoVal>
                   </InfoRow>
                 </InfoRows>
               </AvatarCard>
@@ -383,6 +386,12 @@ const AvailBadge = styled.div`
   font-size: 0.74rem;
   font-weight: 500;
   color: var(--blue-bright);
+
+  /* Preserva as três informações do badge em vez de encurtar o texto. */
+  @media (max-width: 400px) {
+    font-size: 0.68rem;
+    padding: 0.28rem 0.6rem;
+  }
 `;
 
 const PulseDot = styled.span`
@@ -708,6 +717,11 @@ const AvatarFrame = styled.div`
   animation: ${glowRing} 3s ease-in-out infinite;
   flex-shrink: 0;
   margin-bottom: 0.2rem;
+
+  @media (max-width: 860px) {
+    width: 70px;
+    height: 70px;
+  }
 `;
 
 const AvatarImg = styled.img`
@@ -730,6 +744,10 @@ const AvatarRole = styled.p`
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fg-4);
+
+  @media (max-width: 860px) {
+    letter-spacing: 0.1em;
+  }
 `;
 
 const InfoDivider = styled.div`
@@ -745,9 +763,15 @@ const InfoRows = styled.div`
   flex-direction: column;
   gap: 0.85rem;
   text-align: left;
+
+  @media (max-width: 860px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 0.9rem;
+  }
 `;
 
-const InfoRow = styled.div`
+const InfoRow = styled.div<{ $wide?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -757,6 +781,11 @@ const InfoRow = styled.div`
 
   &:hover {
     border-left-color: var(--cy-50);
+  }
+
+  @media (max-width: 860px) {
+    gap: 4px;
+    grid-column: ${({ $wide }) => ($wide ? '1 / -1' : 'auto')};
   }
 `;
 

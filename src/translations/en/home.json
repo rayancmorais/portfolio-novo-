@@ -23,7 +23,7 @@
   "techStack": {
     "title": "Technical Ecosystem",
     "total": "technologies",
-    "eyebrow": "02 · THE STACK",
+    "eyebrow": "03 · THE STACK",
     "title_1": "Technical",
     "title_accent": "Ecosystem",
     "subtitle": "The toolkit I use to build products.",
@@ -34,7 +34,7 @@
     }
   },
   "caseStudies": {
-    "eyebrow": "03 · Selected Work",
+    "eyebrow": "02 · Selected Work",
     "title_1": "Case",
     "title_accent": "Studies",
     "subtitle": "Some builds, told the way I think about them — problem, approach, result.",
@@ -127,6 +127,7 @@
     "link_email": "Email · rayan_cm2021@icloud.com"
   },
   "footer": {
+    "nav_work": "Case studies",
     "nav_ecosystem": "Ecosystem",
     "nav_projects": "Projects",
     "nav_github": "GitHub",

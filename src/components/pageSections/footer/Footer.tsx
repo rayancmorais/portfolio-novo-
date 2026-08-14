@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
    Tokens via CSS custom properties with hex fallbacks. No new dependencies.
    ========================================================================== */
 
-const NAV_HREFS = ['#ecosystem', '#projects', '#github', '#services', '#contact'];
-const NAV_KEYS = [
-  'nav_ecosystem',
-  'nav_projects',
-  'nav_github',
-  'nav_services',
-  'nav_contact',
+const NAV_ITEMS = [
+  { key: 'nav_work', href: '#work' },
+  { key: 'nav_ecosystem', href: '#ecosystem' },
+  { key: 'nav_projects', href: '#projects' },
+  { key: 'nav_github', href: '#github' },
+  { key: 'nav_services', href: '#services' },
+  { key: 'nav_contact', href: '#contact' },
 ] as const;
 
 const Wrap = styled.footer`
@@ -95,8 +95,8 @@ export function Footer() {
         </Wordmark>
 
         <Nav aria-label={t('footer.aria_nav')}>
-          {NAV_KEYS.map((key, i) => (
-            <NavLink key={NAV_HREFS[i]} href={NAV_HREFS[i]}>
+          {NAV_ITEMS.map(({ key, href }) => (
+            <NavLink key={href} href={href}>
               {t(`footer.${key}`)}
             </NavLink>
           ))}

@@ -8,6 +8,7 @@ vi.mock('react-i18next', () => ({
       const map: Record<string, string> = {
         'footer.aria_top': 'Rayan — back to top',
         'footer.aria_nav': 'Footer navigation',
+        'footer.nav_work': 'Case studies',
         'footer.nav_ecosystem': 'Ecosystem',
         'footer.nav_projects': 'Projects',
         'footer.nav_github': 'GitHub',
@@ -34,6 +35,7 @@ describe('Footer', () => {
 
   it('renders all navigation links', () => {
     render(<Footer />);
+    expect(screen.getByText('Case studies')).toBeInTheDocument();
     expect(screen.getByText('Ecosystem')).toBeInTheDocument();
     expect(screen.getByText('Projects')).toBeInTheDocument();
     expect(screen.getByText('GitHub')).toBeInTheDocument();

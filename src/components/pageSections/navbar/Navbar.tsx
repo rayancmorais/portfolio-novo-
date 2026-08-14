@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const NAV_LINKS = [
-  { key: 'ecosystem', href: '#ecosystem' },
   { key: 'selectedWork', href: '#work' },
+  { key: 'ecosystem', href: '#ecosystem' },
 ];
 
 const CV_URLS = {

@@ -14,8 +14,8 @@ export function Home() {
       <Navbar />
       <main>
         <IntroSection />
-        <TechStack />
         <CaseStudies />
+        <TechStack />
         <Projects />
         <GitHubStats />
         <Services />

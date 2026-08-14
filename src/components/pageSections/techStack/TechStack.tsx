@@ -319,6 +319,7 @@ const GroupCol = styled.div`
   }
 
   @media (max-width: 900px) {
+    padding: 1.1rem 1.1rem 1.2rem;
     border-right: none;
     border-bottom: 1px solid var(--border-faint);
     &:last-child {
@@ -329,6 +330,10 @@ const GroupCol = styled.div`
 
 const GroupHead = styled.div`
   margin-bottom: 1.3rem;
+
+  @media (max-width: 900px) {
+    margin-bottom: 0.75rem;
+  }
 `;
 
 const GroupTitle = styled.h3`
@@ -350,10 +355,18 @@ const GroupLine = styled.div`
     0 0 20px rgba(90, 165, 255, 0.35);
 `;
 
+/* No desktop as três categorias já ocupam colunas lado a lado, então a lista
+   interna fica em coluna única. No mobile elas empilham e a seção passava de
+   três telas — daí as duas colunas abaixo de 900px. */
 const TechGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.4rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35rem 0.5rem;
+  }
 `;
 
 const TechItem = styled(motion.div)`
@@ -364,6 +377,12 @@ const TechItem = styled(motion.div)`
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: default;
+  min-width: 0;
+
+  @media (max-width: 900px) {
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+  }
   transition:
     border-color 0.2s var(--ease),
     background 0.2s,
@@ -396,6 +415,13 @@ const IconWell = styled.div`
     background 0.2s,
     box-shadow 0.2s;
 
+  @media (max-width: 900px) {
+    width: 24px;
+    height: 24px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+  }
+
   ${TechItem}:hover & {
     color: var(--cy-bright);
     background: rgba(90, 120, 255, 0.14);
@@ -410,6 +436,12 @@ const TechName = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  /* Nomes chegam a 20 caracteres ("Anthropic Claude API"); em duas colunas
+     estreitas eles precisam de mais folga para não virar reticências. */
+  @media (max-width: 900px) {
+    font-size: 0.76rem;
+  }
 `;
 
 const ChipDivider = styled.div`
