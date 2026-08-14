@@ -3,18 +3,9 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
-
-const CV_URLS = {
-  ptBR: '/pdf/Rayan_Morais_CV_PT_FullStack.pdf',
-  en: '/pdf/Rayan_Morais_CV_Eng.pdf',
-};
+import { CV_URLS } from '@/data/links';
 
 /* ── keyframes ─────────────────────────────────────────────────────────────── */
-
-const blink = keyframes`
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-`;
 
 const pulseDot = keyframes`
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -167,21 +158,6 @@ export function IntroSection() {
       <Scrim aria-hidden />
 
       <Inner>
-        <TopBar>
-          <Anim i={0} inView={inView}>
-            <TermChip>
-              <TermDots>
-                <i />
-                <i />
-                <i />
-              </TermDots>
-              <TermText>
-                rayan@dev&nbsp;:&nbsp;~$&nbsp;whoami<Caret>▋</Caret>
-              </TermText>
-            </TermChip>
-          </Anim>
-        </TopBar>
-
         <Grid>
           {/* left: headline */}
           <HeadCol>
@@ -324,56 +300,7 @@ const Inner = styled.div`
   gap: 1.8rem;
 `;
 
-const TopBar = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-`;
-
-/* ── terminal chip ───────────────────────────────────────────────────────────── */
-
-const TermChip = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  background: var(--bg-2);
-  border: 1px solid var(--border-faint);
-  border-radius: 8px;
-  padding: 0.38rem 0.8rem;
-`;
-
-const TermDots = styled.span`
-  display: flex;
-  gap: 4px;
-  i {
-    display: block;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-  }
-  i:nth-child(1) {
-    background: #ff5f57;
-  }
-  i:nth-child(2) {
-    background: #febc2e;
-  }
-  i:nth-child(3) {
-    background: var(--cy);
-  }
-`;
-
-const TermText = styled.span`
-  font-family: var(--mono);
-  font-size: 0.71rem;
-  color: var(--fg-2);
-  letter-spacing: 0.04em;
-`;
-
-const Caret = styled.span`
-  color: var(--cy);
-  animation: ${blink} 1.1s step-end infinite;
-  margin-left: 2px;
-`;
+/* ── availability badge ──────────────────────────────────────────────────────── */
 
 const AvailBadge = styled.div`
   display: inline-flex;
