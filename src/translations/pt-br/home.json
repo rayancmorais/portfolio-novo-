@@ -23,7 +23,7 @@
   "techStack": {
     "title": "Technical Ecosystem",
     "total": "tecnologias",
-    "eyebrow": "03 · A STACK",
+    "eyebrow": "04 · A STACK",
     "title_1": "Ecossistema",
     "title_accent": "Técnico",
     "subtitle": "O conjunto de ferramentas que uso para construir produtos.",
@@ -113,7 +113,6 @@
     "items": [
       {
         "context_extra": "",
-        "retrospective": "",
         "diagram": {
           "caption": "Passe o mouse por um nó (ou toque, no celular) para ver a responsabilidade dele.",
           "roles": {
@@ -125,20 +124,10 @@
             "db": "Fonte de verdade: cupons, lojas, usuários, alertas e comentários com threading em 3 níveis.",
             "cache": "Cache das listagens quentes e backend da fila."
           }
-        },
-        "decisions": [
-          {
-            "title": "N+1 no sync de afiliados",
-            "problem": "Cada ciclo trazia milhares de cupons processados em upserts individuais, travando o banco sob carga.",
-            "alternatives": "Aumentar o pool de conexões (adia o problema), processar em fila com concorrência limitada (mais complexo), ou lote com deduplicação.",
-            "decision": "upsertMany com dedupe por (fonte, idExterno).",
-            "tradeoff": "Perde o retorno individual de cada linha, que não era necessário no fluxo de sync."
-          }
-        ]
+        }
       },
       {
         "context_extra": "",
-        "retrospective": "",
         "diagram": {
           "caption": "A decisão central está no RabbitMQ: Game e Wallet nunca se falam por HTTP direto.",
           "roles": {
@@ -150,12 +139,10 @@
             "wallet": "Única fonte de verdade para saldo. Dinheiro em BigInt de centavos, sem ponto flutuante em nenhum momento.",
             "db": "Persistência da carteira: apostas, cashouts e histórico de transações."
           }
-        },
-        "decisions": []
+        }
       },
       {
         "context_extra": "",
-        "retrospective": "",
         "diagram": {
           "caption": "O mesmo backend atende dois mercados — o que muda por região é fornecedor, imposto e gateway.",
           "roles": {
@@ -167,13 +154,12 @@
             "eu": "Fornecedores europeus. Adicionar um novo não altera o fluxo de pedidos.",
             "pay": "MercadoPago (Pix, Boleto, cartão) no Brasil; Stripe e PayPal na Europa. O roteamento é por país de destino."
           }
-        },
-        "decisions": []
+        }
       }
     ]
   },
   "contact": {
-    "eyebrow": "08 · Contato",
+    "eyebrow": "07 · Contato",
     "title_1": "Vamos",
     "title_accent": "conversar",
     "subtitle": "Tem um projeto em mente ou uma vaga aberta? Manda uma mensagem.",
@@ -202,7 +188,7 @@
     "copyright": "© {{year}} Rayan Morais · Construído com React, Vite & styled-components"
   },
   "github": {
-    "eyebrow": "05 · GitHub",
+    "eyebrow": "03 · GitHub",
     "title_1": "Atividade no",
     "title_accent": "GitHub",
     "stat_commits": "Commits",
@@ -213,7 +199,7 @@
     "lang_others": "Outros"
   },
   "projects": {
-    "eyebrow": "04 · Projetos",
+    "eyebrow": "05 · Projetos",
     "title_accent": "Projetos",
     "subtitle": "Projetos que construí — tecnologias usadas e onde vivem.",
     "status_live": "No ar",

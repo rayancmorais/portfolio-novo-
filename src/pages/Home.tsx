@@ -15,9 +15,9 @@ export function Home() {
       <main>
         <IntroSection />
         <CaseStudies />
+        <GitHubStats />
         <TechStack />
         <Projects />
-        <GitHubStats />
         <Services />
         <Contact />
       </main>

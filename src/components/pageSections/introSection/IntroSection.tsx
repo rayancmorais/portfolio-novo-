@@ -221,7 +221,7 @@ export function IntroSection() {
 
           {/* right: unified card */}
           <SideCol>
-            <Anim i={3} inView={inView}>
+            <Anim i={9} inView={inView}>
               <AvatarCard onMouseMove={handleSpot} onMouseLeave={clearSpot}>
                 <Spot aria-hidden />
                 <Corners aria-hidden>
@@ -579,12 +579,15 @@ const GhostBtn = styled.a`
 
 /* ── side column ─────────────────────────────────────────────────────────────── */
 
+/* No empilhamento do mobile o card vem depois da headline e da bio: tese
+   primeiro, identidade depois. No desktop as duas colunas ficam lado a lado e a
+   ordem vertical não se aplica. */
 const SideCol = styled.div`
   display: flex;
   flex-direction: column;
 
   @media (max-width: 860px) {
-    order: -1;
+    margin-top: 0.5rem;
   }
 `;
 

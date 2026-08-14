@@ -23,7 +23,7 @@
   "techStack": {
     "title": "Technical Ecosystem",
     "total": "technologies",
-    "eyebrow": "03 · THE STACK",
+    "eyebrow": "04 · THE STACK",
     "title_1": "Technical",
     "title_accent": "Ecosystem",
     "subtitle": "The toolkit I use to build products.",
@@ -109,7 +109,6 @@
     "items": [
       {
         "context_extra": "",
-        "retrospective": "",
         "diagram": {
           "caption": "Hover a node (or tap it on mobile) to see what it is responsible for.",
           "roles": {
@@ -121,20 +120,10 @@
             "db": "Source of truth: coupons, stores, users, alerts and 3-level threaded comments.",
             "cache": "Caches hot listings and backs the queue."
           }
-        },
-        "decisions": [
-          {
-            "title": "N+1 in the affiliate sync",
-            "problem": "Every cycle pulled thousands of coupons processed as individual upserts, locking up the database under load.",
-            "alternatives": "Raise the connection pool (postpones the problem), process through a queue with limited concurrency (more complex), or batch with deduplication.",
-            "decision": "upsertMany with dedupe by (source, externalId).",
-            "tradeoff": "Loses the per-row return value, which the sync flow didn't need."
-          }
-        ]
+        }
       },
       {
         "context_extra": "",
-        "retrospective": "",
         "diagram": {
           "caption": "The central decision is RabbitMQ: Game and Wallet never talk to each other over HTTP.",
           "roles": {
@@ -146,12 +135,10 @@
             "wallet": "The single source of truth for balance. Money as BigInt cents, with no floating point anywhere.",
             "db": "Wallet persistence: bets, cashouts and the transaction history."
           }
-        },
-        "decisions": []
+        }
       },
       {
         "context_extra": "",
-        "retrospective": "",
         "diagram": {
           "caption": "One backend serves two markets — what changes per region is supplier, tax and gateway.",
           "roles": {
@@ -163,13 +150,12 @@
             "eu": "European suppliers. Adding a new one doesn't change the order flow.",
             "pay": "MercadoPago (Pix, Boleto, card) in Brazil; Stripe and PayPal in Europe. Routing is by destination country."
           }
-        },
-        "decisions": []
+        }
       }
     ]
   },
   "contact": {
-    "eyebrow": "08 · Contact",
+    "eyebrow": "07 · Contact",
     "title_1": "Let's",
     "title_accent": "talk",
     "subtitle": "Got a project in mind or an open role? Send a message.",
@@ -198,7 +184,7 @@
     "copyright": "© {{year}} Rayan Morais · Built with React, Vite & styled-components"
   },
   "github": {
-    "eyebrow": "05 · GitHub",
+    "eyebrow": "03 · GitHub",
     "title_1": "GitHub",
     "title_accent": "Activity",
     "stat_commits": "Commits",
@@ -209,7 +195,7 @@
     "lang_others": "Others"
   },
   "projects": {
-    "eyebrow": "04 · Projects",
+    "eyebrow": "05 · Projects",
     "title_accent": "Projects",
     "subtitle": "Projects I built — technologies used and where they live.",
     "status_live": "Live",

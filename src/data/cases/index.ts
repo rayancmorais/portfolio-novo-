@@ -1,18 +1,19 @@
 /* ============================================================================
-   Dados-base dos estudos de caso — o que não é texto traduzível.
-   A prosa (problema, abordagem, resultado, decisões técnicas) vive no i18next,
-   em translations/<lng>/home.json sob `caseStudies` e `casePages`.
+   Estudos de caso — ponto único de entrada.
 
-   Consumido pela seção da home (CaseStudies) e pelas páginas /case/:slug,
-   para que os dois nunca divirjam.
+   Aqui ficam os dados-base (ordem, ano, stack, links, métricas), consumidos
+   tanto pela seção da home quanto pelas páginas /case/:slug, para que os dois
+   nunca divirjam.
+
+   A prosa curta da home (problema, abordagem, resultado) vive no i18next. O
+   conteúdo técnico longo — decisões, código anotado e retrospectiva — vive em
+   ./<slug>.ts, um arquivo por case.
    ========================================================================== */
 
-export interface CaseCodeSnippet {
-  /** Caminho do arquivo de origem, mostrado como legenda do bloco. */
-  file: string;
-  language: string;
-  code: string;
-}
+import { cupommaniac } from './cupommaniac';
+import { crashGame } from './crash-game';
+import { luxLabBrasil } from './lux-lab-brasil';
+import type { CaseContent } from './types';
 
 export interface CaseStudy {
   slug: string;
@@ -27,11 +28,6 @@ export interface CaseStudy {
   /** Repositório. Ausente quando o código é privado. */
   repo?: string;
   metricValues: string[];
-  /**
-   * Trecho anotado do ponto mais interessante do projeto. Ausente enquanto o
-   * código não foi escolhido — a página simplesmente não renderiza a seção.
-   */
-  snippet?: CaseCodeSnippet;
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -105,4 +101,16 @@ export function findCaseBySlug(slug: string | undefined): CaseStudy | undefined 
 export function findNextCase(slug: string): CaseStudy {
   const index = CASE_STUDIES.findIndex(c => c.slug === slug);
   return CASE_STUDIES[(index + 1) % CASE_STUDIES.length];
+}
+
+/* ------------------------------------------------- conteúdo técnico ------- */
+
+const CONTENT: Record<string, CaseContent> = {
+  [cupommaniac.slug]: cupommaniac,
+  [crashGame.slug]: crashGame,
+  [luxLabBrasil.slug]: luxLabBrasil,
+};
+
+export function findCaseContent(slug: string): CaseContent | undefined {
+  return CONTENT[slug];
 }

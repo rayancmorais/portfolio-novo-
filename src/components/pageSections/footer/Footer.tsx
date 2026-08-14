@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 
 const NAV_ITEMS = [
   { key: 'nav_work', href: '#work' },
+  { key: 'nav_github', href: '#github' },
   { key: 'nav_ecosystem', href: '#ecosystem' },
   { key: 'nav_projects', href: '#projects' },
-  { key: 'nav_github', href: '#github' },
   { key: 'nav_services', href: '#services' },
   { key: 'nav_contact', href: '#contact' },
 ] as const;

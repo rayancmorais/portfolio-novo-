@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Orbitron, sans-serif">
+  <!--
+    Fonte do og-image (1200×630). Não é servido pelo site — fica fora de public/.
+    Exportar para public/og-image.png; instruções no README da tarefa.
+    As fontes vêm do Google Fonts porque o arquivo é aberto solto no navegador;
+    são as mesmas famílias que o site usa via @fontsource.
+  -->
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap');
+    </style>
+
+    <radialGradient id="glowTop" cx="78%" cy="0%" r="82%">
+      <stop offset="0%" stop-color="#3e7fe9" stop-opacity="0.20" />
+      <stop offset="62%" stop-color="#3e7fe9" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="glowBottom" cx="0%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#3e7fe9" stop-opacity="0.10" />
+      <stop offset="60%" stop-color="#3e7fe9" stop-opacity="0" />
+    </radialGradient>
+
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#ffffff" stroke-opacity="0.022" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0d1117" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+  <rect width="1200" height="630" fill="url(#glowTop)" />
+  <rect width="1200" height="630" fill="url(#glowBottom)" />
+
+  <!-- cantos em colchete — assinatura visual dos cards do site -->
+  <g fill="none" stroke="#3e7fe9" stroke-width="2" stroke-opacity="0.85">
+    <path d="M 34 60 L 34 34 L 60 34" />
+    <path d="M 1140 34 L 1166 34 L 1166 60" />
+    <path d="M 34 570 L 34 596 L 60 596" />
+    <path d="M 1166 570 L 1166 596 L 1140 596" />
+  </g>
+
+  <!-- disponibilidade -->
+  <circle cx="93" cy="84" r="5" fill="#4ade80" />
+  <text x="112" y="90" font-family="'Space Mono', monospace" font-size="17" font-weight="700"
+        letter-spacing="3.6" fill="#848b9c">ABERTO A OPORTUNIDADES · REMOTO · INGLÊS C1</text>
+
+  <!-- headline -->
+  <g font-size="84" font-weight="900" letter-spacing="-1">
+    <text x="88" y="248" fill="#e6e8ee">PRODUTOS QUE</text>
+    <text x="88" y="342" fill="#64a0ff">SOBREVIVEM</text>
+    <text x="88" y="436" fill="#e6e8ee">À PRODUÇÃO.</text>
+  </g>
+
+  <!-- régua inferior -->
+  <line x1="88" y1="500" x2="1112" y2="500" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1" />
+
+  <text x="88" y="540" font-size="28" font-weight="700" letter-spacing="0.5" fill="#e6e8ee">Rayan Morais</text>
+  <text x="88" y="568" font-family="'Space Mono', monospace" font-size="16" letter-spacing="2.6"
+        fill="#848b9c">DESENVOLVEDOR FULL-STACK</text>
+
+  <text x="1112" y="540" text-anchor="end" font-family="'Space Mono', monospace" font-size="18"
+        font-weight="700" letter-spacing="1" fill="#64a0ff">React · Node.js · TypeScript · Go</text>
+  <text x="1112" y="568" text-anchor="end" font-family="'Space Mono', monospace" font-size="17"
+        letter-spacing="1.8" fill="#848b9c">rayancmorais.com.br</text>
+</svg>

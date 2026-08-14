@@ -3,9 +3,13 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { CASE_STUDIES, findCaseBySlug, findNextCase } from '@/data/cases';
+import { CASE_STUDIES, findCaseBySlug, findCaseContent, findNextCase } from '@/data/cases';
 import { ARCHITECTURES } from '@/data/architecture';
 import { ArchitectureDiagram } from '@/components/caseStudy/ArchitectureDiagram';
+import { TechnicalDecisions } from '@/components/caseStudy/TechnicalDecisions';
+import { CodeSnippet } from '@/components/caseStudy/CodeSnippet';
+import { Retrospective } from '@/components/caseStudy/Retrospective';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Navbar } from '@/components/pageSections/navbar/Navbar';
 import { Footer } from '@/components/pageSections/footer/Footer';
 
@@ -19,14 +23,6 @@ import { Footer } from '@/components/pageSections/footer/Footer';
    decisões técnicas e o trecho de código de cada projeto ainda não existem.
    ========================================================================== */
 
-interface CaseDecision {
-  title: string;
-  problem: string;
-  alternatives: string;
-  decision: string;
-  tradeoff: string;
-}
-
 interface CaseDiagramCopy {
   caption: string;
   roles: Record<string, string>;
@@ -35,8 +31,6 @@ interface CaseDiagramCopy {
 interface CasePageCopy {
   context_extra?: string;
   diagram?: CaseDiagramCopy;
-  decisions?: CaseDecision[];
-  retrospective?: string;
 }
 
 interface CaseHomeCopy {
@@ -182,80 +176,6 @@ const Prose = styled.p`
   margin: 0 0 1rem;
 `;
 
-const DecisionCard = styled.div`
-  padding: 1.4rem 1.5rem;
-  margin-bottom: 1rem;
-  background: var(--elev);
-  border: 1px solid var(--border);
-  border-radius: var(--r-card, 16px);
-`;
-
-const DecisionTitle = styled.h3`
-  font-family: var(--font-serif, serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.35rem;
-  color: var(--fg-1);
-  margin: 0 0 1rem;
-`;
-
-const DecisionRow = styled.div`
-  display: grid;
-  grid-template-columns: 132px 1fr;
-  gap: 0.9rem;
-  margin-bottom: 0.7rem;
-
-  @media (max-width: 560px) {
-    grid-template-columns: 1fr;
-    gap: 0.2rem;
-  }
-`;
-
-const DecisionLabel = styled.span`
-  font-family: var(--font-mono, monospace);
-  font-size: 0.64rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--fg-4);
-  padding-top: 4px;
-`;
-
-const DecisionText = styled.p`
-  font-family: var(--font-sans, sans-serif);
-  font-size: 0.94rem;
-  line-height: 1.7;
-  color: var(--fg-2);
-  margin: 0;
-`;
-
-const CodeFrame = styled.figure`
-  margin: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--r-card, 16px);
-  overflow: hidden;
-`;
-
-const CodeCaption = styled.figcaption`
-  padding: 0.7rem 1rem;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.68rem;
-  color: var(--fg-4);
-  background: var(--bg-2);
-  border-bottom: 1px solid var(--border-faint);
-`;
-
-const Code = styled.pre`
-  margin: 0;
-  padding: 1.2rem 1rem;
-  overflow-x: auto;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.8rem;
-  line-height: 1.7;
-  color: var(--fg-2);
-  background: var(--bg-2);
-`;
-
 const Metrics = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -342,6 +262,7 @@ const NextArrow = styled.span`
 export function CaseStudyPage() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation('home');
+  const { language } = useLanguage();
   const reduce = useReducedMotion();
 
   const study = findCaseBySlug(slug);
@@ -367,8 +288,11 @@ export function CaseStudyPage() {
   const page = t(`casePages.items.${index}`, { returnObjects: true }) as CasePageCopy;
   const next = findNextCase(study.slug);
   const architecture = ARCHITECTURES[study.slug];
+  const content = findCaseContent(study.slug);
 
-  const decisions = page?.decisions ?? [];
+  const decisions = content?.decisions[language] ?? [];
+  const retrospective = content?.retrospective[language]?.trim() ?? '';
+  const snippet = content?.snippet;
   const metricLabels = home?.metric_labels ?? [];
 
   return (
@@ -438,39 +362,20 @@ export function CaseStudyPage() {
         {decisions.length > 0 && (
           <Section>
             <SectionLabel>{t('casePages.label_decisions')}</SectionLabel>
-            {decisions.map(d => (
-              <DecisionCard key={d.title}>
-                <DecisionTitle>{d.title}</DecisionTitle>
-                <DecisionRow>
-                  <DecisionLabel>{t('casePages.label_problem')}</DecisionLabel>
-                  <DecisionText>{d.problem}</DecisionText>
-                </DecisionRow>
-                <DecisionRow>
-                  <DecisionLabel>{t('casePages.label_alternatives')}</DecisionLabel>
-                  <DecisionText>{d.alternatives}</DecisionText>
-                </DecisionRow>
-                <DecisionRow>
-                  <DecisionLabel>{t('casePages.label_decision')}</DecisionLabel>
-                  <DecisionText>{d.decision}</DecisionText>
-                </DecisionRow>
-                <DecisionRow>
-                  <DecisionLabel>{t('casePages.label_tradeoff')}</DecisionLabel>
-                  <DecisionText>{d.tradeoff}</DecisionText>
-                </DecisionRow>
-              </DecisionCard>
-            ))}
+            <TechnicalDecisions decisions={decisions} />
           </Section>
         )}
 
-        {study.snippet && (
+        {snippet && snippet.code.trim() && (
           <Section>
             <SectionLabel>{t('casePages.label_code')}</SectionLabel>
-            <CodeFrame>
-              <CodeCaption>{study.snippet.file}</CodeCaption>
-              <Code>
-                <code>{study.snippet.code}</code>
-              </Code>
-            </CodeFrame>
+            <CodeSnippet
+              file={snippet.file}
+              language={snippet.language}
+              code={snippet.code}
+              highlightLines={snippet.highlightLines}
+              note={snippet.note[language]}
+            />
           </Section>
         )}
 
@@ -487,10 +392,9 @@ export function CaseStudyPage() {
           </Metrics>
         </Section>
 
-        {page?.retrospective && (
+        {retrospective && (
           <Section>
-            <SectionLabel>{t('casePages.label_retrospective')}</SectionLabel>
-            <Prose>{page.retrospective}</Prose>
+            <Retrospective text={retrospective} />
           </Section>
         )}
 

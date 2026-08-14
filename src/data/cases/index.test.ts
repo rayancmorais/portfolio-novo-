@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { CASE_STUDIES, findCaseBySlug, findNextCase } from './cases';
-import caseRoutes from './case-routes.json';
+import { CASE_STUDIES, findCaseBySlug, findCaseContent, findNextCase } from './index';
+import caseRoutes from '../case-routes.json';
 
 describe('CASE_STUDIES', () => {
   it('stays in sync with the prerendered route list', () => {
@@ -15,5 +15,11 @@ describe('CASE_STUDIES', () => {
   it('wraps around to the first case after the last', () => {
     const last = CASE_STUDIES[CASE_STUDIES.length - 1];
     expect(findNextCase(last.slug).slug).toBe(CASE_STUDIES[0].slug);
+  });
+
+  it('has a technical content file for every case', () => {
+    for (const study of CASE_STUDIES) {
+      expect(findCaseContent(study.slug)).toBeDefined();
+    }
   });
 });
