@@ -271,6 +271,10 @@ const Shot = styled.div`
   height: 340px;
   background: var(--bg-2, #0b0f14);
 
+  @media (max-width: 768px) {
+    height: 272px;
+  }
+
   img {
     position: relative;
     z-index: 1;
@@ -346,15 +350,17 @@ const Blocks = styled.div`
   gap: 0.85rem;
 `;
 
+/* A coluna de labels come ~30% da largura para exibir uma palavra. No desktop
+   sobra espaço e o alinhamento lateral vale; no mobile o label sobe para cima
+   do parágrafo e o texto usa a largura toda. */
 const Block = styled.div`
   display: grid;
   grid-template-columns: 104px 1fr;
   gap: 0.9rem;
   align-items: start;
 
-  @media (max-width: 420px) {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
+  @media (max-width: 768px) {
+    display: block;
   }
 `;
 
@@ -366,6 +372,12 @@ const BlockLabel = styled.span`
   text-transform: uppercase;
   color: var(--cy, #00f5d4);
   padding-top: 3px;
+
+  @media (max-width: 768px) {
+    display: block;
+    padding-top: 0;
+    margin-bottom: 8px;
+  }
 `;
 
 const BlockText = styled.p`
@@ -374,6 +386,10 @@ const BlockText = styled.p`
   color: var(--fg-2, #8b93a7);
   line-height: 1.7;
   margin: 0;
+
+  @media (max-width: 768px) {
+    line-height: 1.6;
+  }
 `;
 
 const Metrics = styled.div`
@@ -383,12 +399,26 @@ const Metrics = styled.div`
   padding: 0.9rem 0;
   border-top: 1px solid var(--border-faint, rgba(255, 255, 255, 0.05));
   border-bottom: 1px solid var(--border-faint, rgba(255, 255, 255, 0.05));
+
+  /* Três itens em duas colunas sempre deixam o terceiro órfão com um vão ao
+     lado. Empilhado, cada métrica vira uma linha própria: valor à esquerda,
+     rótulo à direita. */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.55rem;
+  }
 `;
 
 const Metric = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.8rem;
+  }
 `;
 
 const MetricValue = styled.span`
@@ -398,6 +428,13 @@ const MetricValue = styled.span`
   font-size: 1.5rem;
   line-height: 1.1;
   color: var(--cy, #00f5d4);
+
+  /* Largura fixa alinha os rótulos numa coluna só, apesar de "91" e "OAuth2"
+     terem larguras bem diferentes. */
+  @media (max-width: 768px) {
+    flex-shrink: 0;
+    min-width: 3.6rem;
+  }
 `;
 
 const MetricLabel = styled.span`
@@ -451,6 +488,11 @@ const Ghost = styled.a`
     border-color 0.2s ease,
     color 0.2s ease,
     transform 0.2s ease;
+
+  @media (max-width: 768px) {
+    padding: 0.55rem 1rem;
+    font-size: 0.8rem;
+  }
 
   &:hover {
     border-color: var(--cy-50, rgba(0, 245, 212, 0.5));
