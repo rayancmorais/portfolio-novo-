@@ -43,6 +43,7 @@
     "label_result": "Result",
     "visit_site": "Visit site →",
     "view_code": "View code →",
+    "view_study": "Read full case study →",
     "private_repo": "Private repository",
     "items": [
       {
@@ -65,6 +66,45 @@
         "approach": "Go backend running serverless on AWS Lambda, with a single Supplier interface implemented by BR and EU suppliers — adding a new supplier doesn't change the order flow. A per-region pricing pipeline computes local currency, margin and tax by destination country (IVA/VAT), and checkout uses MercadoPago (Pix, Boleto, card) in Brazil and Stripe/PayPal in Europe.",
         "result": "A multi-market e-commerce with OAuth2/OIDC authentication (Google, Facebook, Apple) using PKCE, parallel catalog sync via goroutines and a streaming AI shopping assistant — working around the API Gateway's 29s connection limit with an explicit 28s timeout.",
         "metric_labels": ["markets (BR + EU)", "payment gateways", "Google · Facebook · Apple"]
+      }
+    ]
+  },
+  "casePages": {
+    "back": "Back to home",
+    "next": "Next case study",
+    "label_context": "Context",
+    "label_approach": "Approach",
+    "label_decisions": "Technical decisions",
+    "label_code": "The code",
+    "label_result": "Result",
+    "label_retrospective": "What I'd do differently today",
+    "label_problem": "Problem",
+    "label_alternatives": "Alternatives",
+    "label_decision": "Decision",
+    "label_tradeoff": "Accepted trade-off",
+    "items": [
+      {
+        "context_extra": "",
+        "retrospective": "",
+        "decisions": [
+          {
+            "title": "N+1 in the affiliate sync",
+            "problem": "Every cycle pulled thousands of coupons processed as individual upserts, locking up the database under load.",
+            "alternatives": "Raise the connection pool (postpones the problem), process through a queue with limited concurrency (more complex), or batch with deduplication.",
+            "decision": "upsertMany with dedupe by (source, externalId).",
+            "tradeoff": "Loses the per-row return value, which the sync flow didn't need."
+          }
+        ]
+      },
+      {
+        "context_extra": "",
+        "retrospective": "",
+        "decisions": []
+      },
+      {
+        "context_extra": "",
+        "retrospective": "",
+        "decisions": []
       }
     ]
   },

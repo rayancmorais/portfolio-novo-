@@ -19,6 +19,7 @@ import '@fontsource/chakra-petch/600-italic.css';
 import '@fontsource/chakra-petch/700.css';
 import './index.css';
 import '@/lib/i18n';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
@@ -27,7 +28,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <LanguageProvider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </LanguageProvider>
     </ThemeProvider>
   </StrictMode>

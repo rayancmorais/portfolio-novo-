@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { CASE_STUDIES, type CaseStudy } from '@/data/cases';
 
 /* ============================================================================
    CaseStudies — Estudos de Caso (production port of the js/CaseStudies.jsx
@@ -16,81 +18,6 @@ import { useTranslation } from 'react-i18next';
    (e.g. public/assets/cases/cupommaniac.png). A missing file degrades to a
    branded placeholder behind the <img>, so nothing breaks.
    ========================================================================== */
-
-/* ---------------------------------------------------------------- data ---- */
-
-interface CaseStudyBase {
-  no: string;
-  title: string;
-  year: string;
-  domain: string;
-  image?: string;
-  stack: string[];
-  link?: string;
-  repo?: string;
-  metric_values: string[];
-}
-
-const CASES_BASE: CaseStudyBase[] = [
-  {
-    no: '01',
-    title: 'CupomManiac',
-    year: '2026',
-    domain: 'cupommaniac.com.br',
-    image: '/assets/cases/cupommaniac.png',
-    stack: [
-      'Next.js 15',
-      'Fastify',
-      'Prisma',
-      'PostgreSQL',
-      'Redis',
-      'BullMQ',
-      'Meilisearch',
-      'Vercel',
-      'Railway',
-    ],
-    link: 'https://cupommaniac.com.br',
-    metric_values: ['5', '3h', '0–100'],
-  },
-  {
-    no: '02',
-    title: 'Crash Game',
-    year: '2026',
-    domain: 'jungle-gaming.app',
-    image: '/assets/cases/crashGame.png',
-    stack: [
-      'NestJS',
-      'Bun',
-      'DDD',
-      'RabbitMQ',
-      'Kong',
-      'Keycloak',
-      'WebSocket',
-      'PostgreSQL',
-      'Docker',
-    ],
-    repo: 'https://github.com/rayancmorais/fullstack-challengeRayancm',
-    metric_values: ['91', '11', '4'],
-  },
-  {
-    no: '03',
-    title: 'Lux Lab Brasil',
-    year: '2025',
-    domain: 'luxlabbrasil.com.br',
-    image: '/assets/cases/brdropshipping.png',
-    stack: [
-      'Go',
-      'Gin',
-      'AWS Lambda',
-      'MongoDB',
-      'Next.js 15',
-      'MercadoPago',
-      'Stripe',
-      'OAuth2/OIDC',
-    ],
-    metric_values: ['2', '3', 'OAuth2'],
-  },
-];
 
 /* ------------------------------------------------------------- motion ---- */
 
@@ -538,9 +465,20 @@ const Ghost = styled.a`
   }
 `;
 
+/* variante cheia — o caminho principal a partir do card é o estudo completo */
+const PrimaryGhost = styled(Ghost)`
+  border-color: var(--cy-50, rgba(0, 245, 212, 0.5));
+  background: var(--cy-08, rgba(0, 245, 212, 0.08));
+  color: var(--cy-bright, #5cf8e6);
+
+  &:hover {
+    background: var(--cy-12, rgba(0, 245, 212, 0.12));
+    border-color: var(--cy, #00f5d4);
+  }
+`;
+
 const Private = styled.span`
-  align-self: flex-start;
-  margin-top: 0.2rem;
+  align-self: center;
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   letter-spacing: 0.02em;
@@ -550,7 +488,7 @@ const Private = styled.span`
 /* ---------------------------------------------------------- subcomponent -- */
 
 interface CaseRowProps {
-  base: CaseStudyBase;
+  base: CaseStudy;
   i: number;
   reduce: boolean;
   lProblem: string;
@@ -563,6 +501,7 @@ interface CaseRowProps {
   metric_labels: string[];
   visit_site: string;
   view_code: string;
+  view_study: string;
   private_repo: string;
 }
 
@@ -580,6 +519,7 @@ function CaseRow({
   metric_labels,
   visit_site,
   view_code,
+  view_study,
   private_repo,
 }: CaseRowProps) {
   const flip = i % 2 === 1;
@@ -644,7 +584,7 @@ function CaseRow({
           </Blocks>
 
           <Metrics>
-            {c.metric_values.map((v, idx) => (
+            {c.metricValues.map((v, idx) => (
               <Metric key={idx}>
                 <MetricValue>{v}</MetricValue>
                 <MetricLabel>{metric_labels[idx]}</MetricLabel>
@@ -658,22 +598,22 @@ function CaseRow({
             ))}
           </Chips>
 
-          {c.link || c.repo ? (
-            <Actions>
-              {c.link && (
-                <Ghost href={c.link} target="_blank" rel="noopener noreferrer">
-                  {visit_site}
-                </Ghost>
-              )}
-              {c.repo && (
-                <Ghost href={c.repo} target="_blank" rel="noopener noreferrer">
-                  {view_code}
-                </Ghost>
-              )}
-            </Actions>
-          ) : (
-            <Private>{private_repo}</Private>
-          )}
+          <Actions>
+            <PrimaryGhost as={Link} to={`/case/${c.slug}`}>
+              {view_study}
+            </PrimaryGhost>
+            {c.link && (
+              <Ghost href={c.link} target="_blank" rel="noopener noreferrer">
+                {visit_site}
+              </Ghost>
+            )}
+            {c.repo && (
+              <Ghost href={c.repo} target="_blank" rel="noopener noreferrer">
+                {view_code}
+              </Ghost>
+            )}
+            {!c.link && !c.repo && <Private>{private_repo}</Private>}
+          </Actions>
         </Copy>
       </Col>
     </Row>
@@ -719,9 +659,9 @@ export function CaseStudies() {
           initial={reduce ? false : 'hidden'}
           animate={reduce ? undefined : inView ? 'show' : 'hidden'}
         >
-          {CASES_BASE.map((c, i) => (
+          {CASE_STUDIES.map((c, i) => (
             <CaseRow
-              key={c.no}
+              key={c.slug}
               base={c}
               i={i}
               reduce={!!reduce}
@@ -735,6 +675,7 @@ export function CaseStudies() {
               metric_labels={items[i]?.metric_labels ?? []}
               visit_site={t('caseStudies.visit_site')}
               view_code={t('caseStudies.view_code')}
+              view_study={t('caseStudies.view_study')}
               private_repo={t('caseStudies.private_repo')}
             />
           ))}

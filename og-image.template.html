@@ -1,0 +1,226 @@
+<!doctype html>
+<!--
+  Template do og-image (1200×630). Não é servido pelo site — fica fora de public/.
+  Como exportar:
+    1. abrir este arquivo no navegador
+    2. screenshot da moldura (ela tem exatamente 1200×630)
+    3. salvar em public/og-image.png
+  As fontes vêm do Google Fonts CDN porque este arquivo roda solto, fora do bundle.
+  São as mesmas famílias que o site usa via @fontsource.
+-->
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>og-image · 1200×630</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --accent: #3e7fe9;
+        --accent-bright: #64a0ff;
+        --fg-1: #e6e8ee;
+        --fg-3: #848b9c;
+        --border: rgba(255, 255, 255, 0.08);
+        --success: #4ade80;
+      }
+
+      body {
+        margin: 0;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        background: #1a1d23;
+      }
+
+      .og {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding: 76px 88px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background:
+          radial-gradient(90% 120% at 78% 0%, rgba(62, 127, 233, 0.16), transparent 62%),
+          radial-gradient(70% 90% at 0% 100%, rgba(62, 127, 233, 0.08), transparent 60%), var(--bg);
+        font-family: 'Orbitron', sans-serif;
+      }
+
+      /* grade sutil, mesma linguagem do fundo do site */
+      .og::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+
+      .og > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* cantos em colchete — assinatura visual dos cards */
+      .bracket {
+        position: absolute;
+        width: 26px;
+        height: 26px;
+        border: 2px solid var(--accent);
+        opacity: 0.85;
+        z-index: 2;
+      }
+      .bracket[data-c='tl'] {
+        top: 34px;
+        left: 34px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .bracket[data-c='tr'] {
+        top: 34px;
+        right: 34px;
+        border-left: none;
+        border-bottom: none;
+      }
+      .bracket[data-c='bl'] {
+        bottom: 34px;
+        left: 34px;
+        border-right: none;
+        border-top: none;
+      }
+      .bracket[data-c='br'] {
+        bottom: 34px;
+        right: 34px;
+        border-left: none;
+        border-top: none;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: 'Space Mono', monospace;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--fg-3);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--success);
+        box-shadow: 0 0 12px rgba(74, 222, 128, 0.7);
+      }
+
+      .headline {
+        font-size: 84px;
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: var(--fg-1);
+        margin: 0;
+      }
+
+      .headline em {
+        font-style: normal;
+        color: var(--accent-bright);
+        text-shadow: 0 0 34px rgba(62, 127, 233, 0.45);
+      }
+
+      .footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 32px;
+        padding-top: 26px;
+        border-top: 1px solid var(--border);
+      }
+
+      .name {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: var(--fg-1);
+      }
+
+      .role {
+        margin-top: 8px;
+        font-family: 'Space Mono', monospace;
+        font-size: 16px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--fg-3);
+      }
+
+      .stack {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+        max-width: 520px;
+      }
+
+      .chip {
+        font-family: 'Space Mono', monospace;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--accent-bright);
+        background: rgba(62, 127, 233, 0.1);
+        border: 1px solid rgba(62, 127, 233, 0.28);
+        border-radius: 100px;
+        padding: 7px 18px;
+      }
+
+      .domain {
+        margin-top: 16px;
+        width: 100%;
+        text-align: right;
+        font-family: 'Space Mono', monospace;
+        font-size: 18px;
+        letter-spacing: 0.1em;
+        color: var(--fg-3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="og">
+      <span class="bracket" data-c="tl"></span>
+      <span class="bracket" data-c="tr"></span>
+      <span class="bracket" data-c="bl"></span>
+      <span class="bracket" data-c="br"></span>
+
+      <div class="eyebrow"><span class="dot"></span> Aberto a oportunidades · Remoto · Inglês C1</div>
+
+      <h1 class="headline">Produtos que<br /><em>sobrevivem</em><br />à produção.</h1>
+
+      <div class="footer">
+        <div>
+          <div class="name">Rayan Morais</div>
+          <div class="role">Desenvolvedor Full-Stack</div>
+        </div>
+        <div>
+          <div class="stack">
+            <span class="chip">React</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Go</span>
+          </div>
+          <div class="domain">rayancmorais.com.br</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

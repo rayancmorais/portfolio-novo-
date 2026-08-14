@@ -43,6 +43,7 @@
     "label_result": "Resultado",
     "visit_site": "Visitar site →",
     "view_code": "Ver código →",
+    "view_study": "Ver estudo completo →",
     "private_repo": "Repositório privado",
     "items": [
       {
@@ -69,6 +70,45 @@
           "gateways de pagamento",
           "Google · Facebook · Apple"
         ]
+      }
+    ]
+  },
+  "casePages": {
+    "back": "Voltar para a home",
+    "next": "Próximo estudo de caso",
+    "label_context": "Contexto",
+    "label_approach": "Abordagem",
+    "label_decisions": "Decisões técnicas",
+    "label_code": "O código",
+    "label_result": "Resultado",
+    "label_retrospective": "O que eu faria diferente hoje",
+    "label_problem": "Problema",
+    "label_alternatives": "Alternativas",
+    "label_decision": "Decisão",
+    "label_tradeoff": "Trade-off aceito",
+    "items": [
+      {
+        "context_extra": "",
+        "retrospective": "",
+        "decisions": [
+          {
+            "title": "N+1 no sync de afiliados",
+            "problem": "Cada ciclo trazia milhares de cupons processados em upserts individuais, travando o banco sob carga.",
+            "alternatives": "Aumentar o pool de conexões (adia o problema), processar em fila com concorrência limitada (mais complexo), ou lote com deduplicação.",
+            "decision": "upsertMany com dedupe por (fonte, idExterno).",
+            "tradeoff": "Perde o retorno individual de cada linha, que não era necessário no fluxo de sync."
+          }
+        ]
+      },
+      {
+        "context_extra": "",
+        "retrospective": "",
+        "decisions": []
+      },
+      {
+        "context_extra": "",
+        "retrospective": "",
+        "decisions": []
       }
     ]
   },

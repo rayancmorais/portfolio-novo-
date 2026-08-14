@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { LoadingScene } from './LoadingScene';
 
 /* ── data ───────────────────────────────────────────────────────────────────── */
@@ -15,51 +15,36 @@ const LOGS = [
   { text: '> Jump ready — welcome aboard 🚀', done: true },
 ];
 
-const STEP = 460;
-const TOTAL = LOGS.length * STEP + 500;
+/* Cadência puramente cosmética dos logs — não controla quando o loader sai. */
+const LOG_STEP_MS = 460;
+
+/* Fade-out curto: acontece depois de o conteúdo já estar pronto. */
+const EXIT_DURATION_S = 0.22;
 
 /* ── component ─────────────────────────────────────────────────────────────── */
 
-export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
+export function LoadingScreen({ visible }: { visible: boolean }) {
   const [visibleLogs, setVisibleLogs] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const [exiting, setExiting] = useState(false);
   const reduced = useReducedMotion() ?? false;
 
   useEffect(() => {
-    const timers: ReturnType<typeof setTimeout>[] = [];
+    if (!visible) return;
 
-    LOGS.forEach((_, i) => {
-      timers.push(
-        setTimeout(
-          () => {
-            setVisibleLogs(i + 1);
-            setProgress(Math.round(((i + 1) / LOGS.length) * 100));
-          },
-          i * STEP + 250
-        )
-      );
-    });
+    const timers = LOGS.map((_, i) =>
+      setTimeout(() => setVisibleLogs(i + 1), i * LOG_STEP_MS + 250)
+    );
 
-    const exit = setTimeout(() => {
-      setExiting(true);
-      setTimeout(onFinish, 800);
-    }, TOTAL);
-
-    return () => {
-      timers.forEach(clearTimeout);
-      clearTimeout(exit);
-    };
-  }, [onFinish]);
+    return () => timers.forEach(clearTimeout);
+  }, [visible]);
 
   return (
     <AnimatePresence>
-      {!exiting && (
+      {visible && (
         <Overlay
           as={motion.div}
-          initial={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.12 }}
-          transition={{ duration: 0.8, ease: [0.6, 0, 0.9, 0.4] }}
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduced ? 0 : EXIT_DURATION_S, ease: 'easeOut' }}
         >
           <SceneLayer>
             <LoadingScene reduced={reduced} />
@@ -166,17 +151,11 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
               transition={{ delay: 0.4 }}
             >
               <PctLabel>HYPERDRIVE CHARGE</PctLabel>
-              <Pct>{progress}%</Pct>
             </PctWrap>
           </Bottom>
 
           <ProgressTrack>
-            <ProgressFill
-              as={motion.div}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: progress / 100 }}
-              transition={{ duration: 0.45, ease: 'easeOut' }}
-            />
+            <ProgressFill $reduced={reduced} />
           </ProgressTrack>
         </Overlay>
       )}
@@ -185,6 +164,11 @@ export function LoadingScreen({ onFinish }: { onFinish: () => void }) {
 }
 
 /* ── keyframes ─────────────────────────────────────────────────────────────── */
+
+const slide = keyframes`
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(357%); }
+`;
 
 const spin = keyframes`
   from { transform: rotate(0deg); }
@@ -476,16 +460,6 @@ const PctLabel = styled.span`
   white-space: nowrap;
 `;
 
-const Pct = styled.span`
-  font-family: var(--display, 'Orbitron', sans-serif);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #8fd0ff;
-  white-space: nowrap;
-  text-shadow: 0 0 12px rgba(90, 190, 255, 0.5);
-`;
-
 /* ── charge bar ─────────────────────────────────────────────────────────────── */
 
 const ProgressTrack = styled.div`
@@ -498,9 +472,16 @@ const ProgressTrack = styled.div`
   background: rgba(255, 255, 255, 0.05);
 `;
 
-const ProgressFill = styled.div`
+/* Indeterminada de propósito: não existe progresso real para reportar aqui. */
+const ProgressFill = styled.div<{ $reduced: boolean }>`
+  width: 28%;
   height: 100%;
-  transform-origin: left center;
-  background: linear-gradient(90deg, #3e7fe9 0%, #7fe0ff 50%, #9a6cff 100%);
+  background: linear-gradient(90deg, transparent 0%, #3e7fe9 30%, #7fe0ff 70%, transparent 100%);
   box-shadow: 0 0 12px rgba(90, 160, 255, 0.7);
+  ${({ $reduced }) =>
+    $reduced
+      ? 'width: 100%; opacity: 0.5;'
+      : css`
+          animation: ${slide} 1.15s ease-in-out infinite;
+        `}
 `;
