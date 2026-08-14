@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Download } from 'lucide-react';
+import { Download, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCommandPalette } from '@/contexts/CommandPaletteContext';
+import { CV_URLS } from '@/data/links';
 
 const NAV_LINKS = [
   { key: 'selectedWork', href: '#work' },
   { key: 'ecosystem', href: '#ecosystem' },
 ];
 
-const CV_URLS = {
-  ptBR: '/pdf/Rayan_Morais_CV_PT_FullStack.pdf',
-  en: '/pdf/Rayan_Morais_CV_Eng.pdf',
-};
-
 export function Navbar() {
   const { t } = useTranslation('navbar');
   const { language, toggleLanguage } = useLanguage();
+  const { open: openPalette } = useCommandPalette();
   const cvUrl = CV_URLS[language];
   const [scrolled, setScrolled] = useState(false);
 
@@ -49,6 +47,10 @@ export function Navbar() {
         </Links>
 
         <Controls>
+          <PaletteBtn onClick={openPalette} aria-label={t('searchAria')}>
+            <Search size={13} aria-hidden />
+            <ShortcutHint aria-hidden>⌘K</ShortcutHint>
+          </PaletteBtn>
           <LangBtn onClick={toggleLanguage}>{language === 'ptBR' ? 'EN' : 'PT'}</LangBtn>
           <CtaPill href={cvUrl} download rel="noopener">
             <Download size={13} />
@@ -135,6 +137,40 @@ const Controls = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+`;
+
+/* Sem esse gatilho visível quase ninguém descobre o ⌘K. No mobile o atalho de
+   teclado não existe, então sobra só o ícone de busca. */
+const PaletteBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.6rem;
+  height: 32px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: 8px;
+  background: transparent;
+  color: var(--fg-2, #8b93a7);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    color: var(--cy, #00e5cc);
+    border-color: var(--cy-50, rgba(0, 229, 204, 0.5));
+  }
+`;
+
+const ShortcutHint = styled.span`
+  font-family: var(--mono, monospace);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  @media (max-width: 720px) {
+    display: none;
+  }
 `;
 
 const LangBtn = styled.button`

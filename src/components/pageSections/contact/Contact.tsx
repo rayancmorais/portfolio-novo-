@@ -2,6 +2,7 @@ import { useRef, useState, type FormEvent } from 'react';
 import styled, { css } from 'styled-components';
 import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { EMAIL, GITHUB_URL, LINKEDIN_URL } from '@/data/links';
 
 /* ============================================================================
    Contact — name / email / message form (no backend) + social links.
@@ -414,23 +415,15 @@ export function Contact() {
               <SideTitle>{t('contact.side_title')}</SideTitle>
               <SideText>{t('contact.side_text')}</SideText>
               <Links>
-                <SocialLink
-                  href="https://github.com/rayancmorais"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <SocialLink href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
                   GitHub · @rayancmorais
                   <Arrow aria-hidden="true">↗</Arrow>
                 </SocialLink>
-                <SocialLink
-                  href="https://www.linkedin.com/in/rayancmorais"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <SocialLink href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
                   LinkedIn · Rayan Morais
                   <Arrow aria-hidden="true">↗</Arrow>
                 </SocialLink>
-                <SocialLink href="mailto:rayan_cm2021@icloud.com">
+                <SocialLink href={`mailto:${EMAIL}`}>
                   {t('contact.link_email')}
                   <Arrow aria-hidden="true">↗</Arrow>
                 </SocialLink>

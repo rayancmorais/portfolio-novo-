@@ -6,6 +6,7 @@ import { LoadingScreen } from '@/components/pageSections/loadingScreen/LoadingSc
 import { Home } from '@/pages/Home';
 import { useLenis } from '@/hooks/useLenis';
 import { usePageLoading } from '@/hooks/usePageLoading';
+import { CommandPaletteProvider } from '@/contexts/CommandPaletteContext';
 
 /* Fora da home: só baixa quando alguém abre um estudo de caso. */
 const CaseStudyPage = lazy(() =>
@@ -32,13 +33,15 @@ export default function App() {
         }}
       />
       <LoadingScreen visible={showLoader} />
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/case/:slug" element={<CaseStudyPage />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
-      </Suspense>
+      <CommandPaletteProvider>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/case/:slug" element={<CaseStudyPage />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </Suspense>
+      </CommandPaletteProvider>
     </>
   );
 }

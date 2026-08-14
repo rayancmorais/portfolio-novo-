@@ -69,6 +69,29 @@
       }
     ]
   },
+  "commandPalette": {
+    "placeholder": "Search sections, cases or actions…",
+    "empty": "Nothing found.",
+    "group_nav": "Navigation",
+    "group_cases": "Case studies",
+    "group_actions": "Actions",
+    "group_links": "Links",
+    "group_system": "System",
+    "nav_work": "Case studies",
+    "nav_ecosystem": "Technical ecosystem",
+    "nav_projects": "Projects",
+    "nav_services": "What I bring to a team",
+    "nav_contact": "Contact",
+    "open_case": "Open {{name}}",
+    "cv_pt": "Download CV (PT)",
+    "cv_en": "Download CV (EN)",
+    "copy_email": "Copy email",
+    "copied": "Email copied ✓",
+    "toggle_lang": "Switch language to {{lang}}",
+    "hint_nav": "navigate",
+    "hint_open": "open",
+    "hint_close": "close"
+  },
   "casePages": {
     "back": "Back to home",
     "next": "Next case study",

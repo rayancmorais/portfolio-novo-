@@ -73,6 +73,29 @@
       }
     ]
   },
+  "commandPalette": {
+    "placeholder": "Buscar seção, case ou ação…",
+    "empty": "Nada encontrado.",
+    "group_nav": "Navegação",
+    "group_cases": "Estudos de caso",
+    "group_actions": "Ações",
+    "group_links": "Links",
+    "group_system": "Sistema",
+    "nav_work": "Estudos de caso",
+    "nav_ecosystem": "Ecossistema técnico",
+    "nav_projects": "Projetos",
+    "nav_services": "O que eu trago para um time",
+    "nav_contact": "Contato",
+    "open_case": "Abrir {{name}}",
+    "cv_pt": "Baixar CV (PT)",
+    "cv_en": "Baixar CV (EN)",
+    "copy_email": "Copiar email",
+    "copied": "Email copiado ✓",
+    "toggle_lang": "Alternar idioma para {{lang}}",
+    "hint_nav": "navegar",
+    "hint_open": "abrir",
+    "hint_close": "fechar"
+  },
   "casePages": {
     "back": "Voltar para a home",
     "next": "Próximo estudo de caso",
