@@ -102,7 +102,7 @@ export function Footer() {
           ))}
         </Nav>
 
-        <Copy>{t('footer.copyright')}</Copy>
+        <Copy>{t('footer.copyright', { year: new Date().getFullYear() })}</Copy>
       </Inner>
     </Wrap>
   );

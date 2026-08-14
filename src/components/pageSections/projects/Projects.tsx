@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 /* ---------------------------------------------------------------- data ---- */
 
-type Status = 'live' | 'done';
+type Status = 'live' | 'done' | 'wip';
 
 interface Project {
   id: string;
@@ -31,47 +31,21 @@ interface Project {
 
 const PROJECTS_BASE: Omit<Project, 'description'>[] = [
   {
-    id: 'portfolio',
+    id: 'nexusai',
     label: 'P·01',
-    repo: 'rayancmorais / portfolio',
-    title: 'Portfolio Landing Page',
-    status: 'live',
-    stack: ['React', 'Vite', 'TypeScript', 'Styled Components', 'Framer Motion', 'i18next'],
-    link: 'https://portfolio-novo-omega.vercel.app',
-  },
-  {
-    id: 'movideux',
-    label: 'P·02',
-    repo: 'rayancmorais / movideux',
-    title: 'Movideux',
-    status: 'done',
-    stack: ['React', 'Node.js', 'React Router'],
-    link: 'https://moviedeux.vercel.app',
-  },
-  {
-    id: 'chronos',
-    label: 'P·03',
-    repo: 'rayancmorais / chronos-pomodoro',
-    title: 'Chronos',
-    status: 'done',
-    stack: ['React', 'Node.js', 'TypeScript'],
-  },
-  {
-    id: 'iclothes',
-    label: 'P·04',
-    repo: 'rayancmorais / iclothes',
-    title: 'iClothes E-commerce',
-    status: 'done',
-    stack: ['React', 'Node.js', 'MongoDB'],
-    link: 'https://iclothes.vercel.app',
+    repo: 'rayancmorais / nexusai',
+    title: 'NexusAI',
+    status: 'wip',
+    stack: ['Go', 'Node.js', 'Python', 'gRPC', 'Qdrant', 'Next.js'],
   },
   {
     id: 'map-tracker',
-    label: 'P·05',
-    repo: 'rayancmorais / map-tracker',
+    label: 'P·02',
+    repo: 'rayancmorais / googleMap_Tracker_TypeScript',
     title: 'Map Tracker',
     status: 'done',
-    stack: ['React Native'],
+    stack: ['React Native', 'TypeScript'],
+    link: 'https://github.com/rayancmorais/googleMap_Tracker_TypeScript',
   },
 ];
 
@@ -142,9 +116,11 @@ const Subtitle = styled.p`
 
 const Grid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.2rem;
   align-items: stretch;
+  max-width: 860px;
+  margin: 0 auto;
 
   @media (max-width: 920px) {
     grid-template-columns: 1fr;
@@ -326,28 +302,38 @@ const StatusBadge = styled.span<{ $status: Status }>`
   padding: 0.3rem 0.7rem;
   border-radius: 100px;
 
-  ${({ $status }) =>
-    $status === 'live'
-      ? css`
-          color: var(--success, #4ade80);
-          background: var(--success-bg, rgba(74, 222, 128, 0.1));
-          border: 1px solid var(--success-border, rgba(74, 222, 128, 0.28));
-        `
-      : css`
-          color: var(--cy-bright, #5cf8e6);
-          background: var(--cy-08, rgba(0, 245, 212, 0.08));
-          border: 1px solid var(--cy-20, rgba(0, 245, 212, 0.2));
-        `}
+  ${({ $status }) => {
+    if ($status === 'live')
+      return css`
+        color: var(--success, #4ade80);
+        background: var(--success-bg, rgba(74, 222, 128, 0.1));
+        border: 1px solid var(--success-border, rgba(74, 222, 128, 0.28));
+      `;
+    if ($status === 'wip')
+      return css`
+        color: var(--blue-bright, #64a0ff);
+        background: var(--blue-15, rgba(62, 127, 233, 0.15));
+        border: 1px solid var(--blue-30, rgba(62, 127, 233, 0.3));
+      `;
+    return css`
+      color: var(--cy-bright, #5cf8e6);
+      background: var(--cy-08, rgba(0, 245, 212, 0.08));
+      border: 1px solid var(--cy-20, rgba(0, 245, 212, 0.2));
+    `;
+  }}
 `;
 
 const Dot = styled.span<{ $status: Status; $reduce: boolean }>`
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: ${({ $status }) =>
-    $status === 'live' ? 'var(--success, #4ade80)' : 'var(--cy, #00f5d4)'};
+  background: ${({ $status }) => {
+    if ($status === 'live') return 'var(--success, #4ade80)';
+    if ($status === 'wip') return 'var(--blue-bright, #64a0ff)';
+    return 'var(--cy, #00f5d4)';
+  }};
   ${({ $status, $reduce }) =>
-    $status === 'live' &&
+    ($status === 'live' || $status === 'wip') &&
     !$reduce &&
     css`
       animation: ${pulse} 2s ease-in-out infinite;
@@ -437,6 +423,7 @@ export function Projects() {
   const statusText: Record<Status, string> = {
     live: t('projects.status_live'),
     done: t('projects.status_done'),
+    wip: t('projects.status_wip'),
   };
 
   const prettyHost = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');

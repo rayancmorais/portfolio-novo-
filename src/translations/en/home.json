@@ -5,7 +5,7 @@
     "headline_accent": "survive",
     "headline_2": "production.",
     "headline_caps": "P R O D U C T S",
-    "bio": "I'm <strong>Rayan Morais</strong>, a full-stack developer based in Brazil. I work with <em>React, Node.js and TypeScript</em> to build real products — from architecture to deployment.",
+    "bio": "I'm <strong>Rayan Morais</strong>, a full-stack developer based in Brazil. I came into software <em>from healthcare</em>, and the habits stuck: rigid protocols, zero tolerance for error, and a reflex for the edge cases nobody thought to check. Today I build products that run in production — from a medical platform published on the app stores to a coupon aggregator I maintain on my own.",
     "name": "Rayan Morais",
     "role": "FULL-STACK DEVELOPER",
     "available": "Open to opportunities · Remote · English C1",
@@ -48,22 +48,22 @@
       {
         "kind": "Coupon platform",
         "problem": "The Brazilian coupon market is full of slow, stale-data sites — there was no platform with real affiliate sync, smart search and alerts that fire before deals expire.",
-        "approach": "Built a full-stack system with 5 affiliate sources via Adapter Pattern, BullMQ queues syncing every 3h, Meilisearch full-text search, double opt-in alerts and algorithmic scoring 0–100 by discount and expiry.",
+        "approach": "Built a full-stack system with 5 affiliate sources via Adapter Pattern, BullMQ queues syncing every 3h, Meilisearch full-text search, double opt-in alerts and algorithmic scoring 0–100 by discount and expiry. Refactored an N+1 that locked up the database under load (thousands of individual upserts per cycle) into batched upserts deduplicated by (source, externalId), and alert matching went from N queries per coupon to 3 batched calls per cycle, regardless of volume.",
         "result": "A live platform with automatic sync of thousands of coupons, O(1) DB roundtrips for alert matching, 3-level threaded comments and a complete admin panel for coupons, stores and users.",
         "metric_labels": ["affiliate sources", "sync interval", "scoring 0–100"]
       },
       {
         "kind": "Jungle Gaming Challenge",
-        "problem": "A real-time crash game only earns player trust if every round can be verified — it's not enough to promise the outcome is fair.",
-        "approach": "Implemented a provably fair algorithm with a cryptographic hash per round and synced all clients via WebSocket, keeping the multiplier identical in real time for everyone.",
-        "result": "Every result is reproducible and auditable by the player, with the multiplier curve streamed live, with no divergence between sessions.",
+        "problem": "A real-money game in real time carries two risks: the player has no way to trust the outcome wasn't manipulated, and any balance inconsistency between services turns into loss.",
+        "approach": "Game Service and Wallet Service communicate exclusively over RabbitMQ, with no direct HTTP — the Wallet is the single source of truth for balance, and partial failures don't create inconsistency. Four-layer DDD architecture keeping the domain layer in plain TypeScript (zero NestJS, zero Prisma) so business rules are testable without framework mocks. Monetary values as BigInt in cents, eliminating floating-point error.",
+        "result": "91 unit tests and 11 E2E scenarios covering bet → cashout → balance and bet → crash → loss. Every round is verifiable by the player via HMAC-SHA256: the seed hash is published before bets and revealed after the crash, so the crash point can be recomputed independently.",
         "metric_labels": ["unit tests", "E2E scenarios", "layers (DDD)"]
       },
       {
         "kind": "Multi-market e-commerce (BR + EU)",
-        "problem": "Dropshipping stores in Brazil hit a wall at checkout: international gateways break conversion and catalog management with local suppliers is usually manual.",
-        "approach": "Built the store in Next.js with national checkout via Stripe and direct integration with BR suppliers, automating catalog sync and the order flow.",
-        "result": "An end-to-end e-commerce with national payment and an integrated catalog — less manual work and a checkout designed for the Brazilian customer.",
+        "problem": "Selling to Brazil and Europe from the same system means handling different currencies, taxes, gateways and suppliers — and international gateways break conversion at the Brazilian checkout.",
+        "approach": "Go backend running serverless on AWS Lambda, with a single Supplier interface implemented by BR and EU suppliers — adding a new supplier doesn't change the order flow. A per-region pricing pipeline computes local currency, margin and tax by destination country (IVA/VAT), and checkout uses MercadoPago (Pix, Boleto, card) in Brazil and Stripe/PayPal in Europe.",
+        "result": "A multi-market e-commerce with OAuth2/OIDC authentication (Google, Facebook, Apple) using PKCE, parallel catalog sync via goroutines and a streaming AI shopping assistant — working around the API Gateway's 29s connection limit with an explicit 28s timeout.",
         "metric_labels": ["markets (BR + EU)", "payment gateways", "Google · Facebook · Apple"]
       }
     ]
@@ -94,7 +94,7 @@
     "nav_contact": "Contact",
     "aria_top": "Rayan — back to top",
     "aria_nav": "Footer navigation",
-    "copyright": "© 2025 Rayan Morais · Built with React, Vite & styled-components"
+    "copyright": "© {{year}} Rayan Morais · Built with React, Vite & styled-components"
   },
   "github": {
     "eyebrow": "05 · GitHub",
@@ -113,19 +113,11 @@
     "subtitle": "Projects I built — technologies used and where they live.",
     "status_live": "Live",
     "status_done": "Done",
+    "status_wip": "In development",
     "private_repo": "Private repository",
     "items": [
       {
-        "description": "Bilingual personal portfolio (PT-BR/EN) built with React + Vite using Styled Components, framer-motion and i18n — dark mode, scroll animations and deployed on Vercel."
-      },
-      {
-        "description": "Netflix-style movie platform with category navigation and search, consuming a REST API."
-      },
-      {
-        "description": "Pomodoro timer with persistent cycles, focus history and light/dark themes."
-      },
-      {
-        "description": "Clothing e-commerce with catalog, cart and authentication, backed by a Node + MongoDB API."
+        "description": "Distributed e-commerce platform with semantic search and real-time AI chat. Go gateway, Node/Bun domain layer with DDD, Python RAG engine with Qdrant, gRPC contracts managed by Buf, and a Next.js frontend consuming an SDK generated from OpenAPI."
       },
       {
         "description": "Mobile app in React Native that records and visualizes routes with real-time map tracking."

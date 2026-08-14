@@ -4,7 +4,7 @@ import { Footer } from './Footer';
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string) => {
+    t: (key: string, options?: Record<string, unknown>) => {
       const map: Record<string, string> = {
         'footer.aria_top': 'Rayan — back to top',
         'footer.aria_nav': 'Footer navigation',
@@ -13,9 +13,10 @@ vi.mock('react-i18next', () => ({
         'footer.nav_github': 'GitHub',
         'footer.nav_services': 'Services',
         'footer.nav_contact': 'Contact',
-        'footer.copyright': '© 2025 Rayan Morais · Built with React, Vite & styled-components',
+        'footer.copyright': '© {{year}} Rayan Morais · Built with React, Vite & styled-components',
       };
-      return map[key] ?? key;
+      const template = map[key] ?? key;
+      return template.replace(/{{(\w+)}}/g, (_, name) => String(options?.[name] ?? ''));
     },
   }),
 }));
@@ -26,9 +27,9 @@ describe('Footer', () => {
     expect(screen.getByText(/Rayan Morais/)).toBeInTheDocument();
   });
 
-  it('renders the copyright year', () => {
+  it('renders the current copyright year', () => {
     render(<Footer />);
-    expect(screen.getByText(/2025/)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument();
   });
 
   it('renders all navigation links', () => {

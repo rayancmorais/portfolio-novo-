@@ -5,7 +5,7 @@
     "headline_accent": "sobrevivem",
     "headline_2": "à produção.",
     "headline_caps": "P R O D U T O S",
-    "bio": "Sou <strong>Rayan Morais</strong>, desenvolvedor full-stack baseado no Brasil. Trabalho com <em>React, Node.js e TypeScript</em> para construir produtos reais — da arquitetura ao deploy.",
+    "bio": "Sou <strong>Rayan Morais</strong>, desenvolvedor full-stack no Brasil. Vim <em>da saúde para o software</em> e trouxe os hábitos: protocolo rigoroso, tolerância zero ao erro e obsessão pelos edge cases que ninguém pensou em testar. Hoje construo produtos que rodam em produção — de uma plataforma médica publicada nas lojas a um agregador de cupons que mantenho sozinho.",
     "name": "Rayan Morais",
     "role": "FULL-STACK DEVELOPER",
     "available": "Aberto a oportunidades · Remoto · Inglês C1",
@@ -48,22 +48,22 @@
       {
         "kind": "Plataforma de cupons",
         "problem": "O mercado de cupons brasileiro tem sites lentos e dados obsoletos — faltava sync automático com afiliados reais, busca inteligente e alertas que chegam antes da oferta expirar.",
-        "approach": "Construí um sistema full-stack com 5 fontes de afiliados via Adapter Pattern, filas BullMQ para sync a cada 3h, busca full-text com Meilisearch, alertas com double opt-in e scoring algorítmico de 0 a 100 por desconto e expiração.",
+        "approach": "Construí um sistema full-stack com 5 fontes de afiliados via Adapter Pattern, filas BullMQ para sync a cada 3h, busca full-text com Meilisearch, alertas com double opt-in e scoring algorítmico de 0 a 100 por desconto e expiração. Refatorei um N+1 que travava o banco sob carga (milhares de upserts individuais por ciclo) para upserts em lote com deduplicação por (fonte, idExterno), e o matching de alertas saiu de N queries por cupom para 3 chamadas em lote por ciclo, independente do volume.",
         "result": "Plataforma no ar com sync automático de milhares de cupons, matching de alertas em O(1) roundtrips de banco, comments com threading em 3 níveis e painel admin completo para gestão de cupons, lojas e usuários.",
         "metric_labels": ["fontes afiliadas", "ciclo de sync", "scoring 0–100"]
       },
       {
         "kind": "Jungle Gaming Challenge",
-        "problem": "Um jogo crash em tempo real só ganha a confiança do jogador se cada rodada puder ser verificada — não basta prometer que o resultado é justo.",
-        "approach": "Implementei um algoritmo provably fair com hash criptográfico por rodada e sincronizei todos os clientes via WebSocket, mantendo o multiplicador idêntico em tempo real para todo mundo.",
-        "result": "Cada resultado é reproduzível e auditável pelo próprio jogador, com a curva do multiplicador transmitida ao vivo, sem divergência entre as sessões.",
+        "problem": "Um jogo com dinheiro real em tempo real tem dois riscos: o jogador não tem como confiar que o resultado não foi manipulado, e qualquer inconsistência de saldo entre serviços vira prejuízo.",
+        "approach": "Game Service e Wallet Service se comunicam exclusivamente por RabbitMQ, sem HTTP direto — a Wallet é a única fonte de verdade para saldo, e falhas parciais não geram inconsistência. Arquitetura em 4 camadas com DDD, mantendo a camada de domínio em TypeScript puro (zero NestJS, zero Prisma) para testar regra de negócio sem mock de framework. Valores monetários como BigInt em centavos, eliminando erro de ponto flutuante.",
+        "result": "91 testes unitários e 11 cenários E2E cobrindo aposta → cashout → saldo e aposta → crash → perda. Cada rodada é verificável pelo próprio jogador via HMAC-SHA256: o hash do seed é publicado antes das apostas e revelado após o crash, permitindo recalcular o ponto de crash de forma independente.",
         "metric_labels": ["testes unitários", "cenários E2E", "camadas (DDD)"]
       },
       {
         "kind": "E-commerce multi-mercado (BR + EU)",
-        "problem": "Lojas de dropshipping no Brasil esbarram no checkout: gateways internacionais quebram a conversão e a gestão de catálogo com fornecedores locais costuma ser manual.",
-        "approach": "Montei a loja em Next.js com checkout nacional via Stripe e integração direta com fornecedores BR, automatizando a sincronização de catálogo e o fluxo de pedidos.",
-        "result": "Um e-commerce com pagamento nacional ponta a ponta e catálogo gerido de forma integrada — menos trabalho manual e checkout pensado para o cliente brasileiro.",
+        "problem": "Vender para Brasil e Europa no mesmo sistema significa lidar com moedas, impostos, gateways e fornecedores diferentes — e gateways internacionais quebram a conversão no checkout brasileiro.",
+        "approach": "Backend em Go rodando serverless na AWS Lambda, com uma interface única de Supplier implementada por fornecedores BR e EU — adicionar um novo fornecedor não altera o fluxo de pedidos. Pipeline de precificação por região calcula moeda local, margem e imposto por país de destino (IVA/VAT), e o checkout usa MercadoPago (Pix, Boleto, Cartão) no Brasil e Stripe/PayPal na Europa.",
+        "result": "E-commerce multi-mercado com autenticação OAuth2/OIDC (Google, Facebook, Apple) com PKCE, sincronização de catálogo paralela via goroutines e um assistente de compras com IA em streaming — contornando o limite de 29s de conexão do API Gateway com timeout explícito de 28s.",
         "metric_labels": [
           "mercados (BR + EU)",
           "gateways de pagamento",
@@ -98,7 +98,7 @@
     "nav_contact": "Contato",
     "aria_top": "Rayan — topo",
     "aria_nav": "Navegação do rodapé",
-    "copyright": "© 2025 Rayan Morais · Construído com React, Vite & styled-components"
+    "copyright": "© {{year}} Rayan Morais · Construído com React, Vite & styled-components"
   },
   "github": {
     "eyebrow": "05 · GitHub",
@@ -117,19 +117,11 @@
     "subtitle": "Projetos que construí — tecnologias usadas e onde vivem.",
     "status_live": "No ar",
     "status_done": "Concluído",
+    "status_wip": "Em desenvolvimento",
     "private_repo": "Repositório privado",
     "items": [
       {
-        "description": "Portfólio pessoal bilíngue (PT-BR/EN) construído em React + Vite com Styled Components, framer-motion e i18n — dark mode, animações de scroll e deploy na Vercel."
-      },
-      {
-        "description": "Plataforma de filmes no estilo Netflix, com navegação por categorias e busca, consumindo uma API REST."
-      },
-      {
-        "description": "Timer Pomodoro com ciclos persistentes, histórico de foco e temas claro/escuro."
-      },
-      {
-        "description": "E-commerce de roupas com catálogo, carrinho e autenticação, apoiado por uma API Node + MongoDB."
+        "description": "Plataforma de e-commerce distribuída com busca semântica e chat com IA em tempo real. Gateway em Go, domínio em Node/Bun com DDD, motor de RAG em Python com Qdrant, contratos gRPC via Buf e frontend Next.js consumindo SDK gerado do OpenAPI."
       },
       {
         "description": "App mobile em React Native que registra e visualiza trajetos com rastreamento por mapa em tempo real."
