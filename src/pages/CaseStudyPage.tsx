@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { CASE_STUDIES, findCaseBySlug, findNextCase } from '@/data/cases';
+import { ARCHITECTURES } from '@/data/architecture';
+import { ArchitectureDiagram } from '@/components/caseStudy/ArchitectureDiagram';
 import { Navbar } from '@/components/pageSections/navbar/Navbar';
 import { Footer } from '@/components/pageSections/footer/Footer';
 
@@ -25,8 +27,14 @@ interface CaseDecision {
   tradeoff: string;
 }
 
+interface CaseDiagramCopy {
+  caption: string;
+  roles: Record<string, string>;
+}
+
 interface CasePageCopy {
   context_extra?: string;
+  diagram?: CaseDiagramCopy;
   decisions?: CaseDecision[];
   retrospective?: string;
 }
@@ -358,6 +366,7 @@ export function CaseStudyPage() {
   const home = t(`caseStudies.items.${index}`, { returnObjects: true }) as CaseHomeCopy;
   const page = t(`casePages.items.${index}`, { returnObjects: true }) as CasePageCopy;
   const next = findNextCase(study.slug);
+  const architecture = ARCHITECTURES[study.slug];
 
   const decisions = page?.decisions ?? [];
   const metricLabels = home?.metric_labels ?? [];
@@ -413,6 +422,18 @@ export function CaseStudyPage() {
           <SectionLabel>{t('casePages.label_approach')}</SectionLabel>
           <Prose>{home?.approach}</Prose>
         </Section>
+
+        {architecture && page?.diagram && (
+          <Section>
+            <SectionLabel>{t('casePages.label_architecture')}</SectionLabel>
+            <ArchitectureDiagram
+              architecture={architecture}
+              roles={page.diagram.roles}
+              caption={page.diagram.caption}
+              title={`${study.title} — ${t('casePages.label_architecture')}`}
+            />
+          </Section>
+        )}
 
         {decisions.length > 0 && (
           <Section>

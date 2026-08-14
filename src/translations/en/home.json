@@ -74,6 +74,7 @@
     "next": "Next case study",
     "label_context": "Context",
     "label_approach": "Approach",
+    "label_architecture": "Architecture",
     "label_decisions": "Technical decisions",
     "label_code": "The code",
     "label_result": "Result",
@@ -86,6 +87,18 @@
       {
         "context_extra": "",
         "retrospective": "",
+        "diagram": {
+          "caption": "Hover a node (or tap it on mobile) to see what it is responsible for.",
+          "roles": {
+            "web": "Next.js 15 front end with SSR and ISR — coupon pages render on the server so Google can index them and they load fast.",
+            "sources": "Five different affiliate networks behind a single interface. Adding a sixth source doesn't touch the rest of the system.",
+            "api": "Fastify API: exposes search, alerts and the admin panel, and owns the coupon scoring rules.",
+            "queue": "Runs the sync every 3h outside the request cycle, writing in batches deduplicated by (source, externalId).",
+            "search": "Typo-tolerant full-text search — kept separate from Postgres so the two don't compete for connections.",
+            "db": "Source of truth: coupons, stores, users, alerts and 3-level threaded comments.",
+            "cache": "Caches hot listings and backs the queue."
+          }
+        },
         "decisions": [
           {
             "title": "N+1 in the affiliate sync",
@@ -99,11 +112,35 @@
       {
         "context_extra": "",
         "retrospective": "",
+        "diagram": {
+          "caption": "The central decision is RabbitMQ: Game and Wallet never talk to each other over HTTP.",
+          "roles": {
+            "client": "React client: everything goes through the gateway except the game itself — the multiplier curve arrives over WebSocket.",
+            "keycloak": "Issues and validates OAuth2/OIDC tokens. No service rolls its own authentication.",
+            "kong": "Front door: routes, validates the token and rate-limits before any request reaches a service.",
+            "game": "Runs the rounds and the provably fair algorithm. Four DDD layers with the domain in plain TypeScript — no NestJS and no Prisma inside the business rules.",
+            "bus": "All traffic between Game and Wallet goes through here. With no direct HTTP between services, a partial failure becomes a pending message rather than an inconsistent balance.",
+            "wallet": "The single source of truth for balance. Money as BigInt cents, with no floating point anywhere.",
+            "db": "Wallet persistence: bets, cashouts and the transaction history."
+          }
+        },
         "decisions": []
       },
       {
         "context_extra": "",
         "retrospective": "",
+        "diagram": {
+          "caption": "One backend serves two markets — what changes per region is supplier, tax and gateway.",
+          "roles": {
+            "web": "Next.js 15 storefront with i18n in 7 languages and prices already converted to the visitor's currency.",
+            "gw": "API Gateway with an explicit 28s timeout, just under the 29s connection limit — that's what lets the AI assistant stream its answer without being cut off.",
+            "api": "Go backend running serverless. Owns the per-region pricing pipeline: local currency, margin and tax by destination country.",
+            "mongo": "Catalog, orders and sessions. Catalog sync runs in parallel via goroutines.",
+            "br": "Brazilian suppliers behind the Supplier interface — the same one the European ones implement.",
+            "eu": "European suppliers. Adding a new one doesn't change the order flow.",
+            "pay": "MercadoPago (Pix, Boleto, card) in Brazil; Stripe and PayPal in Europe. Routing is by destination country."
+          }
+        },
         "decisions": []
       }
     ]

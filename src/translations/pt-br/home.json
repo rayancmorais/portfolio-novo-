@@ -78,6 +78,7 @@
     "next": "Próximo estudo de caso",
     "label_context": "Contexto",
     "label_approach": "Abordagem",
+    "label_architecture": "Arquitetura",
     "label_decisions": "Decisões técnicas",
     "label_code": "O código",
     "label_result": "Resultado",
@@ -90,6 +91,18 @@
       {
         "context_extra": "",
         "retrospective": "",
+        "diagram": {
+          "caption": "Passe o mouse por um nó (ou toque, no celular) para ver a responsabilidade dele.",
+          "roles": {
+            "web": "Front em Next.js 15 com SSR e ISR — páginas de cupom renderizadas no servidor para indexar no Google e carregar rápido.",
+            "sources": "Cinco redes de afiliados diferentes atrás de uma interface única. Adicionar uma sexta fonte não toca no resto do sistema.",
+            "api": "API Fastify: expõe busca, alertas e o painel admin, e concentra as regras de scoring dos cupons.",
+            "queue": "Fila que roda o sync a cada 3h fora do ciclo de request, gravando em lote com deduplicação por (fonte, idExterno).",
+            "search": "Busca full-text com tolerância a erro de digitação — separada do Postgres para não competir por conexão.",
+            "db": "Fonte de verdade: cupons, lojas, usuários, alertas e comentários com threading em 3 níveis.",
+            "cache": "Cache das listagens quentes e backend da fila."
+          }
+        },
         "decisions": [
           {
             "title": "N+1 no sync de afiliados",
@@ -103,11 +116,35 @@
       {
         "context_extra": "",
         "retrospective": "",
+        "diagram": {
+          "caption": "A decisão central está no RabbitMQ: Game e Wallet nunca se falam por HTTP direto.",
+          "roles": {
+            "client": "Cliente React: entra pelo gateway para tudo, menos o jogo em si — a curva do multiplicador chega por WebSocket.",
+            "keycloak": "Emite e valida os tokens OAuth2/OIDC. Nenhum serviço implementa autenticação por conta própria.",
+            "kong": "Porta de entrada: roteia, valida o token e aplica rate limit antes de qualquer requisição chegar nos serviços.",
+            "game": "Roda as rodadas e o algoritmo provably fair. Quatro camadas com DDD, domínio em TypeScript puro — sem NestJS e sem Prisma dentro da regra de negócio.",
+            "bus": "Todo o tráfego entre Game e Wallet passa por aqui. Sem HTTP direto entre serviços: uma falha parcial vira mensagem pendente, não saldo inconsistente.",
+            "wallet": "Única fonte de verdade para saldo. Dinheiro em BigInt de centavos, sem ponto flutuante em nenhum momento.",
+            "db": "Persistência da carteira: apostas, cashouts e histórico de transações."
+          }
+        },
         "decisions": []
       },
       {
         "context_extra": "",
         "retrospective": "",
+        "diagram": {
+          "caption": "O mesmo backend atende dois mercados — o que muda por região é fornecedor, imposto e gateway.",
+          "roles": {
+            "web": "Storefront em Next.js 15 com i18n em 7 idiomas e preço já convertido para a moeda do visitante.",
+            "gw": "API Gateway com timeout explícito de 28s, logo abaixo do limite de 29s de conexão — é o que permite o assistente de IA responder em streaming sem estourar.",
+            "api": "Backend em Go rodando serverless. Concentra o pipeline de precificação por região: moeda local, margem e imposto por país de destino.",
+            "mongo": "Catálogo, pedidos e sessões. Sincronização paralela via goroutines.",
+            "br": "Fornecedores brasileiros atrás da interface Supplier — a mesma que os europeus implementam.",
+            "eu": "Fornecedores europeus. Adicionar um novo não altera o fluxo de pedidos.",
+            "pay": "MercadoPago (Pix, Boleto, cartão) no Brasil; Stripe e PayPal na Europa. O roteamento é por país de destino."
+          }
+        },
         "decisions": []
       }
     ]
