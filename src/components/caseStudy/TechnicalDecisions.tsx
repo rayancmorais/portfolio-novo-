@@ -5,13 +5,15 @@ import type { TechnicalDecision } from '@/data/cases/types';
 /* ============================================================================
    Decisões técnicas — problema → alternativas → decisão → trade-off.
 
-   A hierarquia visual é a tese do bloco: o problema é o título, as alternativas
-   ficam discretas (foram descartadas), a decisão é o destaque, e o trade-off é
-   menor e mais suave — sinaliza honestidade sobre o custo sem competir com a
-   decisão em si.
+   O problema é parágrafo, não título: descrever o cenário de verdade toma
+   algumas linhas, e isso em serif itálico grande fica ilegível. Quem ancora o
+   bloco é o número. A hierarquia continua: alternativas discretas (foram
+   descartadas), decisão em destaque, e trade-off menor e mais suave — assume o
+   custo sem competir com a decisão.
    ========================================================================== */
 
 const Card = styled.article`
+  position: relative;
   padding: 1.5rem 1.6rem 1.3rem;
   background: var(--elev);
   border: 1px solid var(--border);
@@ -26,14 +28,22 @@ const Card = styled.article`
   }
 `;
 
-const Problem = styled.h3`
+const Index = styled.span`
+  display: block;
+  margin-bottom: 0.9rem;
   font-family: var(--font-serif, serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: 1.4rem;
-  line-height: 1.2;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--cy-20);
+`;
+
+const Problem = styled.p`
+  margin: 0 0 1.2rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.7;
   color: var(--fg-1);
-  margin: 0 0 1.1rem;
 `;
 
 const Label = styled.p`
@@ -64,12 +74,17 @@ const Alternative = styled.li`
     margin-top: 0.3rem;
   }
 
-  /* Riscado não — foram consideradas, não erradas. O traço apenas as agrupa. */
+  /* Marcador redondo, não travessão: o texto das alternativas já usa travessão
+     internamente e os dois se confundiriam. */
   &::before {
-    content: '—';
+    content: '';
     position: absolute;
-    left: 0;
-    color: var(--fg-4);
+    left: 2px;
+    top: 0.62em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--fg-4);
   }
 `;
 
@@ -111,8 +126,11 @@ export function TechnicalDecisions({ decisions }: TechnicalDecisionsProps) {
 
   return (
     <>
-      {decisions.map(decision => (
+      {decisions.map((decision, index) => (
         <Card key={decision.problema}>
+          <Index aria-hidden="true">{String(index + 1).padStart(2, '0')}</Index>
+
+          <Label>{t('casePages.label_problem')}</Label>
           <Problem>{decision.problema}</Problem>
 
           {decision.alternativas.length > 0 && (
