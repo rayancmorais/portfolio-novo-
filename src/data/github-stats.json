@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-08-14",
+  "commits": 583,
+  "publicRepos": 24,
+  "contributionsLastYear": 164,
+  "languages": [
+    {
+      "name": "JavaScript",
+      "pct": 50,
+      "color": "#f1e05a"
+    },
+    {
+      "name": "TypeScript",
+      "pct": 40,
+      "color": "#3178c6"
+    },
+    {
+      "name": "Jupyter Notebook",
+      "pct": 5,
+      "color": "#da5b0b"
+    },
+    {
+      "name": null,
+      "pct": 5,
+      "color": "var(--fg-4)"
+    }
+  ]
+}

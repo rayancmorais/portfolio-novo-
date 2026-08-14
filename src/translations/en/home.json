@@ -178,9 +178,9 @@
     "eyebrow": "05 · GitHub",
     "title_1": "GitHub",
     "title_accent": "Activity",
-    "stat_commits": "Total commits",
-    "stat_repos": "Public repositories",
-    "stat_langs": "Main languages",
+    "stat_commits": "Commits",
+    "stat_repos": "Public repos",
+    "stat_contributions": "Contributions / 12 mo",
     "lang_title": "Most used languages",
     "lang_bar_aria": "Language distribution",
     "lang_others": "Others"

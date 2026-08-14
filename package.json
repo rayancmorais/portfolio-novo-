@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "type-check": "tsc --noEmit -p tsconfig.app.json",
     "knip": "knip",
-    "prepare": "husky"
+    "prepare": "husky",
+    "github:stats": "node scripts/github-stats.mjs"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

@@ -182,9 +182,9 @@
     "eyebrow": "05 · GitHub",
     "title_1": "Atividade no",
     "title_accent": "GitHub",
-    "stat_commits": "Commits no total",
-    "stat_repos": "Repositórios públicos",
-    "stat_langs": "Linguagens principais",
+    "stat_commits": "Commits",
+    "stat_repos": "Repos públicos",
+    "stat_contributions": "Contribuições / 12 meses",
     "lang_title": "Linguagens mais usadas",
     "lang_bar_aria": "Distribuição de linguagens",
     "lang_others": "Outros"

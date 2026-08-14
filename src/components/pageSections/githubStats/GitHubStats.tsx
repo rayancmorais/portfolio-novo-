@@ -15,7 +15,20 @@ import { useTranslation } from 'react-i18next';
 
 /* ---------------------------------------------------------------- data ---- */
 
+import statsJson from '@/data/github-stats.json';
+
 const GH_USER = 'rayancmorais';
+
+/* Números reais, gerados por `npm run github:stats`. Hardcoded eles divergiam
+   do perfil (dizia 12 repos quando havia 24) — e número errado custa mais
+   confiança do que número ausente. */
+const stats = statsJson as {
+  generatedAt: string;
+  commits: number;
+  publicRepos: number;
+  contributionsLastYear: number | null;
+  languages: { name: string | null; pct: number; color: string }[];
+};
 
 interface Stat {
   id: string;
@@ -24,22 +37,11 @@ interface Stat {
   label: string;
 }
 
-const STATS_VALUES = [847, 12, 4] as const;
-
-const LANGS_BASE: Omit<Lang, 'name'>[] = [
-  { pct: 45, color: 'var(--cy, #00f5d4)' },
-  { pct: 28, color: '#f1e05a' },
-  { pct: 15, color: '#a78bfa' },
-  { pct: 12, color: 'var(--fg-4, #545b6b)' },
-];
-
 interface Lang {
   name: string;
   pct: number;
   color: string;
 }
-
-const LANG_NAMES = ['TypeScript', 'JavaScript', 'CSS'] as const;
 
 /* ------------------------------------------------------------- motion ---- */
 
@@ -236,8 +238,10 @@ const StatGrid = styled(motion.div)`
   gap: 1.2rem;
   margin-bottom: 1.2rem;
 
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
+  /* Número curto não justifica largura total: lado a lado eles ficam
+     comparáveis, que é o motivo de existir uma faixa de estatísticas. */
+  @media (max-width: 768px) {
+    gap: 0.6rem;
   }
 `;
 
@@ -248,6 +252,10 @@ const StatCard = styled(motion.div)`
   flex-direction: column;
   gap: 0.35rem;
   padding: 1.5rem 1.4rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem 0.75rem;
+  }
   text-align: left;
 `;
 
@@ -256,6 +264,10 @@ const StatValue = styled.span`
   font-style: italic;
   font-weight: 500;
   font-size: clamp(2.2rem, 4vw, 2.9rem);
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
   line-height: 1;
   color: var(--cy, #00f5d4);
   font-variant-numeric: tabular-nums;
@@ -264,6 +276,11 @@ const StatValue = styled.span`
 const StatLabel = styled.span`
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.66rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+  }
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -366,15 +383,24 @@ export function GitHubStats() {
   const reduce = useReducedMotion();
 
   const STATS: Stat[] = [
-    { id: 'commits', value: STATS_VALUES[0], label: t('github.stat_commits') },
-    { id: 'repos', value: STATS_VALUES[1], label: t('github.stat_repos') },
-    { id: 'langs', value: STATS_VALUES[2], label: t('github.stat_langs') },
+    { id: 'commits', value: stats.commits, label: t('github.stat_commits') },
+    { id: 'repos', value: stats.publicRepos, label: t('github.stat_repos') },
+    ...(stats.contributionsLastYear
+      ? [
+          {
+            id: 'contributions',
+            value: stats.contributionsLastYear,
+            label: t('github.stat_contributions'),
+          },
+        ]
+      : []),
   ];
 
-  const LANGS: Lang[] = [
-    ...LANG_NAMES.map((name, i) => ({ name, ...LANGS_BASE[i] })),
-    { name: t('github.lang_others'), ...LANGS_BASE[3] },
-  ];
+  /* `name: null` marca a fatia agregada — o rótulo dela é traduzível. */
+  const LANGS: Lang[] = stats.languages.map(lang => ({
+    ...lang,
+    name: lang.name ?? t('github.lang_others'),
+  }));
 
   return (
     <Section id="github" aria-labelledby="github-title">
