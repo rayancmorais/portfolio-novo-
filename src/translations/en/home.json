@@ -184,12 +184,7 @@
       {
         "title": "Deploy & DevOps",
         "description": "CI/CD, preview environments and deployment on Railway, Vercel and AWS — so every commit ships safely.",
-        "tags": ["Vercel", "CI/CD", "Git Flow"]
-      },
-      {
-        "title": "UI/UX with Figma",
-        "description": "From wireframe to high-fidelity prototype, focusing on hierarchy, spacing and the details that matter.",
-        "tags": ["Figma", "Design System", "Prototype"]
+        "tags": ["Vercel", "Railway", "AWS", "GitHub Actions"]
       }
     ]
   }

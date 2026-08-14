@@ -18,8 +18,8 @@ interface Service {
   tags: string[];
 }
 
-const SERVICES_GLYPHS = ['</>', '{ }', '▲', '▣'] as const;
-const SERVICES_IDS = ['fullstack', 'api', 'devops', 'design'] as const;
+const SERVICES_GLYPHS = ['</>', '{ }', '▲'] as const;
+const SERVICES_IDS = ['fullstack', 'api', 'devops'] as const;
 
 const containerVariants: Variants = {
   hidden: {},
@@ -79,10 +79,11 @@ const Subtitle = styled.p`
 
 const Grid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* Três cards: qualquer layout de 2 colunas deixa o terceiro órfão. */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.2rem;
 
-  @media (max-width: 720px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -161,6 +162,11 @@ const Card = styled(motion.article)`
   gap: 0.9rem;
   padding: 1.8rem 1.8rem 1.9rem;
   text-align: left;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    padding: 1.25rem;
+  }
   background: var(--elev, rgba(255, 255, 255, 0.03));
   border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: var(--r-card, 16px);
@@ -186,6 +192,19 @@ const Card = styled(motion.article)`
   }
 `;
 
+/* No desktop `display: contents` dissolve o wrapper e ícone e título seguem
+   sendo filhos diretos do Card, preservando a coluna atual. No mobile ele vira
+   uma linha e os dois dividem a mesma altura. */
+const CardHeader = styled.div`
+  display: contents;
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+`;
+
 const IconWell = styled.span`
   display: grid;
   place-items: center;
@@ -198,6 +217,13 @@ const IconWell = styled.span`
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--cy, #00f5d4);
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+  }
 `;
 
 const CardTitle = styled.h3`
@@ -208,6 +234,11 @@ const CardTitle = styled.h3`
   line-height: 1.1;
   color: var(--fg-1, #e6e8ee);
   margin: 0.2rem 0 0;
+
+  @media (max-width: 768px) {
+    margin: 0;
+    font-size: 1.3rem;
+  }
 `;
 
 const Description = styled.p`
@@ -225,6 +256,10 @@ const Tags = styled.div`
   gap: 0.4rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-faint, rgba(255, 255, 255, 0.05));
+
+  @media (max-width: 768px) {
+    padding-top: 0.75rem;
+  }
 `;
 
 const Tag = styled.span`
@@ -271,8 +306,10 @@ export function Services() {
             <Card key={s.id} variants={reduce ? undefined : cardVariants}>
               <span className="brk-tr" aria-hidden="true" />
               <span className="brk-bl" aria-hidden="true" />
-              <IconWell aria-hidden="true">{s.glyph}</IconWell>
-              <CardTitle>{s.title}</CardTitle>
+              <CardHeader>
+                <IconWell aria-hidden="true">{s.glyph}</IconWell>
+                <CardTitle>{s.title}</CardTitle>
+              </CardHeader>
               <Description>{s.description}</Description>
               <Tags>
                 {s.tags.map(tag => (
