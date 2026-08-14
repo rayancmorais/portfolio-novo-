@@ -430,6 +430,10 @@ export function Contact() {
                   LinkedIn · Rayan Morais
                   <Arrow aria-hidden="true">↗</Arrow>
                 </SocialLink>
+                <SocialLink href="mailto:rayan_cm2021@icloud.com">
+                  {t('contact.link_email')}
+                  <Arrow aria-hidden="true">↗</Arrow>
+                </SocialLink>
               </Links>
             </SideCard>
           </Side>

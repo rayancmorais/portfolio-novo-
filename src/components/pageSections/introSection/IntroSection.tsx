@@ -194,7 +194,7 @@ export function IntroSection() {
                 <Line1>{t('hero.headline_1')}</Line1>
               </LineReveal>
               <LineReveal i={1} inView={inView} reduced={reducedMotion}>
-                <Line2>{t('hero.headline_accent')},</Line2>
+                <Line2>{t('hero.headline_accent')}</Line2>
               </LineReveal>
               <LineReveal i={2} inView={inView} reduced={reducedMotion}>
                 <Line3>{t('hero.headline_2')}</Line3>
@@ -255,6 +255,10 @@ export function IntroSection() {
                   <InfoRow>
                     <InfoLabel>{t('hero.focus_label')}</InfoLabel>
                     <InfoValAccent>{t('hero.focus_value')}</InfoValAccent>
+                  </InfoRow>
+                  <InfoRow>
+                    <InfoLabel>{t('hero.journey_label')}</InfoLabel>
+                    <InfoVal>{t('hero.journey_value')}</InfoVal>
                   </InfoRow>
                   <InfoRow>
                     <InfoLabel>{t('hero.exp_label')}</InfoLabel>

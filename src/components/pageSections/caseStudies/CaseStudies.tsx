@@ -27,6 +27,7 @@ interface CaseStudyBase {
   image?: string;
   stack: string[];
   link?: string;
+  repo?: string;
   metric_values: string[];
 }
 
@@ -34,31 +35,60 @@ const CASES_BASE: CaseStudyBase[] = [
   {
     no: '01',
     title: 'CupomManiac',
-    year: '2025',
+    year: '2026',
     domain: 'cupommaniac.com.br',
     image: '/assets/cases/cupommaniac.png',
-    stack: ['Next.js 15', 'Fastify', 'BullMQ', 'Meilisearch', 'PostgreSQL'],
+    stack: [
+      'Next.js 15',
+      'Fastify',
+      'Prisma',
+      'PostgreSQL',
+      'Redis',
+      'BullMQ',
+      'Meilisearch',
+      'Vercel',
+      'Railway',
+    ],
     link: 'https://cupommaniac.com.br',
     metric_values: ['5', '3h', '0–100'],
   },
   {
     no: '02',
     title: 'Crash Game',
-    year: '2025',
+    year: '2026',
     domain: 'jungle-gaming.app',
     image: '/assets/cases/crashGame.png',
-    stack: ['Node.js', 'WebSocket', 'Provably Fair', 'React'],
-    link: 'https://github.com/rayancmorais/fullstack-challengeRayancm',
-    metric_values: ['100%', 'RT', '1'],
+    stack: [
+      'NestJS',
+      'Bun',
+      'DDD',
+      'RabbitMQ',
+      'Kong',
+      'Keycloak',
+      'WebSocket',
+      'PostgreSQL',
+      'Docker',
+    ],
+    repo: 'https://github.com/rayancmorais/fullstack-challengeRayancm',
+    metric_values: ['91', '11', '4'],
   },
   {
     no: '03',
-    title: 'BR Dropshipping',
-    year: '2024',
+    title: 'Lux Lab Brasil',
+    year: '2025',
     domain: 'luxlabbrasil.com.br',
     image: '/assets/cases/brdropshipping.png',
-    stack: ['Next.js', 'Stripe', 'Fornecedores BR'],
-    metric_values: ['BR', 'Auto', 'E2E'],
+    stack: [
+      'Go',
+      'Gin',
+      'AWS Lambda',
+      'MongoDB',
+      'Next.js 15',
+      'MercadoPago',
+      'Stripe',
+      'OAuth2/OIDC',
+    ],
+    metric_values: ['2', '3', 'OAuth2'],
   },
 ];
 
@@ -470,12 +500,18 @@ const Chip = styled.span`
   padding: 4px 11px;
 `;
 
+const Actions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.2rem;
+`;
+
 const Ghost = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 8px;
   align-self: flex-start;
-  margin-top: 0.2rem;
   padding: 0.65rem 1.4rem;
   border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.16));
   border-radius: var(--r-chip, 100px);
@@ -526,6 +562,7 @@ interface CaseRowProps {
   resultText: string;
   metric_labels: string[];
   visit_site: string;
+  view_code: string;
   private_repo: string;
 }
 
@@ -542,6 +579,7 @@ function CaseRow({
   resultText,
   metric_labels,
   visit_site,
+  view_code,
   private_repo,
 }: CaseRowProps) {
   const flip = i % 2 === 1;
@@ -620,10 +658,19 @@ function CaseRow({
             ))}
           </Chips>
 
-          {c.link ? (
-            <Ghost href={c.link} target="_blank" rel="noopener noreferrer">
-              {visit_site}
-            </Ghost>
+          {c.link || c.repo ? (
+            <Actions>
+              {c.link && (
+                <Ghost href={c.link} target="_blank" rel="noopener noreferrer">
+                  {visit_site}
+                </Ghost>
+              )}
+              {c.repo && (
+                <Ghost href={c.repo} target="_blank" rel="noopener noreferrer">
+                  {view_code}
+                </Ghost>
+              )}
+            </Actions>
           ) : (
             <Private>{private_repo}</Private>
           )}
@@ -687,6 +734,7 @@ export function CaseStudies() {
               resultText={items[i]?.result ?? ''}
               metric_labels={items[i]?.metric_labels ?? []}
               visit_site={t('caseStudies.visit_site')}
+              view_code={t('caseStudies.view_code')}
               private_repo={t('caseStudies.private_repo')}
             />
           ))}

@@ -18,8 +18,8 @@ interface Service {
   tags: string[];
 }
 
-const SERVICES_GLYPHS = ['</>', '{ }', '▣', '▲'] as const;
-const SERVICES_IDS = ['fullstack', 'api', 'design', 'devops'] as const;
+const SERVICES_GLYPHS = ['</>', '{ }', '▲', '▣'] as const;
+const SERVICES_IDS = ['fullstack', 'api', 'devops', 'design'] as const;
 
 const containerVariants: Variants = {
   hidden: {},

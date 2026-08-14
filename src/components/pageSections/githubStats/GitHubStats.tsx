@@ -24,7 +24,7 @@ interface Stat {
   label: string;
 }
 
-const STATS_VALUES = [847, 12, 23, 4] as const;
+const STATS_VALUES = [847, 12, 4] as const;
 
 const LANGS_BASE: Omit<Lang, 'name'>[] = [
   { pct: 45, color: 'var(--cy, #00f5d4)' },
@@ -232,12 +232,12 @@ const cardBase = css`
 
 const StatGrid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.2rem;
   margin-bottom: 1.2rem;
 
   @media (max-width: 760px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -368,13 +368,7 @@ export function GitHubStats() {
   const STATS: Stat[] = [
     { id: 'commits', value: STATS_VALUES[0], label: t('github.stat_commits') },
     { id: 'repos', value: STATS_VALUES[1], label: t('github.stat_repos') },
-    {
-      id: 'streak',
-      value: STATS_VALUES[2],
-      suffix: t('github.stat_streak_suffix'),
-      label: t('github.stat_streak'),
-    },
-    { id: 'langs', value: STATS_VALUES[3], label: t('github.stat_langs') },
+    { id: 'langs', value: STATS_VALUES[2], label: t('github.stat_langs') },
   ];
 
   const LANGS: Lang[] = [

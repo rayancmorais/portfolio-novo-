@@ -1,22 +1,24 @@
 {
   "hero": {
     "eyebrow": "FULL-STACK DEVELOPER · BRASIL",
-    "headline_1": "Construo",
-    "headline_accent": "produtos",
-    "headline_2": "do back ao front.",
+    "headline_1": "Produtos que",
+    "headline_accent": "sobrevivem",
+    "headline_2": "à produção.",
     "headline_caps": "P R O D U T O S",
     "bio": "Sou <strong>Rayan Morais</strong>, desenvolvedor full-stack baseado no Brasil. Trabalho com <em>React, Node.js e TypeScript</em> para construir produtos reais — da arquitetura ao deploy.",
     "name": "Rayan Morais",
     "role": "FULL-STACK DEVELOPER",
-    "available": "Aberto a oportunidades",
+    "available": "Aberto a oportunidades · Remoto · Inglês C1",
     "cta_primary": "Ver Trabalhos →",
     "cta_cv": "Baixar CV ↓",
     "location_label": "LOCALIZAÇÃO",
     "location_value": "Brasil · GMT-3",
     "focus_label": "FOCO",
     "focus_value": "React · Next · Nest · Node · TS",
-    "exp_label": "EXPERIÊNCIA",
-    "exp_value": "3+ anos"
+    "journey_label": "TRAJETÓRIA",
+    "journey_value": "Da saúde para o software",
+    "exp_label": "DESDE",
+    "exp_value": "Jan 2024"
   },
   "techStack": {
     "title": "Technical Ecosystem",
@@ -40,6 +42,7 @@
     "label_approach": "Abordagem",
     "label_result": "Resultado",
     "visit_site": "Visitar site →",
+    "view_code": "Ver código →",
     "private_repo": "Repositório privado",
     "items": [
       {
@@ -54,14 +57,18 @@
         "problem": "Um jogo crash em tempo real só ganha a confiança do jogador se cada rodada puder ser verificada — não basta prometer que o resultado é justo.",
         "approach": "Implementei um algoritmo provably fair com hash criptográfico por rodada e sincronizei todos os clientes via WebSocket, mantendo o multiplicador idêntico em tempo real para todo mundo.",
         "result": "Cada resultado é reproduzível e auditável pelo próprio jogador, com a curva do multiplicador transmitida ao vivo, sem divergência entre as sessões.",
-        "metric_labels": ["verificável", "via WebSocket", "fonte de verdade"]
+        "metric_labels": ["testes unitários", "cenários E2E", "camadas (DDD)"]
       },
       {
-        "kind": "Lux Lab Brasil · e-commerce",
+        "kind": "E-commerce multi-mercado (BR + EU)",
         "problem": "Lojas de dropshipping no Brasil esbarram no checkout: gateways internacionais quebram a conversão e a gestão de catálogo com fornecedores locais costuma ser manual.",
         "approach": "Montei a loja em Next.js com checkout nacional via Stripe e integração direta com fornecedores BR, automatizando a sincronização de catálogo e o fluxo de pedidos.",
         "result": "Um e-commerce com pagamento nacional ponta a ponta e catálogo gerido de forma integrada — menos trabalho manual e checkout pensado para o cliente brasileiro.",
-        "metric_labels": ["checkout nacional", "sync de catálogo", "fluxo de pedidos"]
+        "metric_labels": [
+          "mercados (BR + EU)",
+          "gateways de pagamento",
+          "Google · Facebook · Apple"
+        ]
       }
     ]
   },
@@ -80,7 +87,8 @@
     "btn_sent": "Mensagem enviada ✓",
     "sent_feedback": "Obrigado! Retorno em breve.",
     "side_title": "Onde me encontrar",
-    "side_text": "Prefere ir direto ao ponto? Me chama em uma dessas."
+    "side_text": "Prefere ir direto ao ponto? Me chama em uma dessas.",
+    "link_email": "Email · rayan_cm2021@icloud.com"
   },
   "footer": {
     "nav_ecosystem": "Ecossistema",
@@ -98,8 +106,6 @@
     "title_accent": "GitHub",
     "stat_commits": "Commits no total",
     "stat_repos": "Repositórios públicos",
-    "stat_streak": "Streak atual",
-    "stat_streak_suffix": " dias",
     "stat_langs": "Linguagens principais",
     "lang_title": "Linguagens mais usadas",
     "lang_bar_aria": "Distribuição de linguagens",
@@ -132,9 +138,9 @@
   },
   "services": {
     "eyebrow": "06 · Serviços",
-    "title_1": "O que eu",
-    "title_accent": "faço",
-    "subtitle": "Do conceito ao deploy — alguns dos serviços que ofereço.",
+    "title_1": "O que eu trago",
+    "title_accent": "para um time",
+    "subtitle": "Do conceito ao deploy — onde eu contribuo.",
     "items": [
       {
         "title": "Desenvolvimento Full-Stack",
@@ -147,14 +153,14 @@
         "tags": ["Express", "PostgreSQL", "MongoDB"]
       },
       {
-        "title": "UI/UX com Figma",
-        "description": "Do wireframe ao protótipo de alta fidelidade, com foco em hierarquia, espaçamento e detalhes que importam.",
-        "tags": ["Figma", "Design System", "Protótipo"]
-      },
-      {
         "title": "Deploy & DevOps",
         "description": "CI/CD, ambientes de preview e deploy em Railway, Vercel e AWS — para que cada commit vá ao ar com segurança.",
         "tags": ["Vercel", "CI/CD", "Git Flow"]
+      },
+      {
+        "title": "UI/UX com Figma",
+        "description": "Do wireframe ao protótipo de alta fidelidade, com foco em hierarquia, espaçamento e detalhes que importam.",
+        "tags": ["Figma", "Design System", "Protótipo"]
       }
     ]
   }
