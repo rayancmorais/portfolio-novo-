@@ -15,6 +15,7 @@ import { TechnicalDecisions } from '@/components/caseStudy/TechnicalDecisions';
 import { CodeSnippet } from '@/components/caseStudy/CodeSnippet';
 import { Retrospective } from '@/components/caseStudy/Retrospective';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { jumpToTop } from '@/hooks/useSectionNavigation';
 import { Navbar } from '@/components/pageSections/navbar/Navbar';
 import { Footer } from '@/components/pageSections/footer/Footer';
 
@@ -338,7 +339,7 @@ export function CaseStudyPage() {
   const index = CASE_STUDIES.findIndex(c => c.slug === slug);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    jumpToTop();
   }, [slug]);
 
   useEffect(() => {

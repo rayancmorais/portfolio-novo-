@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { CV_URLS } from '@/data/links';
+import { useSectionNavigation } from '@/hooks/useSectionNavigation';
 
 /* ── keyframes ─────────────────────────────────────────────────────────────── */
 
@@ -148,6 +149,7 @@ function clearSpot(e: React.MouseEvent<HTMLDivElement>) {
 export function IntroSection() {
   const { t } = useTranslation('home');
   const { language } = useLanguage();
+  const goToSection = useSectionNavigation();
   const cvUrl = CV_URLS[language];
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-5% 0px' });
@@ -187,7 +189,15 @@ export function IntroSection() {
 
             <Anim i={8} inView={inView}>
               <CTAs>
-                <PrimaryBtn href="#work">{t('hero.cta_primary')}</PrimaryBtn>
+                <PrimaryBtn
+                  href="#work"
+                  onClick={e => {
+                    e.preventDefault();
+                    goToSection('work');
+                  }}
+                >
+                  {t('hero.cta_primary')}
+                </PrimaryBtn>
                 <GhostBtn href={cvUrl} download target="_blank" rel="noopener noreferrer">
                   {t('hero.cta_cv')}
                 </GhostBtn>

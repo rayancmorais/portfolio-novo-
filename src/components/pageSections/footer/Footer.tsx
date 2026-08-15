@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useSectionNavigation } from '@/hooks/useSectionNavigation';
+import { scrollToTop, useSectionNavigation } from '@/hooks/useSectionNavigation';
 
 /* ============================================================================
    Footer — wordmark + nav links + copyright. React + styled-components.
@@ -86,7 +86,7 @@ export function Footer() {
 
   const scrollTop = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
 
   return (

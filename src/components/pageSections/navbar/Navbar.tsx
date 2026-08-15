@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSectionNavigation } from '@/hooks/useSectionNavigation';
+import { scrollToTop, useSectionNavigation } from '@/hooks/useSectionNavigation';
 import { useCommandPalette } from '@/contexts/CommandPaletteContext';
 import { CV_URLS } from '@/data/links';
 
@@ -35,7 +35,13 @@ export function Navbar() {
   return (
     <Nav $scrolled={scrolled}>
       <Inner>
-        <Logo href="#">
+        <Logo
+          href="#"
+          onClick={e => {
+            e.preventDefault();
+            scrollToTop();
+          }}
+        >
           RAYAN<Dot>.</Dot>
         </Logo>
 
