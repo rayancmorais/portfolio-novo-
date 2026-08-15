@@ -5,6 +5,7 @@ import { LoadingScreen } from '@/components/pageSections/loadingScreen/LoadingSc
 import { Home } from '@/pages/Home';
 import { useLenis } from '@/hooks/useLenis';
 import { usePageLoading } from '@/hooks/usePageLoading';
+import { useIdleReady } from '@/hooks/useIdleReady';
 import { CommandPaletteProvider } from '@/contexts/CommandPaletteContext';
 
 /* Fora da home: só baixa quando alguém abre um estudo de caso. */
@@ -12,9 +13,10 @@ const CaseStudyPage = lazy(() =>
   import('@/pages/CaseStudyPage').then(m => ({ default: m.CaseStudyPage }))
 );
 
-/* O fundo estrelado carrega three + @react-three/fiber, que sozinhos eram 56%
-   do bundle inicial. Sendo decoração, sai do caminho crítico: entra depois do
-   primeiro paint, sem segurar o conteúdo. */
+/* O fundo carrega three + @react-three/fiber: 235 KB gzip, mais que o resto do
+   site somado. Sendo decoração, fica fora do caminho crítico duas vezes — é um
+   chunk à parte e o import só dispara quando o navegador fica ocioso, então
+   nunca disputa banda com o conteúdo. Vale em qualquer tamanho de tela. */
 const SpaceScene = lazy(() =>
   import('@/components/pageSections/introSection/SpaceScene').then(m => ({
     default: m.SpaceScene,
@@ -24,14 +26,17 @@ const SpaceScene = lazy(() =>
 export default function App() {
   const reducedMotion = useReducedMotion() ?? false;
   const { showLoader } = usePageLoading();
+  const backgroundReady = useIdleReady();
 
   useLenis();
 
   return (
     <>
-      <Suspense fallback={null}>
-        <SpaceScene reduced={reducedMotion} />
-      </Suspense>
+      {backgroundReady && (
+        <Suspense fallback={null}>
+          <SpaceScene reduced={reducedMotion} />
+        </Suspense>
+      )}
       <div
         aria-hidden
         style={{
