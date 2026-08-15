@@ -68,7 +68,7 @@
         "metric_labels": ["markets (BR + EU)", "payment gateways", "Google · Facebook · Apple"],
         "visit_site_label": "View site (BR version) →",
         "view_code_label": "View code (EU version) →",
-        "links_note": "The live site is the Brazilian version; the public code is the European one, which served as the base for the adaptation. The BR repository is private — available on request."
+        "links_note": "The live site is the Brazilian version; the public code is the European one, which served as the base for the adaptation. The local payment methods — MercadoPago, Pix and Boleto — are specific to the BR version, whose repository is private and available on request."
       }
     ]
   },
