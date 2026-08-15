@@ -21,7 +21,6 @@ export const crashGame: CaseContent = {
           'Dois serviços precisam concordar sobre saldo em tempo real: o Game Service processa apostas e cashouts a cada rodada, e o Wallet Service guarda o dinheiro. Se o Game Service chamasse a Wallet por HTTP síncrono, qualquer timeout ou falha parcial deixaria os dois com versões diferentes da verdade — uma aposta debitada e não registrada, ou registrada e não debitada. Em um jogo com dinheiro real, isso é prejuízo direto.',
         alternativas: [
           'HTTP síncrono com retry e idempotency key — mais simples de implementar e depurar, mas mantém os serviços acoplados no tempo: se a Wallet estiver lenta, o jogo trava junto.',
-          'Banco de dados compartilhado entre os dois serviços — eliminaria a comunicação, mas quebra o isolamento: qualquer mudança de schema afeta os dois, e a fronteira entre os domínios deixa de existir.',
           'Saldo replicado no Game Service, sincronizado periodicamente — leitura rápida, mas cria duas fontes de verdade para o dado mais sensível do sistema.',
         ],
         decisao:
@@ -58,7 +57,6 @@ export const crashGame: CaseContent = {
           'Um jogo de crash só funciona se o jogador acreditar que o resultado não foi manipulado a favor da casa. Prometer que o sorteio é justo não basta — não há como o jogador verificar, e a suspeita é suficiente para inviabilizar o produto.',
         alternativas: [
           'Confiar no servidor e publicar o histórico de resultados — permite análise estatística ao longo do tempo, mas não prova nada sobre uma rodada específica.',
-          'Fonte de aleatoriedade externa (oráculo, VRF) — verificável de forma independente, mas adiciona dependência de terceiros e latência num loop que roda a cada segundo.',
         ],
         decisao:
           'Provably fair com HMAC-SHA256: o hash do seed do servidor é publicado antes das apostas e o seed é revelado após o crash. Com os dois em mãos, o jogador recalcula o ponto de crash por conta própria e confirma que o valor foi definido antes de qualquer aposta entrar.',
