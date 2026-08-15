@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import styled, { css, keyframes } from 'styled-components';
-import { LoadingScene } from './LoadingScene';
+
+/* Mesmo motivo do fundo da home: o loader existe para cobrir carregamento
+   lento, então ele próprio não pode arrastar three para o caminho crítico.
+   Sem o chunk, o HUD e os logs aparecem na hora e o campo de estrelas entra
+   depois — ou nunca, se a conexão não der conta. */
+const LoadingScene = lazy(() => import('./LoadingScene').then(m => ({ default: m.LoadingScene })));
 
 /* ── data ───────────────────────────────────────────────────────────────────── */
 
@@ -47,7 +52,9 @@ export function LoadingScreen({ visible }: { visible: boolean }) {
           transition={{ duration: reduced ? 0 : EXIT_DURATION_S, ease: 'easeOut' }}
         >
           <SceneLayer>
-            <LoadingScene reduced={reduced} />
+            <Suspense fallback={null}>
+              <LoadingScene reduced={reduced} />
+            </Suspense>
           </SceneLayer>
           <Scrim aria-hidden />
 

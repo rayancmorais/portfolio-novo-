@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { CASE_STUDIES, findCaseBySlug, findCaseContent, findNextCase } from '@/data/cases';
 import { ARCHITECTURES } from '@/data/architecture';
@@ -47,6 +46,10 @@ const Page = styled.div`
   position: relative;
 `;
 
+/* Sem animação de entrada no container da página. A versão anterior partia de
+   opacity: 0 e dependia do framer concluir a transição para o conteúdo
+   aparecer — quando isso não acontecia, a página inteira ficava invisível.
+   Conteúdo nunca deve depender de animação decorativa para existir. */
 const Article = styled.article`
   max-width: 860px;
   margin: 0 auto;
@@ -263,7 +266,6 @@ export function CaseStudyPage() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation('home');
   const { language } = useLanguage();
-  const reduce = useReducedMotion();
 
   const study = findCaseBySlug(slug);
   const index = CASE_STUDIES.findIndex(c => c.slug === slug);
@@ -298,12 +300,7 @@ export function CaseStudyPage() {
   return (
     <Page>
       <Navbar />
-      <Article
-        as={motion.article}
-        initial={reduce ? false : { opacity: 0, y: 18 }}
-        animate={reduce ? undefined : { opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <Article>
         <BackLink to="/">← {t('casePages.back')}</BackLink>
 
         <Eyebrow>

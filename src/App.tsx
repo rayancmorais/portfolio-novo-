@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
-import { SpaceScene } from '@/components/pageSections/introSection/SpaceScene';
 import { LoadingScreen } from '@/components/pageSections/loadingScreen/LoadingScreen';
 import { Home } from '@/pages/Home';
 import { useLenis } from '@/hooks/useLenis';
@@ -13,6 +12,15 @@ const CaseStudyPage = lazy(() =>
   import('@/pages/CaseStudyPage').then(m => ({ default: m.CaseStudyPage }))
 );
 
+/* O fundo estrelado carrega three + @react-three/fiber, que sozinhos eram 56%
+   do bundle inicial. Sendo decoração, sai do caminho crítico: entra depois do
+   primeiro paint, sem segurar o conteúdo. */
+const SpaceScene = lazy(() =>
+  import('@/components/pageSections/introSection/SpaceScene').then(m => ({
+    default: m.SpaceScene,
+  }))
+);
+
 export default function App() {
   const reducedMotion = useReducedMotion() ?? false;
   const { showLoader } = usePageLoading();
@@ -21,7 +29,9 @@ export default function App() {
 
   return (
     <>
-      <SpaceScene reduced={reducedMotion} />
+      <Suspense fallback={null}>
+        <SpaceScene reduced={reducedMotion} />
+      </Suspense>
       <div
         aria-hidden
         style={{
