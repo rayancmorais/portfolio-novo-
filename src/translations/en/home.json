@@ -62,10 +62,13 @@
       },
       {
         "kind": "Multi-market e-commerce (BR + EU)",
-        "problem": "Selling to Brazil and Europe from the same system means handling different currencies, taxes, gateways and suppliers — and international gateways break conversion at the Brazilian checkout.",
-        "approach": "Go backend running serverless on AWS Lambda, with a single Supplier interface implemented by BR and EU suppliers — adding a new supplier doesn't change the order flow. A per-region pricing pipeline computes local currency, margin and tax by destination country (IVA/VAT), and checkout uses MercadoPago (Pix, Boleto, card) in Brazil and Stripe/PayPal in Europe.",
-        "result": "A multi-market e-commerce with OAuth2/OIDC authentication (Google, Facebook, Apple) using PKCE, parallel catalog sync via goroutines and a streaming AI shopping assistant — working around the API Gateway's 29s connection limit with an explicit 28s timeout.",
-        "metric_labels": ["markets (BR + EU)", "payment gateways", "Google · Facebook · Apple"]
+        "problem": "Selling to Brazil and Europe from the same system means dealing with different currencies, taxes, payment gateways, and suppliers. International gateways break conversion at Brazilian checkout, and suppliers serving Portugal don't serve São Paulo. The obvious alternative — two separate systems — would duplicate catalog, orders, and maintenance.",
+        "approach": "A single system with the differences isolated to specific points. Go backend running serverless on AWS Lambda, with one Supplier interface implemented by BR and EU providers — adding a supplier or a market doesn't change the order flow. The pricing pipeline computes local currency, margin, and destination-country tax (VAT) in isolated stages, and checkout uses MercadoPago (Pix, Boleto, card) in Brazil and Stripe/PayPal in Europe.",
+        "result": "Two versions of the same product sharing one architecture: the European one, public, and the Brazilian one, adapted for BRL, local tax rules, and local payment methods. OAuth2/OIDC authentication with PKCE (Google, Facebook, Apple), parallel catalog sync via goroutines, and a streaming AI shopping assistant — working around API Gateway's 29-second connection ceiling with an explicit 28-second timeout.",
+        "metric_labels": ["markets (BR + EU)", "payment gateways", "Google · Facebook · Apple"],
+        "visit_site_label": "View site (BR version) →",
+        "view_code_label": "View code (EU version) →",
+        "links_note": "The live site is the Brazilian version; the public code is the European one, which served as the base for the adaptation. The BR repository is private — available on request."
       }
     ]
   },
@@ -150,7 +153,8 @@
             "eu": "European suppliers. Adding a new one doesn't change the order flow.",
             "pay": "MercadoPago (Pix, Boleto, card) in Brazil; Stripe and PayPal in Europe. Routing is by destination country."
           }
-        }
+        },
+        "summary": "Multi-market e-commerce platform for Brazil and the European Union, with international suppliers, geographic order routing, region-aware pricing, and an AI shopping assistant. The European version is public; the Brazilian adaptation runs in a private repository."
       }
     ]
   },

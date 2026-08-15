@@ -74,11 +74,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     metricValues: ['91', '11', '4'],
   },
   {
+    // O slug fica como está: a URL já foi publicada. Só o título exibido muda,
+    // porque o case cobre os dois mercados, não só o Brasil.
     slug: 'lux-lab-brasil',
     no: '03',
-    title: 'Lux Lab Brasil',
+    title: 'Lux Lab',
     year: '2025',
-    domain: 'luxlabbrasil.com.br',
+    domain: 'luxlabbr.vercel.app',
     image: '/assets/cases/brdropshipping.png',
     stack: [
       'Go',
@@ -90,6 +92,10 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Stripe',
       'OAuth2/OIDC',
     ],
+    // Assimetria proposital: o site no ar é a versão BR, o código público é o
+    // da versão EU. Os rótulos dizem qual é qual (ver `links_note`).
+    link: 'https://luxlabbr.vercel.app',
+    repo: 'https://github.com/rayancmorais/luxeLab',
     metricValues: ['2', '3', 'OAuth2'],
   },
 ];

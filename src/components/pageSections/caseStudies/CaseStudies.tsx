@@ -519,6 +519,14 @@ const PrimaryGhost = styled(Ghost)`
   }
 `;
 
+const LinksNote = styled.p`
+  margin: 0.1rem 0 0;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--fg-3);
+`;
+
 const Private = styled.span`
   align-self: center;
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
@@ -545,6 +553,12 @@ interface CaseRowProps {
   view_code: string;
   view_study: string;
   private_repo: string;
+  /* Rótulos e nota específicos do case, quando os genéricos não bastam — o Lux
+     Lab precisa deles porque o site no ar e o código público são de versões
+     diferentes do produto. */
+  visit_site_label?: string;
+  view_code_label?: string;
+  links_note?: string;
 }
 
 function CaseRow({
@@ -563,6 +577,9 @@ function CaseRow({
   view_code,
   view_study,
   private_repo,
+  visit_site_label,
+  view_code_label,
+  links_note,
 }: CaseRowProps) {
   const flip = i % 2 === 1;
   const imgRef = useParallax(28);
@@ -646,16 +663,18 @@ function CaseRow({
             </PrimaryGhost>
             {c.link && (
               <Ghost href={c.link} target="_blank" rel="noopener noreferrer">
-                {visit_site}
+                {visit_site_label ?? visit_site}
               </Ghost>
             )}
             {c.repo && (
               <Ghost href={c.repo} target="_blank" rel="noopener noreferrer">
-                {view_code}
+                {view_code_label ?? view_code}
               </Ghost>
             )}
             {!c.link && !c.repo && <Private>{private_repo}</Private>}
           </Actions>
+
+          {links_note && <LinksNote>{links_note}</LinksNote>}
         </Copy>
       </Col>
     </Row>
@@ -676,6 +695,9 @@ export function CaseStudies() {
     approach: string;
     result: string;
     metric_labels: string[];
+    visit_site_label?: string;
+    view_code_label?: string;
+    links_note?: string;
   }>;
 
   return (
@@ -719,6 +741,9 @@ export function CaseStudies() {
               view_code={t('caseStudies.view_code')}
               view_study={t('caseStudies.view_study')}
               private_repo={t('caseStudies.private_repo')}
+              visit_site_label={items[i]?.visit_site_label}
+              view_code_label={items[i]?.view_code_label}
+              links_note={items[i]?.links_note}
             />
           ))}
         </Rows>

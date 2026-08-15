@@ -65,7 +65,56 @@ export const luxLabBrasil: CaseContent = {
           'Falsos positivos ocasionais travam o pipeline — strings que parecem chave sem ser exigem allowlist e atenção. Preferi o atrito de um build bloqueado indevidamente ao risco de um segredo vazar de novo.',
       },
     ],
-    en: [],
+    en: [
+      {
+        problema:
+          'The platform sells to Brazil and the European Union with different suppliers in each market — BigBuy, Griffati and Printful in Europe, domestic suppliers in Brazil. Each has its own order-creation API, webhook format and geographic coverage. If the order flow had to know which supplier to use, every new market or partner would mean touching the code that processes sales — the most sensitive part of the system.',
+        alternativas: [
+          'Per-country conditionals inside the order flow — fine with two suppliers, unmanageable with five, and it concentrates risk exactly on the path that moves money.',
+          'A separate service per supplier — good isolation, but it duplicates the entire order flow and forces you to keep implementations consistent when they should be identical.',
+        ],
+        decisao:
+          'A single Supplier interface implemented by each provider, with a method returning the ordered list of preferred suppliers per delivery country. The order flow asks "who serves this destination?" and always works against the same abstraction. Adding a supplier or a market means implementing the interface and registering the preference — the order flow does not change.',
+        tradeoff:
+          'The interface has to be the lowest common denominator across quite different suppliers. Features only one of them offers either stay outside the abstraction or need an escape hatch, which erodes the pattern over time.',
+      },
+      {
+        problema:
+          'The same product has to be priced differently depending on the destination: different currency, different margin and different tax — IVA and VAT vary across EU countries, and Brazil has its own burden. Mixing those three things into a single calculation makes it impossible to test any of them in isolation and turns every tax change into a risk of breaking the whole price.',
+        alternativas: [
+          'A single pricing function taking a country and returning the final price — more direct to write, but impossible to test in parts; one wrong rate and the whole test fails without saying where.',
+          'Fixed prices registered per region — removes the calculation, but requires re-registering everything on every change in exchange rate, margin or tax rate.',
+        ],
+        decisao:
+          "A three-stage pipeline, isolated and independently testable: normalizing the supplier price into the local currency, computing the gross margin, and applying the destination country's tax rate. Each stage takes and returns explicit data, so the Spanish rate can be tested without involving exchange rates or margin.",
+        tradeoff:
+          'More structure for a calculation that would fit in a few lines — in a single market it would be obvious over-engineering. The separation only pays off because there are two markets whose tax rules change independently.',
+      },
+      {
+        problema:
+          'The AI shopping assistant needs to answer in streaming to feel natural, but the backend runs on AWS Lambda behind the API Gateway, which closes connections at 29 seconds. A long model response simply dies mid-sentence, and the user watches the message stop with no explanation.',
+        alternativas: [
+          'Move to the API Gateway WebSocket API, which has no such limit — solves it for good, but requires managing connection state and rewriting the handler, disproportionate work just to validate the feature.',
+          'Drop streaming and return the full response at once — removes the problem, but several seconds of silent waiting is a worse experience than text appearing progressively.',
+        ],
+        decisao:
+          'Keep streaming over SSE with an explicit 28-second cap per chat session, enforced in the handler itself. The session closes in a controlled way before the API Gateway cuts it off, with the limitation documented in code and the WebSocket migration recorded as the next step.',
+        tradeoff:
+          'It is an accepted constraint, not a solved problem: long conversations are cut off by design. I accepted it because the cap made the failure predictable and explainable to the user, instead of a connection dying without warning.',
+      },
+      {
+        problema:
+          'Credentials were accidentally exposed in a committed .env file. The immediate problem was rotating the keys, but the real problem was that nothing in the process prevented it from happening again — the protection depended entirely on someone remembering to check before each commit.',
+        alternativas: [
+          'Rely on .gitignore and code review — that is exactly what failed; it depends on human attention in a repetitive task.',
+          'Keep variables only in the hosting provider dashboard — solves production, but does not stop a secret from entering the repository during development.',
+        ],
+        decisao:
+          'Gitleaks in CI blocking any commit containing a secret, immediate rotation of the exposed credentials, and moving sensitive variables to AWS Secrets Manager. The check stopped depending on discipline and became a condition for merging.',
+        tradeoff:
+          'Occasional false positives block the pipeline — strings that look like keys without being one need an allowlist and attention. I preferred the friction of a wrongly blocked build to the risk of another secret leaking.',
+      },
+    ],
   },
 
   snippet: {
@@ -94,6 +143,10 @@ export const luxLabBrasil: CaseContent = {
 O limite de 28 segundos no chat resolveu o sintoma e adiou o problema. Documentei a migração para WebSocket como próximo passo e ela nunca aconteceu — o custo de deixar assim ficou invisível justamente porque a falha virou previsível. Hoje eu teria tratado a restrição do Lambda como critério de escolha da plataforma, não como algo a contornar depois.
 
 E teria começado por um mercado só. Construir para Brasil e Europa ao mesmo tempo multiplicou as decisões — moeda, imposto, fornecedor, gateway — antes de eu ter validado qualquer uma delas em produção. A abstração de fornecedores se provou útil, mas o pipeline de precificação nasceu genérico para um cenário que ainda não existia.`,
-    en: '',
+    en: `Gitleaks came in after the incident, and it should have been there before the first line of code. Today it is the first thing I set up on a new project — not because I trust myself less, but because protection that depends on remembering is not protection.
+
+The 28-second cap on the chat solved the symptom and postponed the problem. I documented the WebSocket migration as the next step and it never happened — the cost of leaving it became invisible precisely because the failure turned predictable. Today I would have treated the Lambda constraint as a platform-choice criterion, not as something to work around later.
+
+And I would have started with one market. Building for Brazil and Europe at the same time multiplied the decisions — currency, tax, supplier, gateway — before I had validated any of them in production. The supplier abstraction proved useful, but the pricing pipeline was born generic for a scenario that did not exist yet.`,
   },
 };

@@ -28,6 +28,7 @@ interface CaseDiagramCopy {
 }
 
 interface CasePageCopy {
+  summary?: string;
   context_extra?: string;
   diagram?: CaseDiagramCopy;
 }
@@ -38,6 +39,9 @@ interface CaseHomeCopy {
   approach: string;
   result: string;
   metric_labels: string[];
+  visit_site_label?: string;
+  view_code_label?: string;
+  links_note?: string;
 }
 
 /* -------------------------------------------------------------- styled ---- */
@@ -95,6 +99,15 @@ const Title = styled.h1`
   margin: 0 0 1.4rem;
 `;
 
+const Summary = styled.p`
+  max-width: 62ch;
+  margin: 0 0 1.6rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--fg-2);
+`;
+
 const Chips = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -139,6 +152,15 @@ const Ghost = styled.a`
     border-color: var(--cy-50);
     color: var(--cy-bright);
   }
+`;
+
+const LinksNote = styled.p`
+  max-width: 62ch;
+  margin: 0.9rem 0 0;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--fg-3);
 `;
 
 const Shot = styled.div`
@@ -308,6 +330,8 @@ export function CaseStudyPage() {
         </Eyebrow>
         <Title>{study.title}</Title>
 
+        {page?.summary && <Summary>{page.summary}</Summary>}
+
         <Chips>
           {study.stack.map(tech => (
             <Chip key={tech}>{tech}</Chip>
@@ -317,15 +341,17 @@ export function CaseStudyPage() {
         <Actions>
           {study.link && (
             <Ghost href={study.link} target="_blank" rel="noopener noreferrer">
-              {t('caseStudies.visit_site')}
+              {home?.visit_site_label ?? t('caseStudies.visit_site')}
             </Ghost>
           )}
           {study.repo && (
             <Ghost href={study.repo} target="_blank" rel="noopener noreferrer">
-              {t('caseStudies.view_code')}
+              {home?.view_code_label ?? t('caseStudies.view_code')}
             </Ghost>
           )}
         </Actions>
+
+        {home?.links_note && <LinksNote>{home.links_note}</LinksNote>}
 
         {study.image && (
           <Shot>
