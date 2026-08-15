@@ -156,7 +156,10 @@
         },
         "summary": "Multi-market e-commerce platform for Brazil and the European Union, with international suppliers, geographic order routing, region-aware pricing, and an AI shopping assistant. The European version is public; the Brazilian adaptation runs in a private repository."
       }
-    ]
+    ],
+    "previous": "Previous case study",
+    "back_label": "Back to",
+    "home": "Home"
   },
   "contact": {
     "eyebrow": "07 · Contact",

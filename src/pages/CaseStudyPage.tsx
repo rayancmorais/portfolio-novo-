@@ -2,7 +2,13 @@ import { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { CASE_STUDIES, findCaseBySlug, findCaseContent, findNextCase } from '@/data/cases';
+import {
+  CASE_STUDIES,
+  findCaseBySlug,
+  findCaseContent,
+  findNextCase,
+  findPreviousCase,
+} from '@/data/cases';
 import { ARCHITECTURES } from '@/data/architecture';
 import { ArchitectureDiagram } from '@/components/caseStudy/ArchitectureDiagram';
 import { TechnicalDecisions } from '@/components/caseStudy/TechnicalDecisions';
@@ -282,6 +288,45 @@ const NextArrow = styled.span`
   color: var(--cy);
 `;
 
+/* Secundário em relação ao próximo: sem fundo, borda mais discreta e seta à
+   esquerda, para a direção ficar óbvia sem depender de ler o rótulo. */
+const PrevCard = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.7rem;
+  padding: 1.1rem 1.8rem;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--r-card, 16px);
+  text-decoration: none;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+`;
+
+const PrevArrow = styled.span`
+  font-size: 1.2rem;
+  color: var(--fg-3);
+`;
+
+const PrevTitle = styled.span`
+  font-family: var(--font-serif, serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--fg-2);
+`;
+
 /* ---------------------------------------------------------- component ---- */
 
 export function CaseStudyPage() {
@@ -311,6 +356,7 @@ export function CaseStudyPage() {
   const home = t(`caseStudies.items.${index}`, { returnObjects: true }) as CaseHomeCopy;
   const page = t(`casePages.items.${index}`, { returnObjects: true }) as CasePageCopy;
   const next = findNextCase(study.slug);
+  const previous = findPreviousCase(study.slug);
   const architecture = ARCHITECTURES[study.slug];
   const content = findCaseContent(study.slug);
 
@@ -428,6 +474,15 @@ export function CaseStudyPage() {
           </span>
           <NextArrow aria-hidden="true">→</NextArrow>
         </NextCard>
+
+        {/* No primeiro case não existe anterior — a saída passa a ser a home. */}
+        <PrevCard to={previous ? `/case/${previous.slug}` : '/'}>
+          <PrevArrow aria-hidden="true">←</PrevArrow>
+          <span>
+            <NextLabel>{previous ? t('casePages.previous') : t('casePages.back_label')}</NextLabel>
+            <PrevTitle>{previous ? previous.title : t('casePages.home')}</PrevTitle>
+          </span>
+        </PrevCard>
       </Article>
       <Footer />
     </Page>

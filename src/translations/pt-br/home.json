@@ -160,7 +160,10 @@
         },
         "summary": "Plataforma de e-commerce multi-mercado para Brasil e União Europeia, com fornecedores internacionais, roteamento geográfico de pedidos, precificação por região e assistente de compras com IA. A versão europeia é pública; a adaptação brasileira roda em repositório privado."
       }
-    ]
+    ],
+    "previous": "Estudo de caso anterior",
+    "back_label": "Voltar para",
+    "home": "Página inicial"
   },
   "contact": {
     "eyebrow": "07 · Contato",

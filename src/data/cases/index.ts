@@ -109,6 +109,16 @@ export function findNextCase(slug: string): CaseStudy {
   return CASE_STUDIES[(index + 1) % CASE_STUDIES.length];
 }
 
+/**
+ * Case anterior, sem dar a volta: no primeiro devolve `undefined`, e aí a
+ * página oferece a home no lugar — "anterior" apontando para o último seria
+ * mentira sobre a ordem.
+ */
+export function findPreviousCase(slug: string): CaseStudy | undefined {
+  const index = CASE_STUDIES.findIndex(c => c.slug === slug);
+  return index > 0 ? CASE_STUDIES[index - 1] : undefined;
+}
+
 /* ------------------------------------------------- conteúdo técnico ------- */
 
 const CONTENT: Record<string, CaseContent> = {
