@@ -1,6 +1,16 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import { Footer } from './Footer';
+
+/* O rodapé navega para a home quando a âncora não existe na rota atual, então
+   precisa de contexto de Router. */
+const renderFooter = () =>
+  render(
+    <MemoryRouter>
+      <Footer />
+    </MemoryRouter>
+  );
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -24,17 +34,17 @@ vi.mock('react-i18next', () => ({
 
 describe('Footer', () => {
   it('renders "Rayan Morais" in the copyright', () => {
-    render(<Footer />);
+    renderFooter();
     expect(screen.getByText(/Rayan Morais/)).toBeInTheDocument();
   });
 
   it('renders the current copyright year', () => {
-    render(<Footer />);
+    renderFooter();
     expect(screen.getByText(new RegExp(String(new Date().getFullYear())))).toBeInTheDocument();
   });
 
   it('renders all navigation links', () => {
-    render(<Footer />);
+    renderFooter();
     expect(screen.getByText('Case studies')).toBeInTheDocument();
     expect(screen.getByText('Ecosystem')).toBeInTheDocument();
     expect(screen.getByText('Projects')).toBeInTheDocument();

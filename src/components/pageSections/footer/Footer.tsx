@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useSectionNavigation } from '@/hooks/useSectionNavigation';
 
 /* ============================================================================
    Footer — wordmark + nav links + copyright. React + styled-components.
@@ -81,6 +82,7 @@ const Copy = styled.span`
 
 export function Footer() {
   const { t } = useTranslation('home');
+  const goToSection = useSectionNavigation();
 
   const scrollTop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -96,7 +98,14 @@ export function Footer() {
 
         <Nav aria-label={t('footer.aria_nav')}>
           {NAV_ITEMS.map(({ key, href }) => (
-            <NavLink key={href} href={href}>
+            <NavLink
+              key={href}
+              href={href}
+              onClick={e => {
+                e.preventDefault();
+                goToSection(href.slice(1));
+              }}
+            >
               {t(`footer.${key}`)}
             </NavLink>
           ))}

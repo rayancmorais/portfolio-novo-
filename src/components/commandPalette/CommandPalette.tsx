@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { CASE_STUDIES } from '@/data/cases';
 import { CV_URLS, EMAIL, GITHUB_URL, LINKEDIN_URL } from '@/data/links';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSectionNavigation } from '@/hooks/useSectionNavigation';
 
 /* ============================================================================
    Command palette (⌘K) — construída à mão, sem dependência nova.
@@ -201,22 +202,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const restoreFocusTo = useRef<HTMLElement | null>(null);
 
-  /** Rola até a seção; se estiver numa página de case, volta para a home antes. */
-  const goToSection = useCallback(
-    (id: string) => {
-      const scroll = () => {
-        const el = document.getElementById(id);
-        if (el) window.scrollTo({ top: el.offsetTop - 66, behavior: 'smooth' });
-      };
-      if (window.location.pathname !== '/') {
-        navigate('/');
-        requestAnimationFrame(() => requestAnimationFrame(scroll));
-      } else {
-        scroll();
-      }
-    },
-    [navigate]
-  );
+  const goToSection = useSectionNavigation();
 
   const commands = useMemo<Command[]>(() => {
     const nav = SECTION_IDS.map(id => ({

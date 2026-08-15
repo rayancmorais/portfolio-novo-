@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Download, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSectionNavigation } from '@/hooks/useSectionNavigation';
 import { useCommandPalette } from '@/contexts/CommandPaletteContext';
 import { CV_URLS } from '@/data/links';
 
+/* `section` rola até a seção da home (funciona de qualquer rota); `route` abre
+   uma página própria. O estudo de caso completo é rota, não âncora — leva à
+   página inteira, não ao card resumido da home. */
 const NAV_LINKS = [
-  { key: 'selectedWork', href: '#work' },
-  { key: 'ecosystem', href: '#ecosystem' },
-];
+  { key: 'selectedWork', kind: 'section', target: 'work' },
+  { key: 'caseStudies', kind: 'route', target: '/case/cupommaniac' },
+  { key: 'ecosystem', kind: 'section', target: 'ecosystem' },
+] as const;
 
 export function Navbar() {
   const { t } = useTranslation('navbar');
@@ -24,12 +30,7 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const id = href.slice(1);
-    const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 66, behavior: 'smooth' });
-  };
+  const goToSection = useSectionNavigation();
 
   return (
     <Nav $scrolled={scrolled}>
@@ -39,11 +40,24 @@ export function Navbar() {
         </Logo>
 
         <Links>
-          {NAV_LINKS.map(({ key, href }) => (
-            <NavLink key={href} href={href} onClick={e => handleNavClick(e, href)}>
-              {t(key)}
-            </NavLink>
-          ))}
+          {NAV_LINKS.map(({ key, kind, target }) =>
+            kind === 'route' ? (
+              <NavLink key={target} as={Link} to={target}>
+                {t(key)}
+              </NavLink>
+            ) : (
+              <NavLink
+                key={target}
+                href={`#${target}`}
+                onClick={e => {
+                  e.preventDefault();
+                  goToSection(target);
+                }}
+              >
+                {t(key)}
+              </NavLink>
+            )
+          )}
         </Links>
 
         <Controls>
