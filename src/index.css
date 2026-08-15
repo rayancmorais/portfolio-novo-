@@ -1,5 +1,17 @@
 @import './styles/tokens.css';
 
+/* O Orbitron ancora mal o til: "PRODUÇÃO" sai com o acento deslocado para cima
+   da letra seguinte, tanto em maiúscula quanto em minúscula. É defeito da
+   fonte. Aqui só os dois glifos afetados vêm do Chakra Petch (já usado como
+   --serif); todo o resto continua Orbitron. */
+@font-face {
+  font-family: 'Display Tilde Fix';
+  src: url('@fontsource/chakra-petch/files/chakra-petch-latin-700-normal.woff2') format('woff2');
+  font-weight: 400 900;
+  font-display: swap;
+  unicode-range: U+00C3, U+00E3;
+}
+
 *,
 *::before,
 *::after {

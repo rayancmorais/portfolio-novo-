@@ -19,6 +19,15 @@
       rel="stylesheet"
     />
     <style>
+      /* Mesmo defeito do site: o Orbitron ancora mal o til e "PRODUÇÃO" sai com
+         o acento deslocado. Só Ã/ã vêm do Chakra Petch. */
+      @font-face {
+        font-family: 'Display Tilde Fix';
+        src: url('https://fonts.gstatic.com/s/chakrapetch/v13/cIflMapbsEk7TDLdtEz1BwkeJI91R5_F_gUk0w.woff2')
+          format('woff2');
+        unicode-range: U+00C3, U+00E3;
+      }
+
       :root {
         --bg: #0d1117;
         --accent: #3e7fe9;
@@ -50,7 +59,7 @@
         background:
           radial-gradient(90% 120% at 78% 0%, rgba(62, 127, 233, 0.16), transparent 62%),
           radial-gradient(70% 90% at 0% 100%, rgba(62, 127, 233, 0.08), transparent 60%), var(--bg);
-        font-family: 'Orbitron', sans-serif;
+        font-family: 'Display Tilde Fix', 'Orbitron', sans-serif;
       }
 
       /* grade sutil, mesma linguagem do fundo do site */

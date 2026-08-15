@@ -51,7 +51,8 @@
     Helvetica, Arial, sans-serif;
   --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --serif: 'Chakra Petch', 'Space Grotesk Variable', sans-serif;
-  --display: 'Orbitron', 'Space Grotesk Variable', sans-serif;
+  /* 'Display Tilde Fix' cobre só Ã/ã (ver @font-face em index.css). */
+  --display: 'Display Tilde Fix', 'Orbitron', 'Space Grotesk Variable', sans-serif;
   /* aliases — many components reference the --font-* names */
   --font-serif: var(--serif);
   --font-sans: var(--sans);

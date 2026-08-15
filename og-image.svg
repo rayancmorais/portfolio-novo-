@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Orbitron, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'Display Tilde Fix', Orbitron, sans-serif">
   <!--
     Fonte do og-image (1200×630). Não é servido pelo site — fica fora de public/.
     Exportar para public/og-image.png; instruções no README da tarefa.
@@ -8,6 +8,14 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap');
+
+      /* Mesmo defeito do site: o Orbitron ancora mal o til e "PRODUÇÃO" sai com
+         o acento deslocado. Só Ã/ã vêm do Chakra Petch. */
+      @font-face {
+        font-family: 'Display Tilde Fix';
+        src: url('https://fonts.gstatic.com/s/chakrapetch/v13/cIflMapbsEk7TDLdtEz1BwkeJI91R5_F_gUk0w.woff2') format('woff2');
+        unicode-range: U+00C3, U+00E3;
+      }
     </style>
 
     <radialGradient id="glowTop" cx="78%" cy="0%" r="82%">
