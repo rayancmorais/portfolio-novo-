@@ -117,20 +117,45 @@ export const luxLabBrasil: CaseContent = {
     ],
   },
 
+  // Extraído de backend/internal/supplier/{interface,registry}.go
   snippet: {
-    // ⚠️ COLE CÓDIGO REAL DO REPOSITÓRIO AQUI.
-    // Melhores candidatos, em ordem:
-    // 1. A interface Supplier + PreferredForCountry (prova visualmente a decisão 1
-    //    e é código Go, o que diferencia dos outros dois cases, ambos TypeScript)
-    // 2. As três etapas do pipeline de precificação encadeadas
-    // 3. O handler de chat com o timeout explícito de 28s
-    file: '',
+    file: 'backend/internal/supplier/interface.go · registry.go',
     language: 'go',
-    code: ``,
-    highlightLines: [],
+    code: `// Supplier is the contract every fulfilment partner must satisfy.
+type Supplier interface {
+	// Name returns the canonical identifier stored in products.supplierName.
+	Name() string
+	// CreateOrder forwards a sub-order and returns the supplier-assigned order ID.
+	CreateOrder(ctx context.Context, req OrderRequest) (supplierOrderID string, err error)
+	// WebhookURL returns the per-supplier tracking endpoint (empty = none).
+	WebhookURL() string
+}
+
+// … registry.go
+
+// PreferredForCountry returns the preferred supplier names (in priority order)
+// for a given EU delivery country, enabling geographic optimisation.
+func PreferredForCountry(country string) []string {
+	switch country {
+	case "ES", "PT":
+		return []string{"bigbuy", "novaengel", "brandsgateway"}
+	case "NL", "BE", "LU":
+		return []string{"beatinow", "brandsgateway"}
+	case "IT":
+		return []string{"griffati", "brandsgateway"}
+	case "DE", "AT":
+		return []string{"brandsgateway", "griffati"}
+	case "FR":
+		return []string{"brandsgateway", "beatinow"}
+	default:
+		return []string{"brandsgateway", "bigbuy", "griffati", "beatinow", "novaengel"}
+	}
+}`,
+    // 2: o contrato · 17: o roteamento por país · 30: o fallback
+    highlightLines: [2, 17, 30],
     note: {
-      ptBR: '',
-      en: '',
+      ptBR: 'O contrato tem três métodos e nenhum deles conhece país, moeda ou imposto — é isso que permite adicionar um fornecedor sem tocar no fluxo de pedidos. A decisão de quem atende cada destino vive fora da interface, numa função pura que devolve a ordem de preferência; o fallback garante que um país não mapeado ainda seja atendido em vez de falhar.',
+      en: 'The contract has three methods and none of them knows about country, currency or tax — that is what allows adding a supplier without touching the order flow. Choosing who serves each destination lives outside the interface, in a pure function returning the preference order; the fallback makes sure an unmapped country is still served instead of failing.',
     },
   },
 
