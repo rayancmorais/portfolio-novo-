@@ -79,7 +79,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'lux-lab-brasil',
     no: '03',
     title: 'Lux Lab',
-    year: '2025',
+    year: '2026',
     domain: 'luxlabbr.vercel.app',
     image: '/assets/cases/brdropshipping.png',
     stack: [
