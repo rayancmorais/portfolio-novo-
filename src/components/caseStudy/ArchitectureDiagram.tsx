@@ -1,6 +1,6 @@
 import { useId, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import type { Architecture, DiagramNode, NodeKind } from '@/data/architecture';
 
 /* ============================================================================
@@ -67,23 +67,60 @@ const Canvas = styled.svg`
   }
 `;
 
+/* Entrada em CSS, não em framer-motion.
+   O `whileInView` do framer depende de IntersectionObserver, que não observa
+   elementos filhos de SVG de forma confiável — no WebKit não observa. O
+   resultado era `opacity="0"` gravado como atributo e nunca revertido: nós e
+   arestas invisíveis, sobrando só os <text> soltos, que não eram animados.
+
+   `animation-fill-mode: backwards` mantém o estado inicial apenas durante o
+   delay; terminada a animação o elemento volta ao estilo natural, visível. Se a
+   animação não rodar (reduced-motion, motor desligado), nada some. */
+const nodeIn = keyframes`
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+`;
+
+const edgeIn = keyframes`
+  from { opacity: 0; }
+  to   { opacity: 1; }
+`;
+
 const dashFlow = keyframes`
   to { stroke-dashoffset: -24; }
 `;
 
 /* O tracejado corre no sentido do fluxo. Fica só nas arestas assíncronas —
    animar tudo vira ruído. */
-const Edge = styled(motion.line)<{ $dashed?: boolean; $reduced: boolean }>`
-  ${({ $dashed, $reduced }) =>
-    $dashed &&
-    !$reduced &&
-    css`
-      animation: ${dashFlow} 1.1s linear infinite;
-    `}
+/* Cada ramo monta a shorthand inteira dentro de um css`` próprio. Interpolar um
+   keyframe numa template string comum faz o styled-components lançar em runtime
+   — e derruba a página inteira, não só o diagrama. */
+const Edge = styled.line<{ $dashed?: boolean; $reduced: boolean; $index: number }>`
+  ${({ $dashed, $reduced, $index }) => {
+    if ($reduced) return '';
+    const delay = `${(0.25 + $index * 0.05).toFixed(2)}s`;
+    return $dashed
+      ? css`
+          animation:
+            ${edgeIn} 0.4s ease-out ${delay} backwards,
+            ${dashFlow} 1.1s linear infinite;
+        `
+      : css`
+          animation: ${edgeIn} 0.4s ease-out ${delay} backwards;
+        `;
+  }}
 `;
 
-const NodeGroup = styled(motion.g)`
+const NodeGroup = styled.g<{ $index: number; $reduced: boolean }>`
   cursor: default;
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+
+  ${({ $index, $reduced }) =>
+    !$reduced &&
+    css`
+      animation: ${nodeIn} 0.36s ease-out ${($index * 0.06).toFixed(2)}s backwards;
+    `}
 
   rect {
     transition:
@@ -217,7 +254,7 @@ export function ArchitectureDiagram({
           </marker>
         </defs>
 
-        {edges.map(edge => {
+        {edges.map((edge, edgeIndex) => {
           const from = byId.get(edge.from);
           const to = byId.get(edge.to);
           if (!from || !to) return null;
@@ -232,6 +269,7 @@ export function ArchitectureDiagram({
               <Edge
                 $dashed={edge.dashed}
                 $reduced={!!reduce}
+                $index={edgeIndex}
                 x1={start.x}
                 y1={start.y}
                 x2={end.x}
@@ -241,10 +279,6 @@ export function ArchitectureDiagram({
                 strokeDasharray={edge.dashed ? '6 6' : undefined}
                 markerEnd={`url(#arrow-${markerId})`}
                 markerStart={edge.bidirectional ? `url(#arrow-${markerId})` : undefined}
-                initial={reduce ? false : { opacity: 0 }}
-                whileInView={reduce ? undefined : { opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: 0.3 }}
               />
               {edge.label && (
                 <text
@@ -265,6 +299,8 @@ export function ArchitectureDiagram({
         {nodes.map((node, i) => (
           <NodeGroup
             key={node.id}
+            $index={i}
+            $reduced={!!reduce}
             tabIndex={0}
             role="button"
             aria-label={`${node.label}: ${roles[node.id] ?? ''}`}
@@ -272,10 +308,6 @@ export function ArchitectureDiagram({
             onMouseLeave={clear}
             onFocus={() => setActiveId(node.id)}
             onBlur={clear}
-            initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-            whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.34, delay: reduce ? 0 : i * 0.07 }}
           >
             <rect
               x={node.x - NODE_W / 2}

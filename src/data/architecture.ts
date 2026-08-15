@@ -40,7 +40,7 @@ export interface Architecture {
 export const ARCHITECTURES: Record<string, Architecture> = {
   cupommaniac: {
     width: 900,
-    height: 400,
+    height: 390,
     nodes: [
       { id: 'web', label: 'Next.js 15', sub: 'SSR / ISR', kind: 'client', x: 110, y: 90 },
       {
@@ -69,7 +69,7 @@ export const ARCHITECTURES: Record<string, Architecture> = {
 
   'crash-game': {
     width: 900,
-    height: 430,
+    height: 380,
     nodes: [
       { id: 'client', label: 'Cliente', sub: 'React', kind: 'client', x: 95, y: 225 },
       { id: 'keycloak', label: 'Keycloak', sub: 'OAuth2 / OIDC', kind: 'external', x: 310, y: 70 },
@@ -107,7 +107,7 @@ export const ARCHITECTURES: Record<string, Architecture> = {
 
   'lux-lab-brasil': {
     width: 900,
-    height: 460,
+    height: 430,
     nodes: [
       { id: 'web', label: 'Next.js 15', sub: '7 idiomas', kind: 'client', x: 95, y: 230 },
       { id: 'gw', label: 'API Gateway', sub: 'timeout 28s', kind: 'infra', x: 300, y: 230 },
@@ -120,16 +120,16 @@ export const ARCHITECTURES: Record<string, Architecture> = {
         y: 230,
         accent: true,
       },
-      { id: 'mongo', label: 'MongoDB', kind: 'infra', x: 760, y: 65 },
-      { id: 'br', label: 'Fornecedores BR', kind: 'external', x: 760, y: 185 },
-      { id: 'eu', label: 'Fornecedores EU', kind: 'external', x: 760, y: 300 },
+      { id: 'mongo', label: 'MongoDB', kind: 'infra', x: 760, y: 70 },
+      { id: 'br', label: 'Fornecedores BR', kind: 'external', x: 760, y: 175 },
+      { id: 'eu', label: 'Fornecedores EU', kind: 'external', x: 760, y: 280 },
       {
         id: 'pay',
         label: 'MercadoPago · Stripe',
         sub: 'gateway por região',
         kind: 'external',
         x: 760,
-        y: 415,
+        y: 385,
       },
     ],
     edges: [
